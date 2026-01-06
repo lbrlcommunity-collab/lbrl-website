@@ -123,7 +123,7 @@ export default function LBRLWebsite() {
           </div>
           <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: '0 0 8px 0', letterSpacing: '-2px' }}>Art That</h1>
           <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: 0, fontStyle: 'italic', letterSpacing: '-2px', color: colors.textSecondary }}>Becomes You</h1>
-          <p style={{ maxWidth: '500px', margin: '40px auto', fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy — tailor-made, never templated.</p>
+          <p style={{ maxWidth: '500px', margin: '40px auto', fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy tailor-made, never templated.</p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '48px' }}>
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: colors.bgDark, padding: '18px 36px', fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', borderRadius: '4px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>Book Consultation →</a>
           </div>
@@ -155,7 +155,7 @@ export default function LBRLWebsite() {
             <TribalLogo size={140} opacity={0.9} />
             <div style={{ fontSize: '24px', fontWeight: 500, marginTop: '24px' }}>Daniel Liberal</div>
             <div style={{ fontSize: '10px', letterSpacing: '2px', color: colors.accentCyan, textTransform: 'uppercase', marginTop: '8px' }}>Lead Artist & Owner</div>
-            <div style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>NYC 2016 • Portland 2024</div>
+            <div style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>From Puerto Rico 2013 est. to Vancouver, WA 2016-Present</div>
           </div>
           <div>
             <div style={{ display: 'inline-flex', padding: '6px 12px', background: 'rgba(255,255,255,0.02)', border: `1px solid ${colors.borderSubtle}`, borderRadius: '4px', marginBottom: '20px' }}>
@@ -178,7 +178,7 @@ export default function LBRLWebsite() {
                 </div>
               </div>
             </div>
-            <p style={{ fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary, marginBottom: '20px' }}>I don't just ink skin — I study your body's unique canvas. Every custom piece is designed to flow with your anatomy, considering how the skin moves, stretches, and ages over time.</p>
+            <p style={{ fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary, marginBottom: '20px' }}>Tattooing, for me, starts with understanding how the body carries a design. Every custom piece is designed to flow with your anatomy, considering how the skin moves, stretches, and ages over time.</p>
             <p style={{ fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>With 12+ years mastering this craft and awards from New York to Portland, I bring your vision to life through one-on-one collaboration. No flash. No templates. Just meaningful art.</p>
           </div>
         </div>
@@ -289,7 +289,7 @@ export default function LBRLWebsite() {
               <div style={{ fontSize: '9px', color: colors.textMuted, marginTop: '2px' }}>Multi-Award Winning Custom Tattoos</div>
             </div>
           </div>
-          <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2025 Daniel Liberal. All rights reserved.</p>
+          <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
         </div>
       </footer>
     </div>
