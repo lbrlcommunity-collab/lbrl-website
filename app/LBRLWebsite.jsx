@@ -1,0 +1,297 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
+
+const BOOKING_URL = 'https://book.lbrltattoos.com'
+
+const TribalLogo = ({ size = 200, opacity = 1 }) => (
+  <svg width={size} height={size} viewBox="0 0 200 200" style={{ opacity }}>
+    <circle cx="100" cy="100" r="80" fill="none" stroke="#7dd4c4" strokeWidth="2" opacity="0.3"/>
+    <text x="100" y="110" textAnchor="middle" fill="#7dd4c4" fontSize="32" fontWeight="300">LBRL</text>
+  </svg>
+)
+
+export default function LBRLWebsite() {
+  const [scrolled, setScrolled] = useState(false)
+  const [activeStyle, setActiveStyle] = useState('all')
+  const [hoveredItem, setHoveredItem] = useState(null)
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const colors = {
+    bgDark: '#1a1f1c',
+    bgPrimary: '#232a26',
+    bgCard: '#2a322d',
+    bgElevated: '#323b35',
+    bgSage: '#3d4a42',
+    borderSubtle: 'rgba(255,255,255,0.04)',
+    borderDefault: 'rgba(255,255,255,0.08)',
+    textPrimary: '#ffffff',
+    textSecondary: '#a8b0ab',
+    textMuted: '#6b756e',
+    accentCyan: '#7dd4c4',
+    accentOrange: '#e8a87c',
+    accentTeal: '#5a8a8a',
+  }
+
+  const stats = [
+    { value: '12+', label: 'Years Experience' },
+    { value: '2x', label: 'Award Winner' },
+    { value: '100%', label: 'Custom Designs' },
+    { value: '5.0', label: 'Google Rating' },
+  ]
+
+  const styles = ['all', 'japanese', 'blackwork', 'ornamental', 'floral', 'portraits']
+  
+  const portfolioItems = [
+    { id: 1, style: 'blackwork', title: 'Organic Sleeve', desc: 'Full arm composition' },
+    { id: 2, style: 'japanese', title: 'Koi & Peony Torso', desc: 'Traditional irezumi' },
+    { id: 3, style: 'floral', title: 'Botanical Back', desc: 'Fine line botanicals' },
+    { id: 4, style: 'ornamental', title: 'Mandala Knee', desc: 'Dotwork precision' },
+    { id: 5, style: 'portraits', title: 'Dark Fantasy', desc: 'Surreal realism' },
+    { id: 6, style: 'blackwork', title: 'Geometric Neck', desc: 'Bold placement' },
+    { id: 7, style: 'japanese', title: 'Tiger Bodysuit', desc: 'Large scale project' },
+    { id: 8, style: 'floral', title: 'Peony Hip Piece', desc: 'Soft gray tones' },
+  ]
+
+  const filteredPortfolio = activeStyle === 'all' ? portfolioItems : portfolioItems.filter(item => item.style === activeStyle)
+
+  const reviews = [
+    { name: 'Sarah M.', text: 'Daniel understood my vision perfectly. The way my sleeve flows with my arm is incredible.', rating: 5 },
+    { name: 'Marcus T.', text: 'Best custom work in Vancouver. Worth every penny. The private studio experience was amazing.', rating: 5 },
+    { name: 'Jessica L.', text: 'From consultation to final session, everything was seamless. My back piece is a masterpiece.', rating: 5 },
+  ]
+
+  const faqs = [
+    { q: 'Am I Eligible for a Tattoo?', a: 'You must be at least 18 years old and present a valid ID. This is non-negotiable.' },
+    { q: 'What Are the Costs Involved?', a: 'Half-day session (4 hours): $1,000. Full-day session (8 hours): $2,000. Small tattoos priced individually.' },
+    { q: "What's Required to Secure an Appointment?", a: 'A $300 deposit is required to book. This guarantees priority dates and goes toward your final session.' },
+    { q: 'What if I Need to Cancel or Reschedule?', a: "Cancellations with less than 72 hours notice = deposit lost. 15+ min late with no message = no-show." },
+    { q: 'How Should I Prepare for My Session?', a: 'Get rest, eat well, stay hydrated, bring snacks. Come with a positive attitude!' },
+    { q: 'How Do I Book a Consultation?', a: 'Fill out our booking form or DM @dani_lbrl on Instagram. Virtual consultations available.' },
+  ]
+
+  const processSteps = [
+    { num: '01', title: 'Consultation', desc: 'Share your vision. We discuss placement, style, and how the design flows with your body.' },
+    { num: '02', title: 'Design', desc: 'I create your custom artwork from scratch, considering every angle of your anatomy.' },
+    { num: '03', title: 'Session', desc: 'In my private studio, we bring your vision to life with precision and care.' },
+    { num: '04', title: 'Aftercare', desc: 'Detailed guidance ensures your tattoo heals perfectly and ages beautifully.' }
+  ]
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: colors.bgDark, color: colors.textPrimary, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+      
+      {/* NAV */}
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+        padding: scrolled ? '12px 24px' : '20px 24px',
+        background: scrolled ? 'rgba(26, 31, 28, 0.95)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? `1px solid ${colors.borderSubtle}` : 'none',
+        transition: 'all 0.3s ease'
+      }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <TribalLogo size={44} opacity={0.95} />
+            <div>
+              <div style={{ fontSize: '18px', fontWeight: 600, letterSpacing: '6px' }}>LBRL</div>
+              <div style={{ fontSize: '8px', letterSpacing: '2px', color: colors.textMuted, textTransform: 'uppercase' }}>Tattoo Studio</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '36px', alignItems: 'center' }}>
+            {['Portfolio', 'About', 'Process', 'FAQs', 'Contact'].map((item) => (
+              <a key={item} onClick={() => scrollToSection(item.toLowerCase())} style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', cursor: 'pointer' }}>{item}</a>
+            ))}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: colors.bgDark, padding: '14px 28px', fontSize: '10px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', borderRadius: '4px', textDecoration: 'none' }}>Book Now</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', background: `linear-gradient(180deg, ${colors.bgSage} 0%, ${colors.bgPrimary} 100%)` }}>
+        <div style={{ maxWidth: '900px', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '100px', marginBottom: '32px' }}>
+            <span style={{ fontSize: '10px', letterSpacing: '2px', color: colors.textSecondary, textTransform: 'uppercase' }}>📍 Vancouver, Washington</span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: '0 0 8px 0', letterSpacing: '-2px' }}>Art That</h1>
+          <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: 0, fontStyle: 'italic', letterSpacing: '-2px', color: colors.textSecondary }}>Becomes You</h1>
+          <p style={{ maxWidth: '500px', margin: '40px auto', fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy — tailor-made, never templated.</p>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '48px' }}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: colors.bgDark, padding: '18px 36px', fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', borderRadius: '4px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>Book Consultation →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* INSTAGRAM BAR */}
+      <a href="https://instagram.com/dani_lbrl" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '20px', background: colors.bgDark, borderTop: `1px solid ${colors.borderSubtle}`, borderBottom: `1px solid ${colors.borderSubtle}`, textDecoration: 'none' }}>
+        <span style={{ color: colors.textSecondary, fontSize: '13px', letterSpacing: '1px' }}>📸 @dani_lbrl</span>
+      </a>
+
+      {/* STATS */}
+      <section style={{ padding: '60px 24px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          {stats.map((stat, i) => (
+            <div key={i} style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '28px', fontWeight: 300, marginBottom: '6px' }}>{stat.value}</div>
+              <div style={{ fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: colors.textMuted }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, border: `1px solid ${colors.borderSubtle}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '20px', right: '20px', background: `linear-gradient(135deg, ${colors.accentCyan} 0%, ${colors.accentTeal} 100%)`, padding: '8px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 600, color: '#fff' }}>🏆 AWARD WINNER</div>
+            <TribalLogo size={140} opacity={0.9} />
+            <div style={{ fontSize: '24px', fontWeight: 500, marginTop: '24px' }}>Daniel Liberal</div>
+            <div style={{ fontSize: '10px', letterSpacing: '2px', color: colors.accentCyan, textTransform: 'uppercase', marginTop: '8px' }}>Lead Artist & Owner</div>
+            <div style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>NYC 2016 • Portland 2024</div>
+          </div>
+          <div>
+            <div style={{ display: 'inline-flex', padding: '6px 12px', background: 'rgba(255,255,255,0.02)', border: `1px solid ${colors.borderSubtle}`, borderRadius: '4px', marginBottom: '20px' }}>
+              <span style={{ fontSize: '9px', letterSpacing: '2px', color: colors.textMuted, textTransform: 'uppercase' }}>The Philosophy</span>
+            </div>
+            <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 28px 0', lineHeight: 1.2 }}>Body Harmony</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '10px 14px', background: 'rgba(125, 212, 196, 0.08)', border: '1px solid rgba(125, 212, 196, 0.15)', borderRadius: '6px', width: 'fit-content' }}>
+                <span>🏆</span>
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentCyan }}>3rd Place — Asian Category</div>
+                  <div style={{ fontSize: '9px', color: colors.textMuted }}>Portland Tattoo Expo 2024</div>
+                </div>
+              </div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '10px 14px', background: 'rgba(232, 168, 124, 0.08)', border: '1px solid rgba(232, 168, 124, 0.15)', borderRadius: '6px', width: 'fit-content' }}>
+                <span>🏆</span>
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentOrange }}>3rd Place — Hands, Neck, Face</div>
+                  <div style={{ fontSize: '9px', color: colors.textMuted }}>United Ink No Limits NYC 2016</div>
+                </div>
+              </div>
+            </div>
+            <p style={{ fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary, marginBottom: '20px' }}>I don't just ink skin — I study your body's unique canvas. Every custom piece is designed to flow with your anatomy, considering how the skin moves, stretches, and ages over time.</p>
+            <p style={{ fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>With 12+ years mastering this craft and awards from New York to Portland, I bring your vision to life through one-on-one collaboration. No flash. No templates. Just meaningful art.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* PORTFOLIO */}
+      <section id="portfolio" style={{ padding: '100px 24px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: 300, margin: 0 }}>Portfolio</h2>
+          </div>
+          <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colors.bgCard, borderRadius: '6px', width: 'fit-content', margin: '0 auto 50px' }}>
+            {styles.map((style) => (
+              <button key={style} onClick={() => setActiveStyle(style)} style={{ background: activeStyle === style ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer' }}>{style}</button>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+            {filteredPortfolio.map((item) => (
+              <div key={item.id} onMouseEnter={() => setHoveredItem(item.id)} onMouseLeave={() => setHoveredItem(null)} style={{ aspectRatio: '1', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}`, cursor: 'pointer', transition: 'all 0.3s', transform: hoveredItem === item.id ? 'translateY(-6px)' : 'translateY(0)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TribalLogo size={60} opacity={0.1} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(26, 31, 28, 0.95) 0%, transparent 60%)', opacity: hoveredItem === item.id ? 1 : 0, transition: 'opacity 0.3s', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '20px', borderRadius: '12px' }}>
+                  <div style={{ fontSize: '14px', fontWeight: 500 }}>{item.title}</div>
+                  <div style={{ fontSize: '11px', color: colors.accentCyan, marginTop: '4px' }}>{item.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section id="process" style={{ padding: '100px 24px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: 300, margin: 0 }}>The Process</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+            {processSteps.map((step, i) => (
+              <div key={i} style={{ padding: '32px 24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}` }}>
+                <div style={{ fontSize: '32px', fontWeight: 200, color: colors.textMuted, marginBottom: '16px' }}>{step.num}</div>
+                <h3 style={{ fontSize: '16px', fontWeight: 500, margin: '0 0 12px 0' }}>{step.title}</h3>
+                <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section style={{ padding: '100px 24px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: 300, margin: 0 }}>Reviews</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+            {reviews.map((review, i) => (
+              <div key={i} style={{ padding: '32px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}` }}>
+                <div style={{ marginBottom: '16px', color: colors.accentOrange, fontSize: '14px' }}>{'★'.repeat(review.rating)}</div>
+                <p style={{ fontSize: '14px', lineHeight: 1.8, color: colors.textSecondary, fontStyle: 'italic', margin: '0 0 20px 0' }}>"{review.text}"</p>
+                <div style={{ fontSize: '12px', fontWeight: 500 }}>— {review.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQS */}
+      <section id="faqs" style={{ padding: '100px 24px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '42px', fontWeight: 300, margin: 0 }}>FAQs</h2>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {faqs.map((faq, i) => (
+              <div key={i} style={{ padding: '24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '10px', border: `1px solid ${colors.borderSubtle}` }}>
+                <h4 style={{ fontSize: '14px', fontWeight: 500, margin: '0 0 12px 0' }}>{faq.q}</h4>
+                <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" style={{ padding: '100px 24px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 8px 0' }}>Book Your</h2>
+          <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 28px 0', color: colors.accentCyan }}>Consultation</h2>
+          <p style={{ fontSize: '15px', lineHeight: 1.8, color: colors.textMuted, marginBottom: '40px' }}>Fill out the booking form and I'll get back to you within 1-3 business days.</p>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '60px' }}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: colors.accentTeal, color: '#fff', padding: '18px 48px', fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '8px', textDecoration: 'none' }}>Book Consultation →</a>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', color: colors.textMuted, fontSize: '14px' }}>
+            <span>📍 9013 NE Hwy 99, Vancouver, WA</span>
+            <span>📞 (360) 901-0636</span>
+            <span>🕐 By Appointment Only</span>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{ padding: '60px 24px 30px', borderTop: `1px solid ${colors.borderSubtle}`, background: colors.bgDark }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <TribalLogo size={36} opacity={0.9} />
+            <div>
+              <span style={{ fontSize: '18px', letterSpacing: '6px', fontWeight: 600 }}>LBRL</span>
+              <div style={{ fontSize: '9px', color: colors.textMuted, marginTop: '2px' }}>Multi-Award Winning Custom Tattoos</div>
+            </div>
+          </div>
+          <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2025 Daniel Liberal. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  )
+}
