@@ -188,7 +188,7 @@ export default function LBRLWebsite() {
     { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png' },
     { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp' },
     { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg' },
-    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9402.jpeg' },
+    
     { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png' },
     { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png' },
     { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
