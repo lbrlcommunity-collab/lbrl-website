@@ -116,7 +116,7 @@ export default function LBRLWebsite() {
       </nav>
 
       {/* HERO */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', background: `linear-gradient(180deg, ${colors.bgSage} 0%, ${colors.bgPrimary} 100%)` }}>
+      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px',background: `linear-gradient(180deg, rgba(26, 31, 28, 0.85) 0%, rgba(35, 42, 38, 0.95) 100%), url('/IMG_4330.WEBP') center/cover no-repeat` }}>
         <div style={{ maxWidth: '900px', textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '100px', marginBottom: '32px' }}>
             <span style={{ fontSize: '10px', letterSpacing: '2px', color: colors.textSecondary, textTransform: 'uppercase' }}>📍 Vancouver, Washington</span>
