@@ -55,7 +55,6 @@ export default function LBRLWebsite() {
   ]
   
   const portfolioItems = [
-    // NEO JAPANESE (54)
     { id: 1, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png' },
     { id: 2, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
     { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp' },
@@ -110,7 +109,6 @@ export default function LBRLWebsite() {
     { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
     { id: 53, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
     { id: 54, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
-    // BLACKWORK (18)
     { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_0445.png' },
     { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
     { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
@@ -129,7 +127,6 @@ export default function LBRLWebsite() {
     { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
     { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
     { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
-    // FLORAL (19)
     { id: 73, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
     { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
     { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
@@ -149,7 +146,6 @@ export default function LBRLWebsite() {
     { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
     { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
     { id: 91, style: 'floral', image: '/portfolio/floral/copy_96A57A24-3F29-493B-AAC3-947800F209B5.jpeg' },
-    // ORNAMENTAL (40)
     { id: 92, style: 'ornamental', image: '/portfolio/ornamental/8525FC48-6C80-4BFF-A495-97B5C094566A.jpeg' },
     { id: 93, style: 'ornamental', image: '/portfolio/ornamental/IMG_0462.png' },
     { id: 94, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
@@ -200,7 +196,6 @@ export default function LBRLWebsite() {
   }
 
   const closeLightbox = () => setLightboxOpen(false)
-
   const nextImage = () => setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
 
@@ -214,7 +209,7 @@ export default function LBRLWebsite() {
     { q: 'Am I Eligible for a Tattoo?', a: 'You must be at least 18 years old and present a valid ID. This is non-negotiable.' },
     { q: 'What Are the Costs Involved?', a: 'Half-day session (4 hours): $1,000. Full-day session (8 hours): $2,000. Small tattoos priced individually.' },
     { q: "What's Required to Secure an Appointment?", a: 'A $300 deposit is required to book. This guarantees priority dates and goes toward your final session.' },
-    { q: 'What if I Need to Cancel or Reschedule?', a: "Cancellations with less than 72 hours notice = deposit lost. 15+ min late with no message = no-show." },
+    { q: 'What if I Need to Cancel or Reschedule?', a: 'Cancellations with less than 72 hours notice = deposit lost. 15+ min late with no message = no-show.' },
     { q: 'How Should I Prepare for My Session?', a: 'Get rest, eat well, stay hydrated, bring snacks. Come with a positive attitude!' },
     { q: 'How Do I Book a Consultation?', a: 'Fill out our booking form or DM @dani_lbrl on Instagram. Virtual consultations available.' },
   ]
@@ -233,26 +228,17 @@ export default function LBRLWebsite() {
   return (
     <div style={{ minHeight: '100vh', background: colors.bgDark, color: colors.textPrimary, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       
-      {/* LIGHTBOX */}
       {lightboxOpen && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={closeLightbox}>
           <button onClick={(e) => { e.stopPropagation(); prevImage(); }} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>←</button>
           <img src={filteredPortfolio[currentImage]?.image} alt="" style={{ maxHeight: '90vh', maxWidth: '90vw', objectFit: 'contain', borderRadius: '8px' }} onClick={(e) => e.stopPropagation()} />
           <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>→</button>
           <button onClick={closeLightbox} style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '40px', height: '40px', borderRadius: '50%', fontSize: '20px', cursor: 'pointer' }}>✕</button>
-          <div style={{ position: 'absolute', bottom: '20px', color: colors.textMuted, fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
+          <div style={{ position: 'absolute', bottom: '20px', color: '#6b756e', fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
         </div>
       )}
 
-      {/* NAV */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        padding: scrolled ? '12px 24px' : '20px 24px',
-        background: scrolled ? 'rgba(26, 31, 28, 0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${colors.borderSubtle}` : 'none',
-        transition: 'all 0.3s ease'
-      }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: scrolled ? '12px 24px' : '20px 24px', background: scrolled ? 'rgba(26, 31, 28, 0.95)' : 'transparent', backdropFilter: scrolled ? 'blur(20px)' : 'none', borderBottom: scrolled ? '1px solid rgba(255,255,255,0.04)' : 'none', transition: 'all 0.3s ease' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <TribalLogo size={44} opacity={0.95} />
@@ -270,7 +256,6 @@ export default function LBRLWebsite() {
         </div>
       </nav>
 
-      {/* HERO */}
       <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', background: `linear-gradient(180deg, rgba(26, 31, 28, 0.85) 0%, rgba(35, 42, 38, 0.95) 100%), url('/IMG_4330.WEBP') center/cover no-repeat` }}>
         <div style={{ maxWidth: '900px', textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '100px', marginBottom: '32px' }}>
@@ -285,12 +270,10 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* INSTAGRAM BAR */}
-      <a href="https://instagram.com/dani_lbrl" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '20px', background: colors.bgDark, borderTop: `1px solid ${colors.borderSubtle}`, borderBottom: `1px solid ${colors.borderSubtle}`, textDecoration: 'none' }}>
+      <a href="https://instagram.com/dani_lbrl" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '20px', background: colors.bgDark, borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)', textDecoration: 'none' }}>
         <span style={{ color: colors.textSecondary, fontSize: '13px', letterSpacing: '1px' }}>📸 @dani_lbrl</span>
       </a>
 
-      {/* STATS */}
       <section style={{ padding: '60px 24px', background: colors.bgPrimary }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
           {stats.map((stat, i) => (
@@ -302,10 +285,9 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* ABOUT */}
       <section id="about" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background: `linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url('/about-bg.webp') center/cover no-repeat`, border: `1px solid ${colors.borderSubtle}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background: `linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url('/about-bg.webp') center/cover no-repeat`, border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             <div style={{ position: 'absolute', top: '20px', right: '20px', background: `linear-gradient(135deg, ${colors.accentCyan} 0%, ${colors.accentTeal} 100%)`, padding: '8px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 600, color: '#fff' }}>🏆 AWARD WINNER</div>
             <TribalLogo size={140} opacity={0.9} />
             <div style={{ fontSize: '24px', fontWeight: 500, marginTop: '24px' }}>Daniel Liberal</div>
@@ -313,7 +295,7 @@ export default function LBRLWebsite() {
             <div style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>From Puerto Rico 2013 est. to Vancouver, WA 2016-Present</div>
           </div>
           <div>
-            <div style={{ display: 'inline-flex', padding: '6px 12px', background: 'rgba(255,255,255,0.02)', border: `1px solid ${colors.borderSubtle}`, borderRadius: '4px', marginBottom: '20px' }}>
+            <div style={{ display: 'inline-flex', padding: '6px 12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: '4px', marginBottom: '20px' }}>
               <span style={{ fontSize: '9px', letterSpacing: '2px', color: colors.textMuted, textTransform: 'uppercase' }}>The Philosophy</span>
             </div>
             <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 28px 0', lineHeight: 1.2 }}>Body Harmony</h2>
@@ -339,7 +321,6 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* PORTFOLIO */}
       <section id="portfolio" style={{ padding: '100px 24px', background: colors.bgPrimary }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -350,10 +331,9 @@ export default function LBRLWebsite() {
               <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ background: activeStyle === style.value ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style.value ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer' }}>{style.label}</button>
             ))}
           </div>
-          {/* MASONRY GRID */}
           <div style={{ columns: '4 280px', columnGap: '16px' }}>
             {filteredPortfolio.map((item, index) => (
-              <div key={item.id} onClick={() => openLightbox(index)} style={{ breakInside: 'avoid', marginBottom: '16px', cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', position: 'relative' }}>
+              <div key={item.id} onClick={() => openLightbox(index)} style={{ breakInside: 'avoid', marginBottom: '16px', cursor: 'pointer', borderRadius: '12px', overflow: 'hidden' }}>
                 <img src={item.image} alt="" style={{ width: '100%', display: 'block', borderRadius: '12px', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.03)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
               </div>
             ))}
@@ -361,7 +341,6 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* PROCESS */}
       <section id="process" style={{ padding: '100px 24px', background: colors.bgDark }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
@@ -369,7 +348,7 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
             {processSteps.map((step, i) => (
-              <div key={i} style={{ padding: '32px 24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}` }}>
+              <div key={i} style={{ padding: '32px 24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ fontSize: '32px', fontWeight: 200, color: colors.textMuted, marginBottom: '16px' }}>{step.num}</div>
                 <h3 style={{ fontSize: '16px', fontWeight: 500, margin: '0 0 12px 0' }}>{step.title}</h3>
                 <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{step.desc}</p>
@@ -379,7 +358,6 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* REVIEWS */}
       <section style={{ padding: '100px 24px', background: colors.bgPrimary }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -387,7 +365,7 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
             {reviews.map((review, i) => (
-              <div key={i} style={{ padding: '32px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}` }}>
+              <div key={i} style={{ padding: '32px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ marginBottom: '16px', color: colors.accentOrange, fontSize: '14px' }}>{'★'.repeat(review.rating)}</div>
                 <p style={{ fontSize: '14px', lineHeight: 1.8, color: colors.textSecondary, fontStyle: 'italic', margin: '0 0 20px 0' }}>"{review.text}"</p>
                 <div style={{ fontSize: '12px', fontWeight: 500 }}>— {review.name}</div>
@@ -397,7 +375,6 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* FAQS */}
       <section id="faqs" style={{ padding: '100px 24px', background: colors.bgDark }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -405,7 +382,7 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {faqs.map((faq, i) => (
-              <div key={i} style={{ padding: '24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '10px', border: `1px solid ${colors.borderSubtle}` }}>
+              <div key={i} style={{ padding: '24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <h4 style={{ fontSize: '14px', fontWeight: 500, margin: '0 0 12px 0' }}>{faq.q}</h4>
                 <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{faq.a}</p>
               </div>
@@ -414,7 +391,6 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* CONTACT */}
       <section id="contact" style={{ padding: '100px 24px', background: colors.bgPrimary }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 8px 0' }}>Book Your</h2>
@@ -431,8 +407,7 @@ export default function LBRLWebsite() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ padding: '60px 24px 30px', borderTop: `1px solid ${colors.borderSubtle}`, background: colors.bgDark }}>
+      <footer style={{ padding: '60px 24px 30px', borderTop: '1px solid rgba(255,255,255,0.04)', background: colors.bgDark }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <TribalLogo size={36} opacity={0.9} />
@@ -444,9 +419,6 @@ export default function LBRLWebsite() {
           <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
         </div>
       </footer>
-    </div>
-  )
-}
     </div>
   )
 }
