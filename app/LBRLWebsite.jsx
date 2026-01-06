@@ -163,7 +163,7 @@ export default function LBRLWebsite() {
     { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
     { id: 91, style: 'floral', image: '/portfolio/floral/copy_96A57A24-3F29-493B-AAC3-947800F209B5.jpeg' },
     { id: 92, style: 'ornamental', image: '/portfolio/ornamental/8525FC48-6C80-4BFF-A495-97B5C094566A.jpeg' },
-    { id: 93, style: 'ornamental', image: '/portfolio/ornamental/IMG_0462.png' },
+  
     { id: 94, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
     { id: 95, style: 'ornamental', image: '/portfolio/ornamental/IMG_0479.webp' },
     { id: 96, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
