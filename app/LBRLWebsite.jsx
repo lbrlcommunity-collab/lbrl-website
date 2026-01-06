@@ -150,7 +150,7 @@ export default function LBRLWebsite() {
       {/* ABOUT */}
       <section id="about" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background:linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url('/about-bg.webp') center/cover no-repeat, border: `1px solid ${colors.borderSubtle}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+          <div style={{ aspectRatio: '4/5', borderRadius: '16px',background: `linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url('/about-bg.webp') center/cover no-repeat`, border: `1px solid ${colors.borderSubtle}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             <div style={{ position: 'absolute', top: '20px', right: '20px', background: `linear-gradient(135deg, ${colors.accentCyan} 0%, ${colors.accentTeal} 100%)`, padding: '8px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 600, color: '#fff' }}>🏆 AWARD WINNER</div>
             <TribalLogo size={140} opacity={0.9} />
             <div style={{ fontSize: '24px', fontWeight: 500, marginTop: '24px' }}>Daniel Liberal</div>
