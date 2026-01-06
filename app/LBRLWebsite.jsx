@@ -14,7 +14,8 @@ const TribalLogo = ({ size = 200, opacity = 1 }) => (
 export default function LBRLWebsite() {
   const [scrolled, setScrolled] = useState(false)
   const [activeStyle, setActiveStyle] = useState('all')
-  const [hoveredItem, setHoveredItem] = useState(null)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [currentImage, setCurrentImage] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -45,66 +46,163 @@ export default function LBRLWebsite() {
     { value: '5.0', label: 'Google Rating' },
   ]
 
-  const styles = ['all', 'japanese', 'blackwork', 'ornamental', 'floral', 'portraits']
+  const styleFilters = [
+    { value: 'all', label: 'All' },
+    { value: 'japanese', label: 'Neo Japanese' },
+    { value: 'blackwork', label: 'Blackwork' },
+    { value: 'ornamental', label: 'Ornamental' },
+    { value: 'floral', label: 'Floral' },
+  ]
   
   const portfolioItems = [
-    { id: 1, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 2, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 5, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 11, style: 'japanese', image: '/portfolio/japanese/IMG_0787.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 15, style: 'japanese', image: '/portfolio/japanese/IMG_4405.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 22, style: 'japanese', image: '/portfolio/japanese/IMG_4461.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 24, style: 'japanese', image: '/portfolio/japanese/IMG_4465.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 27, style: 'japanese', image: '/portfolio/japanese/IMG_4472.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 32, style: 'japanese', image: '/portfolio/japanese/IMG_9305.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_9315.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_9320.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_9321.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_9322.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_9371.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 44, style: 'japanese', image: '/portfolio/japanese/IMG_9410.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_9417.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_9419.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_9445.png', title: 'Japanese', desc: 'Custom work' },
-    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_9844.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp', title: 'Japanese', desc: 'Custom work' },
-    { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg', title: 'Japanese', desc: 'Custom work' },
-    { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png', title: 'Japanese', desc: 'Custom work' },
+    // NEO JAPANESE (54)
+    { id: 1, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png' },
+    { id: 2, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
+    { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp' },
+    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
+    { id: 5, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
+    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg' },
+    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png' },
+    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png' },
+    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0787.png' },
+    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg' },
+    { id: 11, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png' },
+    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png' },
+    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_4405.webp' },
+    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp' },
+    { id: 15, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp' },
+    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp' },
+    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg' },
+    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg' },
+    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp' },
+    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4461.webp' },
+    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp' },
+    { id: 22, style: 'japanese', image: '/portfolio/japanese/IMG_4465.webp' },
+    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp' },
+    { id: 24, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp' },
+    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4472.webp' },
+    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp' },
+    { id: 27, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png' },
+    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png' },
+    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png' },
+    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9305.png' },
+    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png' },
+    { id: 32, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png' },
+    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png' },
+    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9315.png' },
+    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9320.png' },
+    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_9321.png' },
+    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_9322.png' },
+    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_9371.png' },
+    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg' },
+    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png' },
+    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp' },
+    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9410.jpeg' },
+    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp' },
+    { id: 44, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp' },
+    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp' },
+    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9417.png' },
+    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9419.png' },
+    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_9445.png' },
+    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_9844.jpeg' },
+    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp' },
+    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
+    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
+    { id: 53, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
+    { id: 54, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
+    // BLACKWORK (18)
+    { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_0445.png' },
+    { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
+    { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
+    { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
+    { id: 59, style: 'blackwork', image: '/portfolio/blackwork/IMG_4428.webp' },
+    { id: 60, style: 'blackwork', image: '/portfolio/blackwork/IMG_4429.webp' },
+    { id: 61, style: 'blackwork', image: '/portfolio/blackwork/IMG_4430.webp' },
+    { id: 62, style: 'blackwork', image: '/portfolio/blackwork/IMG_4433.webp' },
+    { id: 63, style: 'blackwork', image: '/portfolio/blackwork/IMG_4435.webp' },
+    { id: 64, style: 'blackwork', image: '/portfolio/blackwork/IMG_4438.webp' },
+    { id: 65, style: 'blackwork', image: '/portfolio/blackwork/IMG_4440.webp' },
+    { id: 66, style: 'blackwork', image: '/portfolio/blackwork/IMG_4442.webp' },
+    { id: 67, style: 'blackwork', image: '/portfolio/blackwork/IMG_4443.webp' },
+    { id: 68, style: 'blackwork', image: '/portfolio/blackwork/IMG_9386.webp' },
+    { id: 69, style: 'blackwork', image: '/portfolio/blackwork/IMG_9388.jpeg' },
+    { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
+    { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
+    { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
+    // FLORAL (19)
+    { id: 73, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
+    { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
+    { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
+    { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0137.jpeg' },
+    { id: 77, style: 'floral', image: '/portfolio/floral/IMG_0140.jpeg' },
+    { id: 78, style: 'floral', image: '/portfolio/floral/IMG_0141.jpeg' },
+    { id: 79, style: 'floral', image: '/portfolio/floral/IMG_0143.jpeg' },
+    { id: 80, style: 'floral', image: '/portfolio/floral/IMG_1222.jpeg' },
+    { id: 81, style: 'floral', image: '/portfolio/floral/IMG_1223.jpeg' },
+    { id: 82, style: 'floral', image: '/portfolio/floral/IMG_1225.jpeg' },
+    { id: 83, style: 'floral', image: '/portfolio/floral/IMG_9361.webp' },
+    { id: 84, style: 'floral', image: '/portfolio/floral/IMG_9363.jpeg' },
+    { id: 85, style: 'floral', image: '/portfolio/floral/IMG_9414.webp' },
+    { id: 86, style: 'floral', image: '/portfolio/floral/IMG_9442.webp' },
+    { id: 87, style: 'floral', image: '/portfolio/floral/IMG_9446.png' },
+    { id: 88, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
+    { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
+    { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
+    { id: 91, style: 'floral', image: '/portfolio/floral/copy_96A57A24-3F29-493B-AAC3-947800F209B5.jpeg' },
+    // ORNAMENTAL (40)
+    { id: 92, style: 'ornamental', image: '/portfolio/ornamental/8525FC48-6C80-4BFF-A495-97B5C094566A.jpeg' },
+    { id: 93, style: 'ornamental', image: '/portfolio/ornamental/IMG_0462.png' },
+    { id: 94, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
+    { id: 95, style: 'ornamental', image: '/portfolio/ornamental/IMG_0479.webp' },
+    { id: 96, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
+    { id: 97, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
+    { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0726.png' },
+    { id: 99, style: 'ornamental', image: '/portfolio/ornamental/IMG_0727.png' },
+    { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0730.png' },
+    { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0731.png' },
+    { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_0733.png' },
+    { id: 103, style: 'ornamental', image: '/portfolio/ornamental/IMG_0735.webp' },
+    { id: 104, style: 'ornamental', image: '/portfolio/ornamental/IMG_1230.jpeg' },
+    { id: 105, style: 'ornamental', image: '/portfolio/ornamental/IMG_1232.png' },
+    { id: 106, style: 'ornamental', image: '/portfolio/ornamental/IMG_1775.jpeg' },
+    { id: 107, style: 'ornamental', image: '/portfolio/ornamental/IMG_2580.png' },
+    { id: 108, style: 'ornamental', image: '/portfolio/ornamental/IMG_2584.webp' },
+    { id: 109, style: 'ornamental', image: '/portfolio/ornamental/IMG_2610.jpeg' },
+    { id: 110, style: 'ornamental', image: '/portfolio/ornamental/IMG_2616.webp' },
+    { id: 111, style: 'ornamental', image: '/portfolio/ornamental/IMG_2618.jpeg' },
+    { id: 112, style: 'ornamental', image: '/portfolio/ornamental/IMG_9366.png' },
+    { id: 113, style: 'ornamental', image: '/portfolio/ornamental/IMG_9367.jpeg' },
+    { id: 114, style: 'ornamental', image: '/portfolio/ornamental/IMG_9382.jpeg' },
+    { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png' },
+    { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp' },
+    { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg' },
+    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9402.jpeg' },
+    { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png' },
+    { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png' },
+    { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
+    { id: 122, style: 'ornamental', image: '/portfolio/ornamental/IMG_9424.jpeg' },
+    { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9425.webp' },
+    { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9754.jpeg' },
+    { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9755.jpeg' },
+    { id: 126, style: 'ornamental', image: '/portfolio/ornamental/IMG_9756.png' },
+    { id: 127, style: 'ornamental', image: '/portfolio/ornamental/IMG_9758.webp' },
+    { id: 128, style: 'ornamental', image: '/portfolio/ornamental/copy_1163F1C8-7EE2-413A-A501-C5528FB4AF96.jpeg' },
+    { id: 129, style: 'ornamental', image: '/portfolio/ornamental/copy_C3A8F39E-18E5-4B1D-A265-230CFF6D7279.jpeg' },
+    { id: 130, style: 'ornamental', image: '/portfolio/ornamental/copy_C8541463-D180-4668-80FF-644BD54F9894.jpeg' },
+    { id: 131, style: 'ornamental', image: '/portfolio/ornamental/copy_E0336537-08E0-457E-BB7C-1FB14BE36BB3.jpeg' },
   ]
 
   const filteredPortfolio = activeStyle === 'all' ? portfolioItems : portfolioItems.filter(item => item.style === activeStyle)
+
+  const openLightbox = (index) => {
+    setCurrentImage(index)
+    setLightboxOpen(true)
+  }
+
+  const closeLightbox = () => setLightboxOpen(false)
+
+  const nextImage = () => setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
+  const prevImage = () => setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
 
   const reviews = [
     { name: 'Sarah M.', text: 'Daniel understood my vision perfectly. The way my sleeve flows with my arm is incredible.', rating: 5 },
@@ -135,6 +233,17 @@ export default function LBRLWebsite() {
   return (
     <div style={{ minHeight: '100vh', background: colors.bgDark, color: colors.textPrimary, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       
+      {/* LIGHTBOX */}
+      {lightboxOpen && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={closeLightbox}>
+          <button onClick={(e) => { e.stopPropagation(); prevImage(); }} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>←</button>
+          <img src={filteredPortfolio[currentImage]?.image} alt="" style={{ maxHeight: '90vh', maxWidth: '90vw', objectFit: 'contain', borderRadius: '8px' }} onClick={(e) => e.stopPropagation()} />
+          <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>→</button>
+          <button onClick={closeLightbox} style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '40px', height: '40px', borderRadius: '50%', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+          <div style={{ position: 'absolute', bottom: '20px', color: colors.textMuted, fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
+        </div>
+      )}
+
       {/* NAV */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
@@ -232,23 +341,20 @@ export default function LBRLWebsite() {
 
       {/* PORTFOLIO */}
       <section id="portfolio" style={{ padding: '100px 24px', background: colors.bgPrimary }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <h2 style={{ fontSize: '42px', fontWeight: 300, margin: 0 }}>Portfolio</h2>
           </div>
-          <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colors.bgCard, borderRadius: '6px', width: 'fit-content', margin: '0 auto 50px' }}>
-            {styles.map((style) => (
-              <button key={style} onClick={() => setActiveStyle(style)} style={{ background: activeStyle === style ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer' }}>{style}</button>
+          <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colors.bgCard, borderRadius: '6px', width: 'fit-content', margin: '0 auto 50px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {styleFilters.map((style) => (
+              <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ background: activeStyle === style.value ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style.value ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer' }}>{style.label}</button>
             ))}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
-            {filteredPortfolio.map((item) => (
-              <div key={item.id} onMouseEnter={() => setHoveredItem(item.id)} onMouseLeave={() => setHoveredItem(null)} style={{ aspectRatio: '1', backgroundImage: item.image ? `url(${item.image})` : 'none', backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: colors.bgCard, borderRadius: '12px', border: `1px solid ${colors.borderSubtle}`, cursor: 'pointer', transition: 'all 0.3s', transform: hoveredItem === item.id ? 'translateY(-6px)' : 'translateY(0)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                {!item.image && <TribalLogo size={60} opacity={0.1} />}
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(26, 31, 28, 0.95) 0%, transparent 60%)', opacity: hoveredItem === item.id ? 1 : 0, transition: 'opacity 0.3s', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '20px', borderRadius: '12px' }}>
-                  <div style={{ fontSize: '14px', fontWeight: 500 }}>{item.title}</div>
-                  <div style={{ fontSize: '11px', color: colors.accentCyan, marginTop: '4px' }}>{item.desc}</div>
-                </div>
+          {/* MASONRY GRID */}
+          <div style={{ columns: '4 280px', columnGap: '16px' }}>
+            {filteredPortfolio.map((item, index) => (
+              <div key={item.id} onClick={() => openLightbox(index)} style={{ breakInside: 'avoid', marginBottom: '16px', cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', position: 'relative' }}>
+                <img src={item.image} alt="" style={{ width: '100%', display: 'block', borderRadius: '12px', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.03)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
               </div>
             ))}
           </div>
@@ -338,6 +444,9 @@ export default function LBRLWebsite() {
           <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
         </div>
       </footer>
+    </div>
+  )
+}
     </div>
   )
 }
