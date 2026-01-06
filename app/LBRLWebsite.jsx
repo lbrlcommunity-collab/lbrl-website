@@ -16,12 +16,28 @@ export default function LBRLWebsite() {
   const [activeStyle, setActiveStyle] = useState('all')
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
+  const [sliderIndex, setSliderIndex] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!lightboxOpen) return
+      if (e.key === 'Escape') setLightboxOpen(false)
+      if (e.key === 'ArrowRight') setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
+      if (e.key === 'ArrowLeft') setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxOpen])
+
+  useEffect(() => {
+    setSliderIndex(0)
+  }, [activeStyle])
 
   const colors = {
     bgDark: '#1a1f1c',
@@ -189,6 +205,8 @@ export default function LBRLWebsite() {
   ]
 
   const filteredPortfolio = activeStyle === 'all' ? portfolioItems : portfolioItems.filter(item => item.style === activeStyle)
+  const itemsPerView = 4
+  const maxSliderIndex = Math.max(0, filteredPortfolio.length - itemsPerView)
 
   const openLightbox = (index) => {
     setCurrentImage(index)
@@ -198,6 +216,9 @@ export default function LBRLWebsite() {
   const closeLightbox = () => setLightboxOpen(false)
   const nextImage = () => setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
+
+  const slideNext = () => setSliderIndex((prev) => Math.min(prev + itemsPerView, maxSliderIndex))
+  const slidePrev = () => setSliderIndex((prev) => Math.max(prev - itemsPerView, 0))
 
   const reviews = [
     { name: 'Sarah M.', text: 'Daniel understood my vision perfectly. The way my sleeve flows with my arm is incredible.', rating: 5 },
@@ -230,10 +251,10 @@ export default function LBRLWebsite() {
       
       {lightboxOpen && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={closeLightbox}>
-          <button onClick={(e) => { e.stopPropagation(); prevImage(); }} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>←</button>
+          <button onClick={(e) => { e.stopPropagation(); prevImage(); }} style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>&#8592;</button>
           <img src={filteredPortfolio[currentImage]?.image} alt="" style={{ maxHeight: '90vh', maxWidth: '90vw', objectFit: 'contain', borderRadius: '8px' }} onClick={(e) => e.stopPropagation()} />
-          <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>→</button>
-          <button onClick={closeLightbox} style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '40px', height: '40px', borderRadius: '50%', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+          <button onClick={(e) => { e.stopPropagation(); nextImage(); }} style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '50px', height: '50px', borderRadius: '50%', fontSize: '24px', cursor: 'pointer' }}>&#8594;</button>
+          <button onClick={closeLightbox} style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '40px', height: '40px', borderRadius: '50%', fontSize: '20px', cursor: 'pointer' }}>&#10005;</button>
           <div style={{ position: 'absolute', bottom: '20px', color: '#6b756e', fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
         </div>
       )}
@@ -256,22 +277,22 @@ export default function LBRLWebsite() {
         </div>
       </nav>
 
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', background: `linear-gradient(180deg, rgba(26, 31, 28, 0.85) 0%, rgba(35, 42, 38, 0.95) 100%), url('/IMG_4330.WEBP') center/cover no-repeat` }}>
+      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', background: 'linear-gradient(180deg, rgba(26, 31, 28, 0.85) 0%, rgba(35, 42, 38, 0.95) 100%), url(/IMG_4330.WEBP) center/cover no-repeat' }}>
         <div style={{ maxWidth: '900px', textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '100px', marginBottom: '32px' }}>
-            <span style={{ fontSize: '10px', letterSpacing: '2px', color: colors.textSecondary, textTransform: 'uppercase' }}>📍 Vancouver, Washington</span>
+            <span style={{ fontSize: '10px', letterSpacing: '2px', color: colors.textSecondary, textTransform: 'uppercase' }}>Vancouver, Washington</span>
           </div>
           <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: '0 0 8px 0', letterSpacing: '-2px' }}>Art That</h1>
           <h1 style={{ fontSize: 'clamp(48px, 10vw, 96px)', fontWeight: 300, lineHeight: 1, margin: 0, fontStyle: 'italic', letterSpacing: '-2px', color: colors.textSecondary }}>Becomes You</h1>
           <p style={{ maxWidth: '500px', margin: '40px auto', fontSize: '15px', lineHeight: 1.9, color: colors.textSecondary }}>Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy tailor-made, never templated.</p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '48px' }}>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: colors.bgDark, padding: '18px 36px', fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', borderRadius: '4px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>Book Consultation →</a>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: colors.bgDark, padding: '18px 36px', fontSize: '11px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', borderRadius: '4px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>Book Consultation</a>
           </div>
         </div>
       </section>
 
       <a href="https://instagram.com/dani_lbrl" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '20px', background: colors.bgDark, borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)', textDecoration: 'none' }}>
-        <span style={{ color: colors.textSecondary, fontSize: '13px', letterSpacing: '1px' }}>📸 @dani_lbrl</span>
+        <span style={{ color: colors.textSecondary, fontSize: '13px', letterSpacing: '1px' }}>@dani_lbrl</span>
       </a>
 
       <section style={{ padding: '60px 24px', background: colors.bgPrimary }}>
@@ -287,11 +308,11 @@ export default function LBRLWebsite() {
 
       <section id="about" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background: `linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url('/about-bg.webp') center/cover no-repeat`, border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: '20px', right: '20px', background: `linear-gradient(135deg, ${colors.accentCyan} 0%, ${colors.accentTeal} 100%)`, padding: '8px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 600, color: '#fff' }}>🏆 AWARD WINNER</div>
+          <div style={{ aspectRatio: '4/5', borderRadius: '16px', background: 'linear-gradient(145deg, rgba(42, 50, 45, 0.85) 0%, rgba(50, 59, 53, 0.9) 100%), url(/about-bg.webp) center/cover no-repeat', border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '20px', right: '20px', background: 'linear-gradient(135deg, #7dd4c4 0%, #5a8a8a 100%)', padding: '8px 12px', borderRadius: '6px', fontSize: '10px', fontWeight: 600, color: '#fff' }}>AWARD WINNER</div>
             <TribalLogo size={140} opacity={0.9} />
             <div style={{ fontSize: '24px', fontWeight: 500, marginTop: '24px' }}>Daniel Liberal</div>
-            <div style={{ fontSize: '10px', letterSpacing: '2px', color: colors.accentCyan, textTransform: 'uppercase', marginTop: '8px' }}>Lead Artist & Owner</div>
+            <div style={{ fontSize: '10px', letterSpacing: '2px', color: colors.accentCyan, textTransform: 'uppercase', marginTop: '8px' }}>Lead Artist and Owner</div>
             <div style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>From Puerto Rico 2013 est. to Vancouver, WA 2016-Present</div>
           </div>
           <div>
@@ -303,14 +324,14 @@ export default function LBRLWebsite() {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '10px 14px', background: 'rgba(125, 212, 196, 0.08)', border: '1px solid rgba(125, 212, 196, 0.15)', borderRadius: '6px', width: 'fit-content' }}>
                 <span>🏆</span>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentCyan }}>3rd Place — Asian Category</div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentCyan }}>3rd Place - Asian Category</div>
                   <div style={{ fontSize: '9px', color: colors.textMuted }}>Portland Tattoo Expo 2024</div>
                 </div>
               </div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '10px 14px', background: 'rgba(232, 168, 124, 0.08)', border: '1px solid rgba(232, 168, 124, 0.15)', borderRadius: '6px', width: 'fit-content' }}>
                 <span>🏆</span>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentOrange }}>3rd Place — Hands, Neck, Face</div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: colors.accentOrange }}>3rd Place - Hands, Neck, Face</div>
                   <div style={{ fontSize: '9px', color: colors.textMuted }}>United Ink No Limits NYC 2016</div>
                 </div>
               </div>
@@ -328,15 +349,34 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colors.bgCard, borderRadius: '6px', width: 'fit-content', margin: '0 auto 50px', flexWrap: 'wrap', justifyContent: 'center' }}>
             {styleFilters.map((style) => (
-              <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ background: activeStyle === style.value ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style.value ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer' }}>{style.label}</button>
+              <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ background: activeStyle === style.value ? 'rgba(255,255,255,0.06)' : 'transparent', border: 'none', color: activeStyle === style.value ? colors.textPrimary : colors.textMuted, padding: '10px 18px', fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '4px', cursor: 'pointer', transition: 'all 0.2s' }}>{style.label}</button>
             ))}
           </div>
-          <div style={{ columns: '4 280px', columnGap: '16px' }}>
-            {filteredPortfolio.map((item, index) => (
-              <div key={item.id} onClick={() => openLightbox(index)} style={{ breakInside: 'avoid', marginBottom: '16px', cursor: 'pointer', borderRadius: '12px', overflow: 'hidden' }}>
-                <img src={item.image} alt="" style={{ width: '100%', display: 'block', borderRadius: '12px', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.03)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
+          
+          <div style={{ position: 'relative', padding: '0 70px' }}>
+            <button onClick={slidePrev} disabled={sliderIndex === 0} style={{ position: 'absolute', left: '0', top: '50%', transform: 'translateY(-50%)', background: sliderIndex === 0 ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.08)', border: 'none', color: sliderIndex === 0 ? colors.textMuted : '#fff', width: '48px', height: '48px', borderRadius: '50%', fontSize: '20px', cursor: sliderIndex === 0 ? 'default' : 'pointer', transition: 'all 0.3s', zIndex: 10 }}>&#8592;</button>
+            
+            <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
+              <div style={{ display: 'flex', gap: '16px', transition: 'transform 0.5s ease', transform: 'translateX(-' + (sliderIndex * (100 / itemsPerView + 1.2)) + '%)' }}>
+                {filteredPortfolio.map((item, index) => (
+                  <div key={item.id} onClick={() => openLightbox(index)} style={{ flex: '0 0 calc(25% - 12px)', aspectRatio: '3/4', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative' }}>
+                    <img src={item.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
+                  </div>
+                ))}
               </div>
+            </div>
+            
+            <button onClick={slideNext} disabled={sliderIndex >= maxSliderIndex} style={{ position: 'absolute', right: '0', top: '50%', transform: 'translateY(-50%)', background: sliderIndex >= maxSliderIndex ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.08)', border: 'none', color: sliderIndex >= maxSliderIndex ? colors.textMuted : '#fff', width: '48px', height: '48px', borderRadius: '50%', fontSize: '20px', cursor: sliderIndex >= maxSliderIndex ? 'default' : 'pointer', transition: 'all 0.3s', zIndex: 10 }}>&#8594;</button>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '30px' }}>
+            {Array.from({ length: Math.ceil(filteredPortfolio.length / itemsPerView) }).map((_, i) => (
+              <button key={i} onClick={() => setSliderIndex(i * itemsPerView)} style={{ width: sliderIndex >= i * itemsPerView && sliderIndex < (i + 1) * itemsPerView ? '24px' : '8px', height: '8px', borderRadius: '4px', border: 'none', background: sliderIndex >= i * itemsPerView && sliderIndex < (i + 1) * itemsPerView ? colors.accentCyan : 'rgba(255,255,255,0.2)', cursor: 'pointer', transition: 'all 0.3s' }} />
             ))}
+          </div>
+          
+          <div style={{ textAlign: 'center', marginTop: '20px', color: colors.textMuted, fontSize: '12px' }}>
+            {sliderIndex + 1}-{Math.min(sliderIndex + itemsPerView, filteredPortfolio.length)} of {filteredPortfolio.length}
           </div>
         </div>
       </section>
@@ -348,7 +388,7 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
             {processSteps.map((step, i) => (
-              <div key={i} style={{ padding: '32px 24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <div key={i} style={{ padding: '32px 24px', background: 'linear-gradient(145deg, #2a322d 0%, #232a26 100%)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ fontSize: '32px', fontWeight: 200, color: colors.textMuted, marginBottom: '16px' }}>{step.num}</div>
                 <h3 style={{ fontSize: '16px', fontWeight: 500, margin: '0 0 12px 0' }}>{step.title}</h3>
                 <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{step.desc}</p>
@@ -365,10 +405,10 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
             {reviews.map((review, i) => (
-              <div key={i} style={{ padding: '32px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgElevated} 100%)`, borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <div style={{ marginBottom: '16px', color: colors.accentOrange, fontSize: '14px' }}>{'★'.repeat(review.rating)}</div>
-                <p style={{ fontSize: '14px', lineHeight: 1.8, color: colors.textSecondary, fontStyle: 'italic', margin: '0 0 20px 0' }}>"{review.text}"</p>
-                <div style={{ fontSize: '12px', fontWeight: 500 }}>— {review.name}</div>
+              <div key={i} style={{ padding: '32px', background: 'linear-gradient(145deg, #2a322d 0%, #323b35 100%)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ marginBottom: '16px', color: colors.accentOrange, fontSize: '14px' }}>★★★★★</div>
+                <p style={{ fontSize: '14px', lineHeight: 1.8, color: colors.textSecondary, fontStyle: 'italic', margin: '0 0 20px 0' }}>{review.text}</p>
+                <div style={{ fontSize: '12px', fontWeight: 500 }}>- {review.name}</div>
               </div>
             ))}
           </div>
@@ -382,7 +422,7 @@ export default function LBRLWebsite() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {faqs.map((faq, i) => (
-              <div key={i} style={{ padding: '24px', background: `linear-gradient(145deg, ${colors.bgCard} 0%, ${colors.bgPrimary} 100%)`, borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <div key={i} style={{ padding: '24px', background: 'linear-gradient(145deg, #2a322d 0%, #232a26 100%)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
                 <h4 style={{ fontSize: '14px', fontWeight: 500, margin: '0 0 12px 0' }}>{faq.q}</h4>
                 <p style={{ fontSize: '13px', lineHeight: 1.7, color: colors.textMuted, margin: 0 }}>{faq.a}</p>
               </div>
@@ -395,14 +435,14 @@ export default function LBRLWebsite() {
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 8px 0' }}>Book Your</h2>
           <h2 style={{ fontSize: '42px', fontWeight: 300, margin: '0 0 28px 0', color: colors.accentCyan }}>Consultation</h2>
-          <p style={{ fontSize: '15px', lineHeight: 1.8, color: colors.textMuted, marginBottom: '40px' }}>Fill out the booking form and I'll get back to you within 1-3 business days.</p>
+          <p style={{ fontSize: '15px', lineHeight: 1.8, color: colors.textMuted, marginBottom: '40px' }}>Fill out the booking form and I will get back to you within 1-3 business days.</p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '60px' }}>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: colors.accentTeal, color: '#fff', padding: '18px 48px', fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '8px', textDecoration: 'none' }}>Book Consultation →</a>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ background: colors.accentTeal, color: '#fff', padding: '18px 48px', fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', borderRadius: '8px', textDecoration: 'none' }}>Book Consultation</a>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', color: colors.textMuted, fontSize: '14px' }}>
-            <span>📍 9013 NE Hwy 99, Vancouver, WA</span>
-            <span>📞 (360) 901-0636</span>
-            <span>🕐 By Appointment Only</span>
+            <span>9013 NE Hwy 99, Vancouver, WA</span>
+            <span>(360) 901-0636</span>
+            <span>By Appointment Only</span>
           </div>
         </div>
       </section>
@@ -416,7 +456,7 @@ export default function LBRLWebsite() {
               <div style={{ fontSize: '9px', color: colors.textMuted, marginTop: '2px' }}>Multi-Award Winning Custom Tattoos</div>
             </div>
           </div>
-          <p style={{ fontSize: '11px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
+          <p style={{ fontSize: '11px', color: colors.textMuted }}>2026 Daniel Liberal. All rights reserved.</p>
         </div>
       </footer>
     </div>
