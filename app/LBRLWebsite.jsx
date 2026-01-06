@@ -125,6 +125,7 @@ export default function LBRLWebsite() {
     { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
     { id: 53, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
     { id: 54, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
+    { id: 118, style: 'blackwork', image: '/portfolio/blackwork/IMG_9402.jpeg' },
     { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_0445.png' },
     { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
     { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
