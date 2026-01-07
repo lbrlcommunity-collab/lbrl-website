@@ -11,6 +11,7 @@ export default function LBRLWebsite() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
   const [sliderIndex, setSliderIndex] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -66,141 +67,140 @@ export default function LBRLWebsite() {
 
   const portfolioItems = [
     // NEO JAPANESE (54)
-    { id: 1, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png' },
-    { id: 2, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
-    { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp' },
-    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0481.webp' },
-    { id: 5, style: 'japanese', image: '/portfolio/japanese/IMG_0482.webp' },
-    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0483.webp' },
-    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0484.webp' },
-    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0486.webp' },
-    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0488.webp' },
-    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0489.webp' },
-    { id: 11, style: 'japanese', image: '/portfolio/japanese/IMG_0490.webp' },
-    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0491.webp' },
-    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_0492.webp' },
-    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_0493.webp' },
-    { id: 15, style: 'japanese', image: '/portfolio/japanese/IMG_0494.webp' },
-    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_0495.webp' },
-    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_0496.webp' },
-    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_0497.webp' },
-    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_0498.webp' },
-    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_0499.webp' },
-    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_0500.webp' },
-    { id: 22, style: 'japanese', image: '/portfolio/japanese/IMG_0501.webp' },
-    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_0502.webp' },
-    { id: 24, style: 'japanese', image: '/portfolio/japanese/IMG_0503.webp' },
-    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_0504.webp' },
-    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_0505.webp' },
-    { id: 27, style: 'japanese', image: '/portfolio/japanese/IMG_0506.webp' },
-    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_0507.webp' },
-    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_0508.webp' },
-    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_0509.webp' },
-    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_0510.webp' },
-    { id: 32, style: 'japanese', image: '/portfolio/japanese/IMG_0511.webp' },
-    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_0512.webp' },
-    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_0513.webp' },
-    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_0514.webp' },
-    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_0515.webp' },
-    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_0516.webp' },
-    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_0517.webp' },
-    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_0518.webp' },
-    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_0519.webp' },
-    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_0520.webp' },
-    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_0521.webp' },
-    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_0522.webp' },
-    { id: 44, style: 'japanese', image: '/portfolio/japanese/IMG_0523.webp' },
-    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_0524.webp' },
-    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_0525.webp' },
-    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_0526.webp' },
-    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_0527.webp' },
-    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_0528.webp' },
-    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_0529.webp' },
-    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_0530.webp' },
-    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_0531.webp' },
-    { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_0532.webp' },
-    { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_0533.webp' },
+    { id: 1, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
+    { id: 2, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
+    { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png' },
+    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
+    { id: 5, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp' },
+    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
+    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
+    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg' },
+    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png' },
+    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png' },
+    { id: 11, style: 'japanese', image: '/portfolio/japanese/IMG_0787.png' },
+    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg' },
+    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png' },
+    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png' },
+    { id: 15, style: 'japanese', image: '/portfolio/japanese/IMG_4405.webp' },
+    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp' },
+    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp' },
+    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp' },
+    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg' },
+    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg' },
+    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp' },
+    { id: 22, style: 'japanese', image: '/portfolio/japanese/IMG_4461.webp' },
+    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp' },
+    { id: 24, style: 'japanese', image: '/portfolio/japanese/IMG_4465.webp' },
+    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp' },
+    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp' },
+    { id: 27, style: 'japanese', image: '/portfolio/japanese/IMG_4472.webp' },
+    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp' },
+    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png' },
+    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png' },
+    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png' },
+    { id: 32, style: 'japanese', image: '/portfolio/japanese/IMG_9305.png' },
+    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png' },
+    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png' },
+    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png' },
+    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_9315.png' },
+    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_9320.png' },
+    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_9321.png' },
+    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_9322.png' },
+    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_9371.png' },
+    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg' },
+    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png' },
+    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp' },
+    { id: 44, style: 'japanese', image: '/portfolio/japanese/IMG_9410.jpeg' },
+    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp' },
+    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp' },
+    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp' },
+    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_9417.png' },
+    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_9419.png' },
+    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_9445.png' },
+    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_9844.jpeg' },
+    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp' },
+    { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
+    { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
     // BLACKWORK (18)
-    { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_9375.jpeg' },
-    { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_9376.jpeg' },
-    { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_9377.jpeg' },
-    { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_9378.jpeg' },
-    { id: 59, style: 'blackwork', image: '/portfolio/blackwork/IMG_9379.jpeg' },
-    { id: 60, style: 'blackwork', image: '/portfolio/blackwork/IMG_9380.jpeg' },
-    { id: 61, style: 'blackwork', image: '/portfolio/blackwork/IMG_9381.jpeg' },
-    { id: 62, style: 'blackwork', image: '/portfolio/blackwork/IMG_9382.jpeg' },
-    { id: 63, style: 'blackwork', image: '/portfolio/blackwork/IMG_9383.jpeg' },
-    { id: 64, style: 'blackwork', image: '/portfolio/blackwork/IMG_9384.jpeg' },
-    { id: 65, style: 'blackwork', image: '/portfolio/blackwork/IMG_9385.jpeg' },
-    { id: 66, style: 'blackwork', image: '/portfolio/blackwork/IMG_9386.jpeg' },
-    { id: 67, style: 'blackwork', image: '/portfolio/blackwork/IMG_9387.jpeg' },
-    { id: 68, style: 'blackwork', image: '/portfolio/blackwork/IMG_9388.jpeg' },
-    { id: 69, style: 'blackwork', image: '/portfolio/blackwork/IMG_9389.jpeg' },
-    { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9390.jpeg' },
-    { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9391.jpeg' },
-    { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9392.jpeg' },
-    { id: 73, style: 'blackwork', image: '/portfolio/blackwork/IMG_9402.jpeg' },
+    { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_0445.png' },
+    { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
+    { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
+    { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
+    { id: 59, style: 'blackwork', image: '/portfolio/blackwork/IMG_4428.webp' },
+    { id: 60, style: 'blackwork', image: '/portfolio/blackwork/IMG_4429.webp' },
+    { id: 61, style: 'blackwork', image: '/portfolio/blackwork/IMG_4430.webp' },
+    { id: 62, style: 'blackwork', image: '/portfolio/blackwork/IMG_4433.webp' },
+    { id: 63, style: 'blackwork', image: '/portfolio/blackwork/IMG_4435.webp' },
+    { id: 64, style: 'blackwork', image: '/portfolio/blackwork/IMG_4438.webp' },
+    { id: 65, style: 'blackwork', image: '/portfolio/blackwork/IMG_4440.webp' },
+    { id: 66, style: 'blackwork', image: '/portfolio/blackwork/IMG_4442.webp' },
+    { id: 67, style: 'blackwork', image: '/portfolio/blackwork/IMG_4443.webp' },
+    { id: 68, style: 'blackwork', image: '/portfolio/blackwork/IMG_9386.webp' },
+    { id: 69, style: 'blackwork', image: '/portfolio/blackwork/IMG_9388.jpeg' },
+    { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
+    { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
+    { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
     // FLORAL (19)
-    { id: 74, style: 'floral', image: '/portfolio/floral/IMG_9393.jpeg' },
-    { id: 75, style: 'floral', image: '/portfolio/floral/IMG_9394.jpeg' },
-    { id: 76, style: 'floral', image: '/portfolio/floral/IMG_9395.jpeg' },
-    { id: 77, style: 'floral', image: '/portfolio/floral/IMG_9396.jpeg' },
-    { id: 78, style: 'floral', image: '/portfolio/floral/IMG_9397.jpeg' },
-    { id: 79, style: 'floral', image: '/portfolio/floral/IMG_9398.jpeg' },
-    { id: 80, style: 'floral', image: '/portfolio/floral/IMG_9399.jpeg' },
-    { id: 81, style: 'floral', image: '/portfolio/floral/IMG_9400.jpeg' },
-    { id: 82, style: 'floral', image: '/portfolio/floral/IMG_9401.jpeg' },
-    { id: 83, style: 'floral', image: '/portfolio/floral/IMG_9403.jpeg' },
-    { id: 84, style: 'floral', image: '/portfolio/floral/IMG_9404.jpeg' },
-    { id: 85, style: 'floral', image: '/portfolio/floral/IMG_9405.jpeg' },
-    { id: 86, style: 'floral', image: '/portfolio/floral/IMG_9406.jpeg' },
-    { id: 87, style: 'floral', image: '/portfolio/floral/IMG_9407.jpeg' },
-    { id: 88, style: 'floral', image: '/portfolio/floral/IMG_9408.jpeg' },
-    { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9409.jpeg' },
-    { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9410.jpeg' },
-    { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9411.jpeg' },
-    { id: 92, style: 'floral', image: '/portfolio/floral/IMG_9412.jpeg' },
+    { id: 73, style: 'floral', image: '/portfolio/floral/copy_96A57A24-3F29-493B-AAC3-947800F209B5.jpeg' },
+    { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
+    { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
+    { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
+    { id: 77, style: 'floral', image: '/portfolio/floral/IMG_0137.jpeg' },
+    { id: 78, style: 'floral', image: '/portfolio/floral/IMG_0140.jpeg' },
+    { id: 79, style: 'floral', image: '/portfolio/floral/IMG_0141.jpeg' },
+    { id: 80, style: 'floral', image: '/portfolio/floral/IMG_0143.jpeg' },
+    { id: 81, style: 'floral', image: '/portfolio/floral/IMG_1222.jpeg' },
+    { id: 82, style: 'floral', image: '/portfolio/floral/IMG_1223.jpeg' },
+    { id: 83, style: 'floral', image: '/portfolio/floral/IMG_1225.jpeg' },
+    { id: 84, style: 'floral', image: '/portfolio/floral/IMG_9361.webp' },
+    { id: 85, style: 'floral', image: '/portfolio/floral/IMG_9363.jpeg' },
+    { id: 86, style: 'floral', image: '/portfolio/floral/IMG_9414.webp' },
+    { id: 87, style: 'floral', image: '/portfolio/floral/IMG_9442.webp' },
+    { id: 88, style: 'floral', image: '/portfolio/floral/IMG_9446.png' },
+    { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
+    { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
+    { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
     // ORNAMENTAL (40)
-    { id: 93, style: 'ornamental', image: '/portfolio/ornamental/IMG_9413.jpeg' },
-    { id: 94, style: 'ornamental', image: '/portfolio/ornamental/IMG_9414.jpeg' },
-    { id: 95, style: 'ornamental', image: '/portfolio/ornamental/IMG_9415.jpeg' },
-    { id: 96, style: 'ornamental', image: '/portfolio/ornamental/IMG_9416.jpeg' },
-    { id: 97, style: 'ornamental', image: '/portfolio/ornamental/IMG_9417.jpeg' },
-    { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_9418.jpeg' },
-    { id: 99, style: 'ornamental', image: '/portfolio/ornamental/IMG_9419.jpeg' },
-    { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.jpeg' },
-    { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_9421.jpeg' },
-    { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.jpeg' },
-    { id: 103, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
-    { id: 104, style: 'ornamental', image: '/portfolio/ornamental/IMG_9424.jpeg' },
-    { id: 105, style: 'ornamental', image: '/portfolio/ornamental/IMG_9425.jpeg' },
-    { id: 106, style: 'ornamental', image: '/portfolio/ornamental/IMG_9426.jpeg' },
-    { id: 107, style: 'ornamental', image: '/portfolio/ornamental/IMG_9427.jpeg' },
-    { id: 108, style: 'ornamental', image: '/portfolio/ornamental/IMG_9428.jpeg' },
-    { id: 109, style: 'ornamental', image: '/portfolio/ornamental/IMG_9429.jpeg' },
-    { id: 110, style: 'ornamental', image: '/portfolio/ornamental/IMG_9430.jpeg' },
-    { id: 111, style: 'ornamental', image: '/portfolio/ornamental/IMG_9431.jpeg' },
-    { id: 112, style: 'ornamental', image: '/portfolio/ornamental/IMG_9432.jpeg' },
-    { id: 113, style: 'ornamental', image: '/portfolio/ornamental/IMG_9433.jpeg' },
-    { id: 114, style: 'ornamental', image: '/portfolio/ornamental/IMG_9434.jpeg' },
-    { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_9435.jpeg' },
-    { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9436.jpeg' },
-    { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9437.jpeg' },
-    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9438.jpeg' },
-    { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9439.jpeg' },
-    { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9440.jpeg' },
-    { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9441.jpeg' },
-    { id: 122, style: 'ornamental', image: '/portfolio/ornamental/IMG_9442.jpeg' },
-    { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9443.jpeg' },
-    { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9444.jpeg' },
-    { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9445.jpeg' },
-    { id: 126, style: 'ornamental', image: '/portfolio/ornamental/IMG_9446.jpeg' },
-    { id: 127, style: 'ornamental', image: '/portfolio/ornamental/IMG_9447.jpeg' },
-    { id: 128, style: 'ornamental', image: '/portfolio/ornamental/IMG_9448.jpeg' },
-    { id: 129, style: 'ornamental', image: '/portfolio/ornamental/IMG_9449.jpeg' },
-    { id: 130, style: 'ornamental', image: '/portfolio/ornamental/IMG_9450.jpeg' },
-    { id: 131, style: 'ornamental', image: '/portfolio/ornamental/IMG_9451.jpeg' },
-    { id: 132, style: 'ornamental', image: '/portfolio/ornamental/IMG_9452.jpeg' },
+    { id: 92, style: 'ornamental', image: '/portfolio/ornamental/8525FC48-6C80-4BFF-A495-97B5C094566A.jpeg' },
+    { id: 93, style: 'ornamental', image: '/portfolio/ornamental/copy_1163F1C8-7EE2-413A-A501-C5528FB4AF96.jpeg' },
+    { id: 94, style: 'ornamental', image: '/portfolio/ornamental/copy_C3A8F39E-18E5-4B1D-A265-230CFF6D7279.jpeg' },
+    { id: 95, style: 'ornamental', image: '/portfolio/ornamental/copy_C8541463-D180-4668-80FF-644BD54F9894.jpeg' },
+    { id: 96, style: 'ornamental', image: '/portfolio/ornamental/copy_E0336537-08E0-457E-BB7C-1FB14BE36BB3.jpeg' },
+    { id: 97, style: 'ornamental', image: '/portfolio/ornamental/IMG_0462.png' },
+    { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
+    { id: 99, style: 'ornamental', image: '/portfolio/ornamental/IMG_0479.webp' },
+    { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
+    { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
+    { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_0726.png' },
+    { id: 103, style: 'ornamental', image: '/portfolio/ornamental/IMG_0727.png' },
+    { id: 104, style: 'ornamental', image: '/portfolio/ornamental/IMG_0730.png' },
+    { id: 105, style: 'ornamental', image: '/portfolio/ornamental/IMG_0731.png' },
+    { id: 106, style: 'ornamental', image: '/portfolio/ornamental/IMG_0733.png' },
+    { id: 107, style: 'ornamental', image: '/portfolio/ornamental/IMG_0735.webp' },
+    { id: 108, style: 'ornamental', image: '/portfolio/ornamental/IMG_1230.jpeg' },
+    { id: 109, style: 'ornamental', image: '/portfolio/ornamental/IMG_1232.png' },
+    { id: 110, style: 'ornamental', image: '/portfolio/ornamental/IMG_1775.jpeg' },
+    { id: 111, style: 'ornamental', image: '/portfolio/ornamental/IMG_2580.png' },
+    { id: 112, style: 'ornamental', image: '/portfolio/ornamental/IMG_2584.webp' },
+    { id: 113, style: 'ornamental', image: '/portfolio/ornamental/IMG_2610.jpeg' },
+    { id: 114, style: 'ornamental', image: '/portfolio/ornamental/IMG_2616.webp' },
+    { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_2618.jpeg' },
+    { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9366.png' },
+    { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9367.jpeg' },
+    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9382.jpeg' },
+    { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png' },
+    { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp' },
+    { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg' },
+    { id: 122, style: 'ornamental', image: '/portfolio/ornamental/IMG_9402.jpeg' },
+    { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png' },
+    { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png' },
+    { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
+    { id: 126, style: 'ornamental', image: '/portfolio/ornamental/IMG_9424.jpeg' },
+    { id: 127, style: 'ornamental', image: '/portfolio/ornamental/IMG_9425.webp' },
+    { id: 128, style: 'ornamental', image: '/portfolio/ornamental/IMG_9754.jpeg' },
+    { id: 129, style: 'ornamental', image: '/portfolio/ornamental/IMG_9755.jpeg' },
+    { id: 130, style: 'ornamental', image: '/portfolio/ornamental/IMG_9756.png' },
+    { id: 131, style: 'ornamental', image: '/portfolio/ornamental/IMG_9758.webp' },
   ]
 
   const filteredPortfolio = activeStyle === 'all' 
@@ -264,7 +264,8 @@ export default function LBRLWebsite() {
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+        {/* Desktop Navigation */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
@@ -331,7 +332,105 @@ export default function LBRLWebsite() {
             Book Now
           </a>
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="mobile-menu-btn"
+          style={{
+            display: 'none',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.textPrimary} strokeWidth="2">
+            {mobileMenuOpen ? (
+              <path d="M18 6L6 18M6 6l12 12" />
+            ) : (
+              <path d="M3 12h18M3 6h18M3 18h18" />
+            )}
+          </svg>
+        </button>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div style={{
+          position: 'fixed',
+          top: '60px',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: colors.bgDark,
+          zIndex: 999,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '40px 24px',
+          gap: '24px',
+        }}>
+          {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                color: colors.textPrimary,
+                textDecoration: 'none',
+                fontSize: '18px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+              }}
+            >
+              {item}
+            </a>
+          ))}
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <a
+              href={RELEASE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                padding: '14px 24px',
+                background: 'transparent',
+                border: `1px solid ${colors.accentCyan}`,
+                borderRadius: '6px',
+                color: colors.accentCyan,
+                fontSize: '13px',
+                fontWeight: '500',
+                letterSpacing: '1px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                textAlign: 'center',
+              }}
+            >
+              Release Form
+            </a>
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                padding: '14px 24px',
+                background: colors.accentCyan,
+                borderRadius: '6px',
+                color: colors.bgDark,
+                fontSize: '13px',
+                fontWeight: '600',
+                letterSpacing: '1px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                textAlign: 'center',
+              }}
+            >
+              Book Now
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section style={{
@@ -492,7 +591,7 @@ export default function LBRLWebsite() {
                 lineHeight: '1.8',
                 marginBottom: '24px',
               }}>
-                I don't just place art on skin — I create pieces that move with your body, considering every angle and contour. This is what sets custom work apart from flash. Your tattoo should feel like it was always meant to be there.
+                I don't just place art on skin. I create pieces that move with your body, considering every angle and contour. This is what sets custom work apart from flash. Your tattoo should feel like it was always meant to be there.
               </p>
               <p style={{
                 fontSize: '14px',
@@ -510,8 +609,8 @@ export default function LBRLWebsite() {
               padding: '32px',
               border: `1px solid ${colors.borderDefault}`,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
+                <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: '500', marginBottom: '4px' }}>Daniel Liberal</h3>
                   <p style={{ fontSize: '13px', color: colors.textMuted }}>Lead Artist & Owner</p>
@@ -840,7 +939,7 @@ export default function LBRLWebsite() {
                 fontWeight: '300',
                 color: colors.textPrimary,
                 marginBottom: '8px',
-              }}>$500–$750</div>
+              }}>$500 to $750</div>
               <div style={{
                 fontSize: '14px',
                 color: colors.accentCyan,
@@ -875,12 +974,12 @@ export default function LBRLWebsite() {
                 fontWeight: '300',
                 color: colors.textPrimary,
                 marginBottom: '8px',
-              }}>$150–$350</div>
+              }}>$150 to $350</div>
               <div style={{
                 fontSize: '14px',
                 color: colors.accentCyan,
                 marginBottom: '20px',
-              }}>$50–$100 deposit</div>
+              }}>$50 to $100 deposit</div>
               <p style={{
                 fontSize: '14px',
                 color: colors.textSecondary,
@@ -996,7 +1095,7 @@ export default function LBRLWebsite() {
                   fontSize: '13px',
                   fontWeight: '500',
                   color: colors.textPrimary,
-                }}>— {review.name}</p>
+                }}>- {review.name}</p>
               </div>
             ))}
           </div>
@@ -1326,8 +1425,68 @@ export default function LBRLWebsite() {
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
+        
+        .desktop-nav { display: flex; }
+        .mobile-menu-btn { display: none !important; }
+        
+        @media (max-width: 1024px) {
+          .desktop-nav { gap: 16px !important; }
+          .desktop-nav a { font-size: 10px !important; }
+        }
+        
         @media (max-width: 768px) {
-          nav > div:last-child { display: none; }
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: block !important; }
+          
+          nav { padding: 12px 16px !important; }
+          
+          section { padding: 40px 16px !important; }
+          
+          h1 { font-size: 32px !important; }
+          h2 { font-size: 24px !important; }
+          
+          [style*="grid-template-columns: 1fr 1fr"] { 
+            display: flex !important; 
+            flex-direction: column !important; 
+            gap: 30px !important; 
+          }
+          
+          [style*="grid-template-columns: repeat(4"] { 
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important; 
+            gap: 16px !important;
+          }
+          
+          [style*="grid-template-columns: repeat(3"] { 
+            display: flex !important; 
+            flex-direction: column !important; 
+            gap: 16px !important;
+          }
+          
+          [style*="grid-template-columns: 1fr 300px"] {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit"] {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          h1 { font-size: 28px !important; }
+          h2 { font-size: 20px !important; }
+          
+          [style*="grid-template-columns: repeat(4"] { 
+            grid-template-columns: 1fr 1fr !important; 
+          }
+          
+          [style*="padding: 32px"] {
+            padding: 20px !important;
+          }
         }
       `}</style>
     </div>
