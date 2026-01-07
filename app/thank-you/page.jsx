@@ -38,6 +38,11 @@ export default function ThankYouPage() {
         maxWidth: '600px',
       }}>
         
+        {/* Logo */}
+        <div style={{ marginBottom: '30px' }}>
+          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+        </div>
+
         {/* Checkmark Icon */}
         <div style={{
           width: '80px',
