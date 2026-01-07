@@ -77,6 +77,61 @@ export default function LBRLWebsite() {
     accentTeal: '#5a8a8a',
   }
 
+  // Decorative SVG Components
+  const FloralSVG1 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 20 C120 40, 140 60, 130 90 C150 80, 170 70, 180 100 C170 130, 150 120, 130 110 C140 140, 120 160, 100 180 C80 160, 60 140, 70 110 C50 120, 30 130, 20 100 C30 70, 50 80, 70 90 C60 60, 80 40, 100 20" 
+        stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
+      <circle cx="100" cy="100" r="15" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
+      <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.4"/>
+    </svg>
+  )
+
+  const FloralSVG2 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M75 10 Q90 50, 75 80 Q60 50, 75 10" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
+      <path d="M75 80 Q90 120, 75 150 Q60 120, 75 80" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
+      <path d="M75 150 Q90 170, 75 190 Q60 170, 75 150" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
+      <path d="M30 60 Q50 75, 75 80 Q50 85, 30 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
+      <path d="M120 60 Q100 75, 75 80 Q100 85, 120 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
+    </svg>
+  )
+
+  const FloralSVG3 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 30 C110 50, 120 70, 110 90 C130 80, 150 85, 150 90 C150 95, 130 100, 110 90 C120 110, 110 130, 90 150 C70 130, 60 110, 70 90 C50 100, 30 95, 30 90 C30 85, 50 80, 70 90 C60 70, 70 50, 90 30" 
+        stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.4"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35" transform="rotate(45 90 90)"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35" transform="rotate(-45 90 90)"/>
+    </svg>
+  )
+
+  const LeafSVG = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 10 Q80 50, 70 100 Q90 130, 50 190 Q10 130, 30 100 Q20 50, 50 10" 
+        stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
+      <path d="M50 30 Q50 100, 50 180" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+      <path d="M50 50 Q65 60, 60 80" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+      <path d="M50 70 Q35 80, 40 100" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+      <path d="M50 90 Q65 100, 60 120" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+      <path d="M50 110 Q35 120, 40 140" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+    </svg>
+  )
+
+  const BotanicalSVG = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M150 80 C170 100, 180 130, 165 150 C185 145, 200 150, 200 160 C200 170, 185 175, 165 170 C180 190, 170 210, 150 220 C130 210, 120 190, 135 170 C115 175, 100 170, 100 160 C100 150, 115 145, 135 150 C120 130, 130 100, 150 80" 
+        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.4"/>
+      <circle cx="150" cy="160" r="12" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.45"/>
+      <circle cx="150" cy="160" r="6" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.35"/>
+      <path d="M100 200 Q80 180, 90 150 Q70 140, 60 160 Q50 140, 70 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
+      <path d="M200 200 Q220 180, 210 150 Q230 140, 240 160 Q250 140, 230 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
+      <path d="M150 220 Q140 250, 150 280" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.35"/>
+      <path d="M150 240 Q130 250, 120 270" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+      <path d="M150 250 Q170 260, 180 280" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+    </svg>
+  )
+
   const stats = [
     { value: '12+', label: 'Years Experience' },
     { value: '2x', label: 'Award Winner' },
@@ -217,10 +272,25 @@ export default function LBRLWebsite() {
   const maxSliderIndex = Math.max(0, filteredPortfolio.length - visibleCount)
 
   const reviews = [
-    { name: 'Sarah M.', text: 'Daniel understood my vision perfectly. The way my sleeve flows with my arm is incredible.', rating: 5 },
-    { name: 'Marcus T.', text: 'Best custom work in Vancouver. Worth every penny. The private studio experience was amazing.', rating: 5 },
-    { name: 'Jessica L.', text: 'From consultation to final session, everything was seamless. My back piece is a masterpiece.', rating: 5 },
+    { name: 'Ivan Martinez', text: 'Got my first tattoo done here, and I couldn\'t have asked for a better experience. Dani was amazing—super chill, easy to talk to, and made the whole process really comfortable from start to finish.', rating: 5 },
+    { name: 'Andrew Ammerman', text: 'Dani designed two beautiful and unique sleeves for me. He was amazing through the process and tuned in to my pain tolerance while working around more sensitive spots. I recommend anyone to seek out Dani.', rating: 5 },
+    { name: 'Logan Sherlock', text: 'Been going to Dani since I was 18, now almost two sleeves down. I have nothing but fantastic things to say. Always great at working with the client and giving them what they ask for. A true professional.', rating: 5 },
+    { name: 'T Boyter', text: 'I\'ve had three sessions with Dani. Clean, professional, personable. Dani will work with you to create your one of a kind masterpiece. His tattoo skills are impressive—clean lines, incredible shading. 10/10', rating: 5 },
+    { name: 'Sara Sargent', text: 'Dani is the only artist I will go to. Hands down the best experience, every time. If you\'re looking for someone to bring your feelings to life, this is your person. Creativity at its best.', rating: 5 },
+    { name: 'Shainna Thompson', text: 'I came to Dani looking for his expertise in covering an existing tattoo. He listened to my ideas and had the most beautiful concept drawn up. If you want your body to become a walking piece of art, contact him!', rating: 5 },
+    { name: 'Emily Heacock', text: 'Love my new tattoo! Dani is very professional and communicative. He makes you feel very welcome and comfortable through the process. Will definitely be going back for future tattoos!', rating: 5 },
+    { name: 'Jessica Allen', text: 'I have gone to Dani for the past 3 years and gotten 3 different tattoos from him. He is very professional but also exceptionally talented and fast! You will not be disappointed!', rating: 5 },
   ]
+
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
+
+  // Auto-rotate reviews
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReviewIndex((prev) => (prev + 1) % reviews.length)
+    }, 5000) // Change every 5 seconds
+    return () => clearInterval(interval)
+  }, [reviews.length])
 
   const processSteps = [
     { number: '01', title: 'Consultation', desc: 'We sit down and talk through your idea, placement, and vision. This is where the concept starts taking shape.' },
@@ -666,8 +736,23 @@ export default function LBRLWebsite() {
       <section id="about" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        {/* Decorative SVGs */}
+        {visibleSections['about'] && (
+          <>
+            <FloralSVG1 
+              className="floral-decoration floral-animate" 
+              style={{ top: '15%', right: '1%', width: '100px', height: '100px' }} 
+            />
+            <LeafSVG 
+              className="floral-decoration floral-animate-slow floral-animate-delay-1" 
+              style={{ bottom: '10%', left: '1%', width: '60px', height: '120px' }} 
+            />
+          </>
+        )}
+        <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <img 
@@ -758,8 +843,23 @@ export default function LBRLWebsite() {
       <section id="portfolio" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Decorative SVGs */}
+        {visibleSections['portfolio'] && (
+          <>
+            <FloralSVG3 
+              className="floral-decoration floral-animate floral-animate-delay-2" 
+              style={{ top: '8%', left: '1%', width: '100px', height: '100px' }} 
+            />
+            <BotanicalSVG 
+              className="floral-decoration floral-animate-slow" 
+              style={{ bottom: '15%', right: '1%', width: '120px', height: '120px' }} 
+            />
+          </>
+        )}
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
             <p style={{
               fontSize: '12px',
@@ -967,8 +1067,23 @@ export default function LBRLWebsite() {
       <section id="pricing" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {/* Decorative SVGs */}
+        {visibleSections['pricing'] && (
+          <>
+            <FloralSVG2 
+              className="floral-decoration floral-animate" 
+              style={{ top: '25%', right: '1%', width: '80px', height: '110px' }} 
+            />
+            <FloralSVG1 
+              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
+              style={{ bottom: '25%', left: '1%', width: '80px', height: '80px' }} 
+            />
+          </>
+        )}
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
@@ -1173,7 +1288,7 @@ export default function LBRLWebsite() {
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className={visibleSections['reviews'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
               fontSize: '12px',
@@ -1189,36 +1304,74 @@ export default function LBRLWebsite() {
             }}>What Clients Say</h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-            {reviews.map((review, i) => (
-              <div
-                key={i}
-                className={visibleSections['reviews'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'}
-                style={{
-                  background: colors.bgCard,
-                  borderRadius: '16px',
-                  padding: '32px',
-                  border: `1px solid ${colors.borderDefault}`,
-                }}
-              >
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
-                  {[...Array(review.rating)].map((_, j) => (
-                    <span key={j} style={{ color: colors.accentOrange }}>★</span>
-                  ))}
-                </div>
-                <p style={{
-                  fontSize: '14px',
-                  color: colors.textSecondary,
-                  lineHeight: '1.7',
-                  marginBottom: '20px',
-                }}>"{review.text}"</p>
-                <p style={{
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: colors.textPrimary,
-                }}>- {review.name}</p>
-              </div>
-            ))}
+          {/* Single Review Carousel */}
+          <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
+            background: colors.bgCard,
+            borderRadius: '20px',
+            padding: 'clamp(32px, 5vw, 48px)',
+            border: `1px solid ${colors.borderDefault}`,
+            textAlign: 'center',
+            position: 'relative',
+            minHeight: '220px',
+          }}>
+            {/* Stars */}
+            <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>
+              {[...Array(5)].map((_, j) => (
+                <span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>
+              ))}
+            </div>
+            
+            {/* Review Text */}
+            <p style={{
+              fontSize: 'clamp(16px, 2vw, 18px)',
+              color: colors.textSecondary,
+              lineHeight: '1.8',
+              marginBottom: '24px',
+              fontStyle: 'italic',
+              transition: 'opacity 0.5s ease',
+            }}>"{reviews[currentReviewIndex].text}"</p>
+            
+            {/* Client Name */}
+            <p style={{
+              fontSize: '14px',
+              fontWeight: '500',
+              color: colors.accentCyan,
+              marginBottom: '32px',
+            }}>— {reviews[currentReviewIndex].name}</p>
+            
+            {/* Navigation Dots */}
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              {reviews.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentReviewIndex(i)}
+                  style={{
+                    width: currentReviewIndex === i ? '24px' : '10px',
+                    height: '10px',
+                    borderRadius: '5px',
+                    background: currentReviewIndex === i ? colors.accentCyan : colors.bgElevated,
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          
+          {/* Google Rating Badge */}
+          <div style={{ 
+            textAlign: 'center', 
+            marginTop: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+          }}>
+            <span style={{ color: colors.accentOrange, fontSize: '24px' }}>★</span>
+            <span style={{ fontSize: '14px', color: colors.textSecondary }}>
+              <strong style={{ color: colors.textPrimary }}>5.0</strong> rating on Google
+            </span>
           </div>
         </div>
       </section>
@@ -1227,8 +1380,17 @@ export default function LBRLWebsite() {
       <section id="faqs" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        {/* Decorative SVGs */}
+        {visibleSections['faqs'] && (
+          <LeafSVG 
+            className="floral-decoration floral-animate floral-animate-delay-1" 
+            style={{ top: '15%', left: '1%', width: '60px', height: '120px' }} 
+          />
+        )}
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
             <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <div style={{ marginBottom: '40px' }}>
@@ -1326,8 +1488,23 @@ export default function LBRLWebsite() {
       <section id="contact" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
+        position: 'relative',
+        overflow: 'hidden',
       }}>
-        <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+        {/* Decorative SVGs */}
+        {visibleSections['contact'] && (
+          <>
+            <LeafSVG 
+              className="floral-decoration floral-animate" 
+              style={{ top: '20%', left: '2%', width: '50px', height: '100px' }} 
+            />
+            <FloralSVG3 
+              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
+              style={{ bottom: '25%', right: '2%', width: '80px', height: '80px' }} 
+            />
+          </>
+        )}
+        <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <p style={{
             fontSize: '12px',
             fontWeight: '500',
@@ -1602,6 +1779,49 @@ export default function LBRLWebsite() {
         .tribal-line-3 { animation-delay: 0.4s; }
         .tribal-line-4 { animation-delay: 0.6s; }
         .tribal-line-5 { animation-delay: 0.8s; }
+        
+        @keyframes floralFloat {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        
+        @keyframes floralPulse {
+          0%, 100% { opacity: 0.15; transform: scale(1); }
+          50% { opacity: 0.25; transform: scale(1.05); }
+        }
+        
+        @keyframes floralDraw {
+          0% { stroke-dashoffset: 500; opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        }
+        
+        .floral-decoration {
+          position: absolute;
+          pointer-events: none;
+          color: #7dd4c4;
+          z-index: 0;
+          opacity: 0.15;
+        }
+        
+        .floral-animate {
+          animation: floralFloat 8s ease-in-out infinite, floralPulse 4s ease-in-out infinite;
+        }
+        
+        .floral-animate-slow {
+          animation: floralFloat 12s ease-in-out infinite;
+        }
+        
+        .floral-animate-delay-1 { animation-delay: 0.5s; }
+        .floral-animate-delay-2 { animation-delay: 1s; }
+        .floral-animate-delay-3 { animation-delay: 1.5s; }
+        
+        /* Hide floral decorations on tablet and mobile */
+        @media (max-width: 1024px) {
+          .floral-decoration {
+            display: none !important;
+          }
+        }
         
         @keyframes fadeInUp {
           from {
