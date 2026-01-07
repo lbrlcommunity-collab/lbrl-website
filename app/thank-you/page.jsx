@@ -156,7 +156,7 @@ export default function ThankYouPage() {
           fontSize: '14px',
           color: colors.textSecondary,
         }}>
-          Questions? Email <a href="mailto:lbrltattoos@gmail.com" style={{ color: colors.accentCyan, textDecoration: 'none' }}>lbrltattoos@gmail.com</a>
+          Questions? Email <a href="mailto:Liberaltattoos@gmail.com" style={{ color: colors.accentCyan, textDecoration: 'none' }}>Liberaltattoos@gmail.com</a>
         </p>
 
       </div>
