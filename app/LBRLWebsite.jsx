@@ -81,54 +81,54 @@ export default function LBRLWebsite() {
   const FloralSVG1 = ({ className, style }) => (
     <svg className={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M100 20 C120 40, 140 60, 130 90 C150 80, 170 70, 180 100 C170 130, 150 120, 130 110 C140 140, 120 160, 100 180 C80 160, 60 140, 70 110 C50 120, 30 130, 20 100 C30 70, 50 80, 70 90 C60 60, 80 40, 100 20" 
-        stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
-      <circle cx="100" cy="100" r="15" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
-      <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.4"/>
+        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <circle cx="100" cy="100" r="15" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.8"/>
+      <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.6"/>
     </svg>
   )
 
   const FloralSVG2 = ({ className, style }) => (
     <svg className={className} style={style} viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M75 10 Q90 50, 75 80 Q60 50, 75 10" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
-      <path d="M75 80 Q90 120, 75 150 Q60 120, 75 80" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
-      <path d="M75 150 Q90 170, 75 190 Q60 170, 75 150" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
-      <path d="M30 60 Q50 75, 75 80 Q50 85, 30 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
-      <path d="M120 60 Q100 75, 75 80 Q100 85, 120 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35"/>
+      <path d="M75 10 Q90 50, 75 80 Q60 50, 75 10" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M75 80 Q90 120, 75 150 Q60 120, 75 80" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M75 150 Q90 170, 75 190 Q60 170, 75 150" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
+      <path d="M30 60 Q50 75, 75 80 Q50 85, 30 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
+      <path d="M120 60 Q100 75, 75 80 Q100 85, 120 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
     </svg>
   )
 
   const FloralSVG3 = ({ className, style }) => (
     <svg className={className} style={style} viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M90 30 C110 50, 120 70, 110 90 C130 80, 150 85, 150 90 C150 95, 130 100, 110 90 C120 110, 110 130, 90 150 C70 130, 60 110, 70 90 C50 100, 30 95, 30 90 C30 85, 50 80, 70 90 C60 70, 70 50, 90 30" 
-        stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.4"/>
-      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35" transform="rotate(45 90 90)"/>
-      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.35" transform="rotate(-45 90 90)"/>
+        stroke="currentColor" strokeWidth="1.8" fill="none" opacity="0.7"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(45 90 90)"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(-45 90 90)"/>
     </svg>
   )
 
   const LeafSVG = ({ className, style }) => (
     <svg className={className} style={style} viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M50 10 Q80 50, 70 100 Q90 130, 50 190 Q10 130, 30 100 Q20 50, 50 10" 
-        stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4"/>
-      <path d="M50 30 Q50 100, 50 180" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
-      <path d="M50 50 Q65 60, 60 80" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
-      <path d="M50 70 Q35 80, 40 100" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
-      <path d="M50 90 Q65 100, 60 120" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
-      <path d="M50 110 Q35 120, 40 140" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M50 30 Q50 100, 50 180" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 50 Q65 60, 60 80" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 70 Q35 80, 40 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 90 Q65 100, 60 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 110 Q35 120, 40 140" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
     </svg>
   )
 
   const BotanicalSVG = ({ className, style }) => (
     <svg className={className} style={style} viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M150 80 C170 100, 180 130, 165 150 C185 145, 200 150, 200 160 C200 170, 185 175, 165 170 C180 190, 170 210, 150 220 C130 210, 120 190, 135 170 C115 175, 100 170, 100 160 C100 150, 115 145, 135 150 C120 130, 130 100, 150 80" 
-        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.4"/>
-      <circle cx="150" cy="160" r="12" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.45"/>
-      <circle cx="150" cy="160" r="6" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.35"/>
-      <path d="M100 200 Q80 180, 90 150 Q70 140, 60 160 Q50 140, 70 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
-      <path d="M200 200 Q220 180, 210 150 Q230 140, 240 160 Q250 140, 230 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
-      <path d="M150 220 Q140 250, 150 280" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.35"/>
-      <path d="M150 240 Q130 250, 120 270" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
-      <path d="M150 250 Q170 260, 180 280" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3"/>
+        stroke="currentColor" strokeWidth="2" fill="none" opacity="0.7"/>
+      <circle cx="150" cy="160" r="12" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.8"/>
+      <circle cx="150" cy="160" r="6" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6"/>
+      <path d="M100 200 Q80 180, 90 150 Q70 140, 60 160 Q50 140, 70 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
+      <path d="M200 200 Q220 180, 210 150 Q230 140, 240 160 Q250 140, 230 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
+      <path d="M150 220 Q140 250, 150 280" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <path d="M150 240 Q130 250, 120 270" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M150 250 Q170 260, 180 280" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
     </svg>
   )
 
@@ -340,32 +340,43 @@ export default function LBRLWebsite() {
           gap: '24px',
           overflow: 'hidden',
         }}>
-          {/* Tribal Lines Background */}
+          {/* Sacred Geometry / Fibonacci Background */}
           <svg style={{
             position: 'absolute',
             width: '100%',
             height: '100%',
-            opacity: 0.08,
-          }} viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            opacity: 0.12,
+          }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
             <defs>
-              <linearGradient id="tribalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="sacredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor={colors.accentCyan} />
-                <stop offset="100%" stopColor={colors.accentTeal} />
+                <stop offset="50%" stopColor={colors.accentTeal} />
+                <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
             </defs>
-            {/* Curved tribal lines */}
-            <path d="M0,200 Q100,100 200,200 T400,200" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-1" />
-            <path d="M0,220 Q100,120 200,220 T400,220" stroke="url(#tribalGrad)" strokeWidth="1.5" fill="none" className="tribal-line-2" />
-            <path d="M0,180 Q100,80 200,180 T400,180" stroke="url(#tribalGrad)" strokeWidth="1.5" fill="none" className="tribal-line-3" />
-            <path d="M50,0 Q150,100 50,200 T50,400" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-4" />
-            <path d="M350,0 Q250,100 350,200 T350,400" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-5" />
-            <path d="M100,50 Q200,150 300,50" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
-            <path d="M100,350 Q200,250 300,350" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
-            {/* Angular tribal shapes */}
-            <path d="M150,100 L170,130 L150,160 L130,130 Z" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
-            <path d="M250,280 L270,310 L250,340 L230,310 Z" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
-            <circle cx="80" cy="300" r="30" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
-            <circle cx="320" cy="100" r="25" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            {/* Golden Spiral approximation */}
+            <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
+              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="fibonacci-spiral" />
+            {/* Fibonacci circles */}
+            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-1" />
+            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-2" />
+            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-3" />
+            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-4" />
+            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-5" />
+            {/* Flower of Life petals */}
+            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
+            {/* Organic floral curves */}
+            <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-1" />
+            <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-2" />
+            <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" />
+            {/* Fine detail arcs */}
+            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
+            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
           </svg>
           
           <div className="logo-spinner" style={{
@@ -599,7 +610,45 @@ export default function LBRLWebsite() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         position: 'relative',
+        overflow: 'hidden',
       }}>
+        {/* Aurora / Northern Lights Effect */}
+        <div className="aurora-container" style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          pointerEvents: 'none',
+          overflow: 'hidden',
+        }}>
+          <div className="aurora-flash aurora-1" />
+          <div className="aurora-flash aurora-2" />
+          <div className="aurora-flash aurora-3" />
+        </div>
+        
+        {/* Hero Floral Decorations */}
+        {!isLoading && (
+          <>
+            <BotanicalSVG 
+              className="floral-decoration floral-animate" 
+              style={{ top: '12%', left: '2%', width: '180px', height: '180px' }} 
+            />
+            <FloralSVG1 
+              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
+              style={{ top: '15%', right: '2%', width: '150px', height: '150px' }} 
+            />
+            <LeafSVG 
+              className="floral-decoration floral-animate floral-animate-delay-1" 
+              style={{ bottom: '12%', left: '3%', width: '100px', height: '200px' }} 
+            />
+            <FloralSVG3 
+              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
+              style={{ bottom: '15%', right: '3%', width: '130px', height: '130px' }} 
+            />
+          </>
+        )}
+        
         <div style={{
           position: 'absolute',
           top: '50%',
@@ -744,11 +793,11 @@ export default function LBRLWebsite() {
           <>
             <FloralSVG1 
               className="floral-decoration floral-animate" 
-              style={{ top: '15%', right: '1%', width: '100px', height: '100px' }} 
+              style={{ top: '10%', right: '1%', width: '140px', height: '140px' }} 
             />
             <LeafSVG 
               className="floral-decoration floral-animate-slow floral-animate-delay-1" 
-              style={{ bottom: '10%', left: '1%', width: '60px', height: '120px' }} 
+              style={{ bottom: '10%', left: '1%', width: '90px', height: '180px' }} 
             />
           </>
         )}
@@ -851,11 +900,11 @@ export default function LBRLWebsite() {
           <>
             <FloralSVG3 
               className="floral-decoration floral-animate floral-animate-delay-2" 
-              style={{ top: '8%', left: '1%', width: '100px', height: '100px' }} 
+              style={{ top: '5%', left: '1%', width: '140px', height: '140px' }} 
             />
             <BotanicalSVG 
               className="floral-decoration floral-animate-slow" 
-              style={{ bottom: '15%', right: '1%', width: '120px', height: '120px' }} 
+              style={{ bottom: '10%', right: '1%', width: '160px', height: '160px' }} 
             />
           </>
         )}
@@ -1075,11 +1124,11 @@ export default function LBRLWebsite() {
           <>
             <FloralSVG2 
               className="floral-decoration floral-animate" 
-              style={{ top: '25%', right: '1%', width: '80px', height: '110px' }} 
+              style={{ top: '20%', right: '1%', width: '110px', height: '150px' }} 
             />
             <FloralSVG1 
               className="floral-decoration floral-animate-slow floral-animate-delay-3" 
-              style={{ bottom: '25%', left: '1%', width: '80px', height: '80px' }} 
+              style={{ bottom: '20%', left: '1%', width: '120px', height: '120px' }} 
             />
           </>
         )}
@@ -1387,7 +1436,7 @@ export default function LBRLWebsite() {
         {visibleSections['faqs'] && (
           <LeafSVG 
             className="floral-decoration floral-animate floral-animate-delay-1" 
-            style={{ top: '15%', left: '1%', width: '60px', height: '120px' }} 
+            style={{ top: '10%', left: '1%', width: '90px', height: '180px' }} 
           />
         )}
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
@@ -1496,11 +1545,11 @@ export default function LBRLWebsite() {
           <>
             <LeafSVG 
               className="floral-decoration floral-animate" 
-              style={{ top: '20%', left: '2%', width: '50px', height: '100px' }} 
+              style={{ top: '15%', left: '2%', width: '80px', height: '160px' }} 
             />
             <FloralSVG3 
               className="floral-decoration floral-animate-slow floral-animate-delay-2" 
-              style={{ bottom: '25%', right: '2%', width: '80px', height: '80px' }} 
+              style={{ bottom: '20%', right: '2%', width: '120px', height: '120px' }} 
             />
           </>
         )}
@@ -1780,14 +1829,104 @@ export default function LBRLWebsite() {
         .tribal-line-4 { animation-delay: 0.6s; }
         .tribal-line-5 { animation-delay: 0.8s; }
         
+        /* Aurora / Northern Lights Effect */
+        @keyframes auroraFlash {
+          0%, 80%, 100% { 
+            opacity: 0; 
+            transform: translateX(-100%) skewX(-15deg);
+          }
+          88% { 
+            opacity: 0.25; 
+            transform: translateX(0%) skewX(-15deg);
+          }
+          94% { 
+            opacity: 0.12; 
+            transform: translateX(100%) skewX(-15deg);
+          }
+        }
+        
+        .aurora-flash {
+          position: absolute;
+          width: 200%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(125, 212, 196, 0.05) 15%,
+            rgba(125, 212, 196, 0.15) 35%,
+            rgba(90, 138, 138, 0.2) 50%,
+            rgba(125, 212, 196, 0.15) 65%,
+            rgba(125, 212, 196, 0.05) 85%,
+            transparent 100%
+          );
+          pointer-events: none;
+        }
+        
+        .aurora-1 {
+          top: 0;
+          left: -100%;
+          animation: auroraFlash 10s ease-in-out infinite;
+        }
+        
+        .aurora-2 {
+          top: 25%;
+          left: -100%;
+          animation: auroraFlash 13s ease-in-out infinite;
+          animation-delay: 3s;
+        }
+        
+        .aurora-3 {
+          top: 55%;
+          left: -100%;
+          animation: auroraFlash 16s ease-in-out infinite;
+          animation-delay: 7s;
+        }
+        
+        /* Fibonacci circles animation for loading */
+        .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
+          stroke-dasharray: 1000;
+          animation: fibDraw 2s ease-out forwards;
+        }
+        .fib-circle-2 { animation-delay: 0.1s; }
+        .fib-circle-3 { animation-delay: 0.2s; }
+        .fib-circle-4 { animation-delay: 0.3s; }
+        .fib-circle-5 { animation-delay: 0.4s; }
+        
+        @keyframes fibDraw {
+          0% { stroke-dashoffset: 1000; opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        }
+        
+        .fibonacci-spiral {
+          stroke-dasharray: 800;
+          animation: spiralDraw 2.5s ease-out forwards;
+        }
+        
+        @keyframes spiralDraw {
+          0% { stroke-dashoffset: 800; opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        }
+        
+        .organic-line-1, .organic-line-2 {
+          stroke-dasharray: 500;
+          animation: organicDraw 2s ease-out forwards;
+        }
+        .organic-line-2 { animation-delay: 0.3s; }
+        
+        @keyframes organicDraw {
+          0% { stroke-dashoffset: 500; opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        }
+        
         @keyframes floralFloat {
           0%, 100% { transform: translateY(0) rotate(0deg); }
           50% { transform: translateY(-10px) rotate(3deg); }
         }
         
         @keyframes floralPulse {
-          0%, 100% { opacity: 0.15; transform: scale(1); }
-          50% { opacity: 0.25; transform: scale(1.05); }
+          0%, 100% { opacity: 0.35; transform: scale(1); }
+          50% { opacity: 0.55; transform: scale(1.08); }
         }
         
         @keyframes floralDraw {
@@ -1801,7 +1940,7 @@ export default function LBRLWebsite() {
           pointer-events: none;
           color: #7dd4c4;
           z-index: 0;
-          opacity: 0.15;
+          opacity: 0.4;
         }
         
         .floral-animate {
@@ -1809,7 +1948,7 @@ export default function LBRLWebsite() {
         }
         
         .floral-animate-slow {
-          animation: floralFloat 12s ease-in-out infinite;
+          animation: floralFloat 12s ease-in-out infinite, floralPulse 6s ease-in-out infinite;
         }
         
         .floral-animate-delay-1 { animation-delay: 0.5s; }
