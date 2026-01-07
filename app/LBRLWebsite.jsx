@@ -5,13 +5,6 @@ import React, { useState, useEffect } from 'react'
 const BOOKING_URL = 'https://www.lbrltattoos.com?popup=booking'
 const RELEASE_URL = 'https://www.lbrltattoos.com/release-form'
 
-const TribalLogo = ({ size = 200, opacity = 1 }) => (
-  <svg width={size} height={size} viewBox="0 0 200 200" style={{ opacity }}>
-    <circle cx="100" cy="100" r="80" fill="none" stroke="#7dd4c4" strokeWidth="2" opacity="0.3"/>
-    <text x="100" y="110" textAnchor="middle" fill="#7dd4c4" fontSize="32" fontWeight="300">LBRL</text>
-  </svg>
-)
-
 export default function LBRLWebsite() {
   const [scrolled, setScrolled] = useState(false)
   const [activeStyle, setActiveStyle] = useState('all')
@@ -267,12 +260,12 @@ export default function LBRLWebsite() {
         alignItems: 'center',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <TribalLogo size={44} />
+          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-          {['Work', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
+          {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -349,7 +342,9 @@ export default function LBRLWebsite() {
         alignItems: 'center',
         textAlign: 'center',
         padding: '120px 20px 80px',
-        background: `linear-gradient(180deg, ${colors.bgSage} 0%, ${colors.bgDark} 100%)`,
+        background: `linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         position: 'relative',
       }}>
         <div style={{
@@ -360,7 +355,7 @@ export default function LBRLWebsite() {
           opacity: 0.06,
           pointerEvents: 'none',
         }}>
-          <TribalLogo size={500} />
+          <img src="/Tribal Logo.jpg" alt="" style={{ width: '500px', height: '500px', objectFit: 'contain' }} />
         </div>
         
         <div style={{
@@ -419,7 +414,7 @@ export default function LBRLWebsite() {
             Start Your Journey
           </a>
           <a
-            href="#work"
+            href="#portfolio"
             style={{
               padding: '16px 32px',
               background: 'transparent',
@@ -508,13 +503,15 @@ export default function LBRLWebsite() {
               </p>
             </div>
             <div style={{
-              background: colors.bgCard,
+              background: `linear-gradient(180deg, rgba(42,50,45,0.95) 0%, rgba(42,50,45,0.98) 100%), url('/about-bg.webp')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               borderRadius: '16px',
               padding: '32px',
               border: `1px solid ${colors.borderDefault}`,
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                <TribalLogo size={60} />
+                <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: '500', marginBottom: '4px' }}>Daniel Liberal</h3>
                   <p style={{ fontSize: '13px', color: colors.textMuted }}>Lead Artist & Owner</p>
@@ -527,7 +524,7 @@ export default function LBRLWebsite() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
-                  <span style={{ fontSize: '13px', color: colors.textPrimary }}>Japanese, Blackwork</span>
+                  <span style={{ fontSize: '13px', color: colors.textPrimary }}>Neo Japanese, Blackwork, Ornamental, Floral</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
@@ -540,7 +537,7 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="work" style={{
+      <section id="portfolio" style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
       }}>
@@ -558,7 +555,7 @@ export default function LBRLWebsite() {
               fontSize: 'clamp(28px, 4vw, 36px)',
               fontWeight: '300',
               marginBottom: '32px',
-            }}>Recent Work</h2>
+            }}>Custom Tattoo Work</h2>
             
             {/* Style Filters */}
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -1011,47 +1008,66 @@ export default function LBRLWebsite() {
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
       }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <p style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-            }}>FAQs</p>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)',
-              fontWeight: '300',
-            }}>Common Questions</h2>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                style={{
-                  background: colors.bgCard,
-                  borderRadius: '12px',
-                  padding: '24px',
-                  border: `1px solid ${colors.borderDefault}`,
-                }}
-              >
-                <h3 style={{
-                  fontSize: '15px',
-                  fontWeight: '500',
-                  marginBottom: '12px',
-                  color: colors.textPrimary,
-                }}>{faq.q}</h3>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
+            <div>
+              <div style={{ marginBottom: '40px' }}>
                 <p style={{
-                  fontSize: '14px',
-                  color: colors.textSecondary,
-                  lineHeight: '1.6',
-                  margin: 0,
-                }}>{faq.a}</p>
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  color: colors.accentCyan,
+                  letterSpacing: '3px',
+                  textTransform: 'uppercase',
+                  marginBottom: '16px',
+                }}>FAQs</p>
+                <h2 style={{
+                  fontSize: 'clamp(28px, 4vw, 36px)',
+                  fontWeight: '300',
+                }}>Common Questions</h2>
               </div>
-            ))}
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {faqs.map((faq, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: colors.bgCard,
+                      borderRadius: '12px',
+                      padding: '24px',
+                      border: `1px solid ${colors.borderDefault}`,
+                    }}
+                  >
+                    <h3 style={{
+                      fontSize: '15px',
+                      fontWeight: '500',
+                      marginBottom: '12px',
+                      color: colors.textPrimary,
+                    }}>{faq.q}</h3>
+                    <p style={{
+                      fontSize: '14px',
+                      color: colors.textSecondary,
+                      lineHeight: '1.6',
+                      margin: 0,
+                    }}>{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div style={{
+              position: 'sticky',
+              top: '100px',
+            }}>
+              <img 
+                src="/Dani2.png" 
+                alt="Daniel Liberal tattooing" 
+                style={{ 
+                  width: '100%', 
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                }} 
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -1196,11 +1212,11 @@ export default function LBRLWebsite() {
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-          <TribalLogo size={32} />
+          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '3px' }}>LBRL</span>
         </div>
         <p style={{ fontSize: '12px', color: colors.textMuted }}>
-          © 2025 Daniel Liberal. All rights reserved.
+          © 2026 Daniel Liberal. All rights reserved.
         </p>
         <p style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>
           Appointment Only • Vancouver, WA
