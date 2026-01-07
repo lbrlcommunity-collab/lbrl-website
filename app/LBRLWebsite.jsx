@@ -1302,7 +1302,7 @@ export default function LBRLWebsite() {
               📍 9013 NE Hwy 99, Vancouver, WA 98665
             </p>
             <p style={{ fontSize: '14px', color: colors.textSecondary }}>
-              ✉️ lbrltattoos@gmail.com
+              ✉️ Liberaltattoos@gmail.com
             </p>
             
             {/* Social Media Links */}
