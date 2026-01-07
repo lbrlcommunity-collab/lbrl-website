@@ -96,36 +96,28 @@ export default function LBRLWebsite() {
     // NEO JAPANESE (54)
     { id: 1, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
     { id: 2, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
-    { id: 3, style: 'japanese', image: '/portfolio/japanese/IMG_0461.png' },
     { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
-    { id: 5, style: 'japanese', image: '/portfolio/japanese/IMG_0480.webp' },
     { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
     { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
     { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg' },
     { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png' },
     { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png' },
-    { id: 11, style: 'japanese', image: '/portfolio/japanese/IMG_0787.png' },
     { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg' },
     { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png' },
     { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png' },
-    { id: 15, style: 'japanese', image: '/portfolio/japanese/IMG_4405.webp' },
     { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp' },
     { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp' },
     { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp' },
     { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg' },
     { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg' },
     { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp' },
-    { id: 22, style: 'japanese', image: '/portfolio/japanese/IMG_4461.webp' },
     { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp' },
-    { id: 24, style: 'japanese', image: '/portfolio/japanese/IMG_4465.webp' },
     { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp' },
     { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp' },
-    { id: 27, style: 'japanese', image: '/portfolio/japanese/IMG_4472.webp' },
     { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp' },
     { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png' },
     { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png' },
     { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png' },
-    { id: 32, style: 'japanese', image: '/portfolio/japanese/IMG_9305.png' },
     { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png' },
     { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png' },
     { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png' },
@@ -137,7 +129,6 @@ export default function LBRLWebsite() {
     { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg' },
     { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png' },
     { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp' },
-    { id: 44, style: 'japanese', image: '/portfolio/japanese/IMG_9410.jpeg' },
     { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp' },
     { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp' },
     { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp' },
@@ -149,7 +140,6 @@ export default function LBRLWebsite() {
     { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
     { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
     // BLACKWORK (18)
-    { id: 55, style: 'blackwork', image: '/portfolio/blackwork/IMG_0445.png' },
     { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
     { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
     { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
@@ -193,9 +183,7 @@ export default function LBRLWebsite() {
     { id: 94, style: 'ornamental', image: '/portfolio/ornamental/copy_C3A8F39E-18E5-4B1D-A265-230CFF6D7279.jpeg' },
     { id: 95, style: 'ornamental', image: '/portfolio/ornamental/copy_C8541463-D180-4668-80FF-644BD54F9894.jpeg' },
     { id: 96, style: 'ornamental', image: '/portfolio/ornamental/copy_E0336537-08E0-457E-BB7C-1FB14BE36BB3.jpeg' },
-    { id: 97, style: 'ornamental', image: '/portfolio/ornamental/IMG_0462.png' },
     { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
-    { id: 99, style: 'ornamental', image: '/portfolio/ornamental/IMG_0479.webp' },
     { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
     { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
     { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_0726.png' },
@@ -218,7 +206,6 @@ export default function LBRLWebsite() {
     { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png' },
     { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp' },
     { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg' },
-    { id: 122, style: 'ornamental', image: '/portfolio/ornamental/IMG_9402.jpeg' },
     { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png' },
     { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png' },
     { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
@@ -289,13 +276,43 @@ export default function LBRLWebsite() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: '24px',
+          overflow: 'hidden',
         }}>
+          {/* Tribal Lines Background */}
+          <svg style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            opacity: 0.08,
+          }} viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="tribalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor={colors.accentCyan} />
+                <stop offset="100%" stopColor={colors.accentTeal} />
+              </linearGradient>
+            </defs>
+            {/* Curved tribal lines */}
+            <path d="M0,200 Q100,100 200,200 T400,200" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-1" />
+            <path d="M0,220 Q100,120 200,220 T400,220" stroke="url(#tribalGrad)" strokeWidth="1.5" fill="none" className="tribal-line-2" />
+            <path d="M0,180 Q100,80 200,180 T400,180" stroke="url(#tribalGrad)" strokeWidth="1.5" fill="none" className="tribal-line-3" />
+            <path d="M50,0 Q150,100 50,200 T50,400" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-4" />
+            <path d="M350,0 Q250,100 350,200 T350,400" stroke="url(#tribalGrad)" strokeWidth="2" fill="none" className="tribal-line-5" />
+            <path d="M100,50 Q200,150 300,50" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            <path d="M100,350 Q200,250 300,350" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            {/* Angular tribal shapes */}
+            <path d="M150,100 L170,130 L150,160 L130,130 Z" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            <path d="M250,280 L270,310 L250,340 L230,310 Z" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            <circle cx="80" cy="300" r="30" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+            <circle cx="320" cy="100" r="25" stroke="url(#tribalGrad)" strokeWidth="1" fill="none" />
+          </svg>
+          
           <div className="logo-spinner" style={{
             width: '80px',
             height: '80px',
             borderRadius: '50%',
             overflow: 'hidden',
             animation: 'spin 1.5s ease-in-out infinite',
+            boxShadow: `0 0 60px ${colors.accentCyan}33`,
           }}>
             <img 
               src="/Tribal Logo.jpg" 
@@ -1574,6 +1591,26 @@ export default function LBRLWebsite() {
           100% { transform: rotate(360deg) scale(1); }
         }
         
+        @keyframes tribalPulse {
+          0%, 100% { opacity: 0.05; }
+          50% { opacity: 0.12; }
+        }
+        
+        @keyframes tribalDraw {
+          0% { stroke-dashoffset: 1000; }
+          100% { stroke-dashoffset: 0; }
+        }
+        
+        .tribal-line-1, .tribal-line-2, .tribal-line-3, .tribal-line-4, .tribal-line-5 {
+          stroke-dasharray: 1000;
+          animation: tribalDraw 3s ease-in-out infinite;
+        }
+        
+        .tribal-line-2 { animation-delay: 0.2s; }
+        .tribal-line-3 { animation-delay: 0.4s; }
+        .tribal-line-4 { animation-delay: 0.6s; }
+        .tribal-line-5 { animation-delay: 0.8s; }
+        
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -1718,6 +1755,24 @@ export default function LBRLWebsite() {
           /* Remove any fixed positioning issues */
           [style*="position: sticky"] {
             position: relative !important;
+          }
+          
+          /* Fix FAQs section on mobile - hide image */
+          #faqs [style*="position: sticky"] {
+            display: none !important;
+          }
+          
+          /* Ensure proper spacing between sections */
+          section {
+            position: relative !important;
+            z-index: 1 !important;
+            overflow: visible !important;
+          }
+          
+          /* Fix contact section overlap */
+          #contact {
+            margin-top: 0 !important;
+            padding-top: 60px !important;
           }
         }
         
