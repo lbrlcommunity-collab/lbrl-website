@@ -1734,41 +1734,49 @@ export default function LBRLWebsite() {
           animation-delay: 7s;
         }
         
-        /* Fibonacci circles animation for loading */
+        /* Fibonacci circles animation for loading - continuous pulse */
         .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
-          stroke-dasharray: 1000;
-          animation: fibDraw 2s ease-out forwards;
+          animation: fibPulse 2.5s ease-in-out infinite;
         }
-        .fib-circle-2 { animation-delay: 0.1s; }
-        .fib-circle-3 { animation-delay: 0.2s; }
-        .fib-circle-4 { animation-delay: 0.3s; }
-        .fib-circle-5 { animation-delay: 0.4s; }
+        .fib-circle-2 { animation-delay: 0.15s; }
+        .fib-circle-3 { animation-delay: 0.3s; }
+        .fib-circle-4 { animation-delay: 0.45s; }
+        .fib-circle-5 { animation-delay: 0.6s; }
         
-        @keyframes fibDraw {
-          0% { stroke-dashoffset: 1000; opacity: 0; }
-          50% { opacity: 0.3; }
-          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        @keyframes fibPulse {
+          0%, 100% { 
+            opacity: 0.08; 
+            transform: scale(1);
+          }
+          50% { 
+            opacity: 0.25; 
+            transform: scale(1.05);
+          }
         }
         
         .fibonacci-spiral {
-          stroke-dasharray: 800;
-          animation: spiralDraw 2.5s ease-out forwards;
+          animation: spiralPulse 3s ease-in-out infinite;
         }
         
-        @keyframes spiralDraw {
-          0% { stroke-dashoffset: 800; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        @keyframes spiralPulse {
+          0%, 100% { 
+            opacity: 0.1; 
+            stroke-dashoffset: 0;
+          }
+          50% { 
+            opacity: 0.3; 
+            stroke-dashoffset: 100;
+          }
         }
         
         .organic-line-1, .organic-line-2 {
-          stroke-dasharray: 500;
-          animation: organicDraw 2s ease-out forwards;
+          animation: organicPulse 2.8s ease-in-out infinite;
         }
-        .organic-line-2 { animation-delay: 0.3s; }
+        .organic-line-2 { animation-delay: 0.4s; }
         
-        @keyframes organicDraw {
-          0% { stroke-dashoffset: 500; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        @keyframes organicPulse {
+          0%, 100% { opacity: 0.08; }
+          50% { opacity: 0.2; }
         }
         
         @keyframes fadeInUp {
