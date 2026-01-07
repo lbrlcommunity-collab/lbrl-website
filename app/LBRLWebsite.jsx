@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-const BOOKING_URL = 'https://book.lbrltattoos.com'
+const BOOKING_URL = 'https://book.lbrltattoos.com?popup=booking'
 const RELEASE_URL = 'https://book.lbrltattoos.com/release-form'
 
 export default function LBRLWebsite() {
@@ -12,6 +12,7 @@ export default function LBRLWebsite() {
   const [currentImage, setCurrentImage] = useState(0)
   const [sliderIndex, setSliderIndex] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -224,10 +225,14 @@ export default function LBRLWebsite() {
   ]
 
   const faqs = [
-    { q: 'How do I book a consultation?', a: 'Fill out the booking form or DM me on Instagram @dani_lbrl. Consultations are free and can be done in person or virtually.' },
-    { q: 'What is the deposit?', a: 'Deposits range from $50-$300 depending on project size. This secures your appointment and goes toward your final tattoo cost.' },
-    { q: 'Do you do walk-ins?', a: 'No, LBRL is appointment-only. This ensures every client gets my full attention and a completely custom experience.' },
-    { q: 'How should I prepare for my session?', a: 'Get a good night\'s sleep, eat a solid meal, stay hydrated, and wear comfortable clothing that allows access to the tattoo area.' },
+    { q: 'Am I eligible for a tattoo?', a: 'You must be 18 years or older and present a valid ID. No exceptions.' },
+    { q: 'What should I expect from a large-scale tattoo?', a: 'Large-scale projects like sleeves, back pieces, or full leg pieces require a real commitment of time and budget. These projects are completed over multiple sessions, and timelines vary depending on the design, your body, and how you sit. Rushing a tattoo usually affects the quality, so the focus is always on doing it right rather than doing it fast.' },
+    { q: 'How does pricing work?', a: 'Large-scale projects are priced at $260 per hour with a $300 deposit. Medium projects are a flat rate from $500 to $750 with a $250 deposit. Small tattoos have a $150 shop minimum, typically ranging from $150 to $350, with deposits from $50 to $100. All deposits go toward the final session.' },
+    { q: 'What\'s required to secure an appointment?', a: 'All appointments require a deposit, which secures your booking and covers design time. Deposits are applied toward the final session and are non-refundable.' },
+    { q: 'What if I need to cancel or reschedule?', a: 'Cancellations or reschedules made with less than 72 hours notice will result in the loss of the deposit. A new deposit is required to book again.' },
+    { q: 'Will I see the design before the tattoo?', a: 'For large-scale projects with a $300 deposit, a revision appointment is scheduled where you review up to three design directions. For medium and small tattoos, designs are reviewed on the day of the appointment. I don\'t send work-in-progress images beforehand, as reviewing in person leads to better results.' },
+    { q: 'How should I prepare for my session?', a: 'Get a good night\'s rest, eat beforehand, stay hydrated, and bring snacks if you\'d like. You\'re welcome to bring a blanket or anything that helps you stay comfortable during the session.' },
+    { q: 'What am I agreeing to when I book?', a: 'By booking an appointment, you acknowledge and agree to the pricing, deposit policy, and process outlined here. You\'re also agreeing to follow studio guidelines so the session runs smoothly.' },
   ]
 
   const openLightbox = (index) => {
@@ -468,7 +473,7 @@ export default function LBRLWebsite() {
         }}>
           <span style={{ fontSize: '12px', color: colors.textSecondary }}>📍 Vancouver, WA</span>
           <span style={{ fontSize: '12px', color: colors.textMuted }}>•</span>
-          <span style={{ fontSize: '12px', color: colors.accentCyan }}>3rd Place 2024 Portland Tattoo Expo</span>
+          <span style={{ fontSize: '12px', color: colors.accentCyan }}>Award Winner: NYC 2016 & Portland 2024</span>
         </div>
 
         <h1 style={{
@@ -645,7 +650,7 @@ export default function LBRLWebsite() {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
-                  <span style={{ fontSize: '13px', color: colors.accentCyan }}>3rd Place PDX Expo 2024</span>
+                  <span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span>
                 </div>
               </div>
             </div>
@@ -1143,29 +1148,59 @@ export default function LBRLWebsite() {
                 }}>Common Questions</h2>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {faqs.map((faq, i) => (
                   <div
                     key={i}
                     style={{
                       background: colors.bgCard,
                       borderRadius: '12px',
-                      padding: '24px',
                       border: `1px solid ${colors.borderDefault}`,
+                      overflow: 'hidden',
                     }}
                   >
-                    <h3 style={{
-                      fontSize: '15px',
-                      fontWeight: '500',
-                      marginBottom: '12px',
-                      color: colors.textPrimary,
-                    }}>{faq.q}</h3>
-                    <p style={{
-                      fontSize: '14px',
-                      color: colors.textSecondary,
-                      lineHeight: '1.6',
-                      margin: 0,
-                    }}>{faq.a}</p>
+                    <button
+                      onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
+                      style={{
+                        width: '100%',
+                        padding: '20px 24px',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        textAlign: 'left',
+                      }}
+                    >
+                      <h3 style={{
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        color: colors.textPrimary,
+                        margin: 0,
+                        paddingRight: '16px',
+                      }}>{faq.q}</h3>
+                      <span style={{
+                        color: colors.accentCyan,
+                        fontSize: '20px',
+                        fontWeight: '300',
+                        transform: expandedFaq === i ? 'rotate(45deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s ease',
+                      }}>+</span>
+                    </button>
+                    <div style={{
+                      maxHeight: expandedFaq === i ? '500px' : '0',
+                      overflow: 'hidden',
+                      transition: 'max-height 0.3s ease',
+                    }}>
+                      <p style={{
+                        fontSize: '14px',
+                        color: colors.textSecondary,
+                        lineHeight: '1.7',
+                        margin: 0,
+                        padding: '0 24px 20px 24px',
+                      }}>{faq.a}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1472,7 +1507,7 @@ export default function LBRLWebsite() {
           [style*="grid-template-columns: repeat(4"] { 
             display: grid !important;
             grid-template-columns: repeat(2, 1fr) !important; 
-            gap: 16px !important;
+            gap: 12px !important;
           }
           
           [style*="grid-template-columns: repeat(3"] { 
@@ -1492,18 +1527,67 @@ export default function LBRLWebsite() {
             flex-direction: column !important;
             gap: 16px !important;
           }
+          
+          /* Portfolio filter buttons */
+          [style*="gap: 12px"][style*="flex-wrap"] {
+            gap: 8px !important;
+          }
+          
+          [style*="gap: 12px"][style*="flex-wrap"] button {
+            padding: 8px 12px !important;
+            font-size: 10px !important;
+          }
+          
+          /* Fix slider on mobile */
+          [style*="minWidth: 280px"] {
+            min-width: 240px !important;
+          }
+          
+          /* Fix hero section */
+          [style*="minHeight: 100vh"] {
+            min-height: auto !important;
+            padding-top: 100px !important;
+            padding-bottom: 60px !important;
+          }
+          
+          /* Remove any fixed positioning issues */
+          [style*="position: sticky"] {
+            position: relative !important;
+          }
         }
         
         @media (max-width: 480px) {
-          h1 { font-size: 28px !important; }
+          h1 { font-size: 26px !important; }
           h2 { font-size: 20px !important; }
           
           [style*="grid-template-columns: repeat(4"] { 
-            grid-template-columns: 1fr 1fr !important; 
+            grid-template-columns: 1fr !important;
           }
           
           [style*="padding: 32px"] {
-            padding: 20px !important;
+            padding: 16px !important;
+          }
+          
+          /* Stats bar single column */
+          [style*="grid-template-columns: repeat(4, 1fr)"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          
+          /* Portfolio filter buttons wrap better */
+          [style*="gap: 12px"][style*="flex-wrap"] {
+            justify-content: center !important;
+          }
+          
+          [style*="gap: 12px"][style*="flex-wrap"] button {
+            padding: 6px 10px !important;
+            font-size: 9px !important;
+            letter-spacing: 0.5px !important;
+          }
+          
+          /* Slider cards smaller */
+          [style*="minWidth: 280px"] {
+            min-width: 200px !important;
+            height: 280px !important;
           }
         }
       `}</style>
