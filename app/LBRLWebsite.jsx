@@ -13,6 +13,32 @@ export default function LBRLWebsite() {
   const [sliderIndex, setSliderIndex] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [visibleSections, setVisibleSections] = useState({})
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => setIsLoading(false), 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }))
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    const sections = document.querySelectorAll('[data-animate]')
+    sections.forEach((section) => observer.observe(section))
+
+    return () => observer.disconnect()
+  }, [isLoading])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -248,6 +274,49 @@ export default function LBRLWebsite() {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     }}>
 
+      {/* Loading Spinner */}
+      {isLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: colors.bgDark,
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '24px',
+        }}>
+          <div className="logo-spinner" style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            animation: 'spin 1.5s ease-in-out infinite',
+          }}>
+            <img 
+              src="/Tribal Logo.jpg" 
+              alt="LBRL" 
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+              }} 
+            />
+          </div>
+          <span style={{ 
+            fontSize: '24px', 
+            fontWeight: '300', 
+            letterSpacing: '6px', 
+            color: colors.textPrimary,
+            opacity: 0.8,
+          }}>LBRL</span>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav style={{
         position: 'fixed',
@@ -263,6 +332,7 @@ export default function LBRLWebsite() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        opacity: isLoading ? 0 : 1,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -470,6 +540,9 @@ export default function LBRLWebsite() {
           background: colors.bgCard,
           borderRadius: '20px',
           marginBottom: '32px',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(20px)' : 'translateY(0)',
+          transition: 'all 0.6s ease 0.3s',
         }}>
           <span style={{ fontSize: '12px', color: colors.textSecondary }}>📍 Vancouver, WA</span>
           <span style={{ fontSize: '12px', color: colors.textMuted }}>•</span>
@@ -482,6 +555,9 @@ export default function LBRLWebsite() {
           letterSpacing: '-1px',
           marginBottom: '24px',
           lineHeight: '1.1',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
+          transition: 'all 0.6s ease 0.5s',
         }}>
           Art That<br />
           <span style={{ color: colors.accentCyan }}>Becomes You</span>
@@ -493,11 +569,22 @@ export default function LBRLWebsite() {
           maxWidth: '600px',
           lineHeight: '1.7',
           marginBottom: '40px',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
+          transition: 'all 0.6s ease 0.7s',
         }}>
           Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy.
         </p>
 
-        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{ 
+          display: 'flex', 
+          gap: '16px', 
+          flexWrap: 'wrap', 
+          justifyContent: 'center',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
+          transition: 'all 0.6s ease 0.9s',
+        }}>
           <a
             href={BOOKING_URL}
             target="_blank"
@@ -567,13 +654,13 @@ export default function LBRLWebsite() {
       </section>
 
       {/* About Section */}
-      <section id="about" style={{
+      <section id="about" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <div>
+            <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <img 
                 src="/Dany 3.PNG" 
                 alt="Daniel Liberal tattooing" 
@@ -624,7 +711,7 @@ export default function LBRLWebsite() {
                 From Puerto Rico 2013 est. to Vancouver, WA 2016-Present
               </p>
             </div>
-            <div style={{
+            <div className={visibleSections['about'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{
               background: `linear-gradient(180deg, rgba(42,50,45,0.95) 0%, rgba(42,50,45,0.98) 100%), url('/about-bg.webp')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -644,9 +731,9 @@ export default function LBRLWebsite() {
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Experience</span>
                   <span style={{ fontSize: '13px', color: colors.textPrimary }}>12+ Years</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
-                  <span style={{ fontSize: '13px', color: colors.textPrimary }}>Neo Japanese, Blackwork, Ornamental, Floral</span>
+                  <span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
@@ -659,12 +746,12 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" style={{
+      <section id="portfolio" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
             <p style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -811,12 +898,12 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Process Section */}
-      <section id="process" style={{
+      <section id="process" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div className={visibleSections['process'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -835,6 +922,7 @@ export default function LBRLWebsite() {
             {processSteps.map((step, i) => (
               <div
                 key={i}
+                className={visibleSections['process'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'}
                 style={{
                   background: colors.bgCard,
                   borderRadius: '16px',
@@ -867,13 +955,13 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" style={{
+      <section id="pricing" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -900,7 +988,7 @@ export default function LBRLWebsite() {
           </div>
 
           {/* Pricing Cards */}
-          <div style={{
+          <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '24px',
@@ -1072,12 +1160,12 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Reviews Section */}
-      <section style={{
+      <section id="reviews" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div className={visibleSections['reviews'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
               fontSize: '12px',
               fontWeight: '500',
@@ -1096,6 +1184,7 @@ export default function LBRLWebsite() {
             {reviews.map((review, i) => (
               <div
                 key={i}
+                className={visibleSections['reviews'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'}
                 style={{
                   background: colors.bgCard,
                   borderRadius: '16px',
@@ -1126,13 +1215,13 @@ export default function LBRLWebsite() {
       </section>
 
       {/* FAQs Section */}
-      <section id="faqs" style={{
+      <section id="faqs" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgPrimary,
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
-            <div>
+            <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <div style={{ marginBottom: '40px' }}>
                 <p style={{
                   fontSize: '12px',
@@ -1206,7 +1295,7 @@ export default function LBRLWebsite() {
               </div>
             </div>
             
-            <div style={{
+            <div className={visibleSections['faqs'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{
               position: 'sticky',
               top: '100px',
             }}>
@@ -1225,11 +1314,11 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{
+      <section id="contact" data-animate style={{
         padding: 'clamp(60px, 10vw, 100px) 20px',
         background: colors.bgDark,
       }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+        <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
           <p style={{
             fontSize: '12px',
             fontWeight: '500',
@@ -1478,6 +1567,82 @@ export default function LBRLWebsite() {
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(180deg) scale(1.1); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        .animate-hidden {
+          opacity: 0;
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .animate-fadeInLeft {
+          animation: fadeInLeft 0.8s ease forwards;
+        }
+        
+        .animate-fadeInRight {
+          animation: fadeInRight 0.8s ease forwards;
+        }
+        
+        .animate-fadeInScale {
+          animation: fadeInScale 0.8s ease forwards;
+        }
+        
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        .animate-delay-5 { animation-delay: 0.5s; }
         
         .desktop-nav { display: flex; }
         .mobile-menu-btn { display: none !important; }
