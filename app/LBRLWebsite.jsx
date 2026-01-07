@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 
-const BOOKING_URL = 'https://www.lbrltattoos.com?popup=booking'
-const RELEASE_URL = 'https://www.lbrltattoos.com/release-form'
+const BOOKING_URL = 'https://book.lbrltattoos.com'
+const RELEASE_URL = 'https://book.lbrltattoos.com/release-form'
 
 export default function LBRLWebsite() {
   const [scrolled, setScrolled] = useState(false)
@@ -569,6 +569,16 @@ export default function LBRLWebsite() {
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div>
+              <img 
+                src="/Dany 3.PNG" 
+                alt="Daniel Liberal tattooing" 
+                style={{ 
+                  width: '100%', 
+                  borderRadius: '16px', 
+                  marginBottom: '30px',
+                  objectFit: 'cover',
+                }} 
+              />
               <p style={{
                 fontSize: '12px',
                 fontWeight: '500',
@@ -591,7 +601,15 @@ export default function LBRLWebsite() {
                 lineHeight: '1.8',
                 marginBottom: '24px',
               }}>
-                I don't just place art on skin. I create pieces that move with your body, considering every angle and contour. This is what sets custom work apart from flash. Your tattoo should feel like it was always meant to be there.
+                Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.
+              </p>
+              <p style={{
+                fontSize: '16px',
+                color: colors.textSecondary,
+                lineHeight: '1.8',
+                marginBottom: '24px',
+              }}>
+                With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.
               </p>
               <p style={{
                 fontSize: '14px',
