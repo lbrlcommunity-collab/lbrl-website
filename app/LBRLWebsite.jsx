@@ -93,9 +93,7 @@ export default function LBRLWebsite() {
   ]
 
   const portfolioItems = [
-    // NEO JAPANESE (54)
-    { id: 1, style: 'japanese', image: '/portfolio/japanese/copy_55E228E6-0551-46C5-AE1F-83BD632183F0.jpeg' },
-    { id: 2, style: 'japanese', image: '/portfolio/japanese/copy_B1D30228-A3E9-444D-9479-E4A686F0BE23.jpeg' },
+    // NEO JAPANESE
     { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
     { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
     { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
@@ -157,8 +155,7 @@ export default function LBRLWebsite() {
     { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
     { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
     { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
-    // FLORAL (19)
-    { id: 73, style: 'floral', image: '/portfolio/floral/copy_96A57A24-3F29-493B-AAC3-947800F209B5.jpeg' },
+    // FLORAL
     { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
     { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
     { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
@@ -177,12 +174,7 @@ export default function LBRLWebsite() {
     { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
     { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
     { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
-    // ORNAMENTAL (40)
-    { id: 92, style: 'ornamental', image: '/portfolio/ornamental/8525FC48-6C80-4BFF-A495-97B5C094566A.jpeg' },
-    { id: 93, style: 'ornamental', image: '/portfolio/ornamental/copy_1163F1C8-7EE2-413A-A501-C5528FB4AF96.jpeg' },
-    { id: 94, style: 'ornamental', image: '/portfolio/ornamental/copy_C3A8F39E-18E5-4B1D-A265-230CFF6D7279.jpeg' },
-    { id: 95, style: 'ornamental', image: '/portfolio/ornamental/copy_C8541463-D180-4668-80FF-644BD54F9894.jpeg' },
-    { id: 96, style: 'ornamental', image: '/portfolio/ornamental/copy_E0336537-08E0-457E-BB7C-1FB14BE36BB3.jpeg' },
+    // ORNAMENTAL
     { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
     { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
     { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
