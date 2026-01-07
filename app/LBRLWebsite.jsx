@@ -266,6 +266,9 @@ export default function LBRLWebsite() {
       background: colors.bgDark,
       color: colors.textPrimary,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      overflowX: 'hidden',
+      width: '100%',
+      maxWidth: '100vw',
     }}>
 
       {/* Loading Spinner */}
@@ -807,6 +810,7 @@ export default function LBRLWebsite() {
         background: colors.bgPrimary,
         position: 'relative',
         overflow: 'hidden',
+        maxWidth: '100vw',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -1665,7 +1669,8 @@ export default function LBRLWebsite() {
       {/* Global Styles */}
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { overflow-x: hidden; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
@@ -1847,6 +1852,8 @@ export default function LBRLWebsite() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
+          
+          html, body { overflow-x: hidden !important; width: 100% !important; }
           
           nav { padding: 12px 16px !important; }
           
