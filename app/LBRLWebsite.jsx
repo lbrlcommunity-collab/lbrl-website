@@ -678,13 +678,11 @@ export default function LBRLWebsite() {
           </a>
         </div>
 
-        {/* Wind Animation Image - Full Width */}
+        {/* Wind Animation Image - Below Buttons */}
         <div style={{
-          position: 'absolute',
-          bottom: '40px',
-          left: 0,
-          right: 0,
           width: '100%',
+          maxWidth: '1200px',
+          marginTop: '60px',
           padding: '0 40px',
           opacity: isLoading ? 0 : 1,
           transition: 'opacity 0.6s ease 1.1s',
