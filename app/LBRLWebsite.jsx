@@ -1704,10 +1704,10 @@ export default function LBRLWebsite() {
         @keyframes windBlow {
           0% {
             transform: translateX(-100px);
-            visibility: hidden;
+            opacity: 0;
           }
-          1% {
-            visibility: visible;
+          10% {
+            opacity: 1;
           }
           70% {
             transform: translateX(15px);
@@ -1717,13 +1717,14 @@ export default function LBRLWebsite() {
           }
           100% {
             transform: translateX(0);
+            opacity: 1;
           }
         }
         
         .wind-blow-image {
           animation: windBlow 1.5s ease-out forwards;
           animation-delay: 1s;
-          visibility: hidden;
+          opacity: 0;
         }
         
         /* Aurora / Northern Lights Effect */
