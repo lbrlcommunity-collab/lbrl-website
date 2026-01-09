@@ -1707,11 +1707,9 @@ export default function LBRLWebsite() {
           0% {
             transform: translateX(-80px) scaleX(0.95);
             opacity: 0;
-            filter: blur(2px);
           }
           40% {
             opacity: 0.6;
-            filter: blur(0px);
           }
           70% {
             transform: translateX(15px) scaleX(1.01);
@@ -1723,7 +1721,6 @@ export default function LBRLWebsite() {
           100% {
             transform: translateX(0) scaleX(1);
             opacity: 0.65;
-            filter: blur(0px);
           }
         }
         
