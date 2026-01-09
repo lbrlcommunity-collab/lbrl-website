@@ -77,6 +77,61 @@ export default function LBRLWebsite() {
     accentTeal: '#5a8a8a',
   }
 
+  // Decorative SVG Components
+  const FloralSVG1 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 20 C120 40, 140 60, 130 90 C150 80, 170 70, 180 100 C170 130, 150 120, 130 110 C140 140, 120 160, 100 180 C80 160, 60 140, 70 110 C50 120, 30 130, 20 100 C30 70, 50 80, 70 90 C60 60, 80 40, 100 20" 
+        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <circle cx="100" cy="100" r="15" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.8"/>
+      <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.6"/>
+    </svg>
+  )
+
+  const FloralSVG2 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M75 10 Q90 50, 75 80 Q60 50, 75 10" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M75 80 Q90 120, 75 150 Q60 120, 75 80" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M75 150 Q90 170, 75 190 Q60 170, 75 150" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
+      <path d="M30 60 Q50 75, 75 80 Q50 85, 30 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
+      <path d="M120 60 Q100 75, 75 80 Q100 85, 120 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
+    </svg>
+  )
+
+  const FloralSVG3 = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 30 C110 50, 120 70, 110 90 C130 80, 150 85, 150 90 C150 95, 130 100, 110 90 C120 110, 110 130, 90 150 C70 130, 60 110, 70 90 C50 100, 30 95, 30 90 C30 85, 50 80, 70 90 C60 70, 70 50, 90 30" 
+        stroke="currentColor" strokeWidth="1.8" fill="none" opacity="0.7"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(45 90 90)"/>
+      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(-45 90 90)"/>
+    </svg>
+  )
+
+  const LeafSVG = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 10 Q80 50, 70 100 Q90 130, 50 190 Q10 130, 30 100 Q20 50, 50 10" 
+        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M50 30 Q50 100, 50 180" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 50 Q65 60, 60 80" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 70 Q35 80, 40 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 90 Q65 100, 60 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M50 110 Q35 120, 40 140" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+    </svg>
+  )
+
+  const BotanicalSVG = ({ className, style }) => (
+    <svg className={className} style={style} viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M150 80 C170 100, 180 130, 165 150 C185 145, 200 150, 200 160 C200 170, 185 175, 165 170 C180 190, 170 210, 150 220 C130 210, 120 190, 135 170 C115 175, 100 170, 100 160 C100 150, 115 145, 135 150 C120 130, 130 100, 150 80" 
+        stroke="currentColor" strokeWidth="2" fill="none" opacity="0.7"/>
+      <circle cx="150" cy="160" r="12" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.8"/>
+      <circle cx="150" cy="160" r="6" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6"/>
+      <path d="M100 200 Q80 180, 90 150 Q70 140, 60 160 Q50 140, 70 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
+      <path d="M200 200 Q220 180, 210 150 Q230 140, 240 160 Q250 140, 230 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
+      <path d="M150 220 Q140 250, 150 280" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <path d="M150 240 Q130 250, 120 270" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+      <path d="M150 250 Q170 260, 180 280" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
+    </svg>
+  )
+
   const stats = [
     { value: '12+', label: 'Years Experience' },
     { value: '2x', label: 'Award Winner' },
@@ -266,9 +321,6 @@ export default function LBRLWebsite() {
       background: colors.bgDark,
       color: colors.textPrimary,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      overflowX: 'hidden',
-      width: '100%',
-      maxWidth: '100vw',
     }}>
 
       {/* Loading Spinner */}
@@ -365,7 +417,7 @@ export default function LBRLWebsite() {
         padding: scrolled ? '12px 24px' : '20px 24px',
         background: scrolled ? `${colors.bgDark}ee` : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${colors.borderSubtle}` : 'none',
+        boxShadow: scrolled ? `0 4px 30px rgba(125, 212, 196, 0.08)` : 'none',
         transition: 'all 0.3s ease',
         display: 'flex',
         justifyContent: 'space-between',
@@ -560,6 +612,32 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* LBRL Leaf Art with Wind Animation */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          pointerEvents: 'none',
+          overflow: 'hidden',
+        }}>
+          <img 
+            src="/IMG_4885.png" 
+            alt="" 
+            className="wind-animation"
+            style={{
+              width: '120%',
+              height: '120%',
+              objectFit: 'cover',
+              opacity: 0.15,
+            }}
+          />
+        </div>
+        
         {/* Aurora / Northern Lights Effect */}
         <div className="aurora-container" style={{
           position: 'absolute',
@@ -574,6 +652,28 @@ export default function LBRLWebsite() {
           <div className="aurora-flash aurora-2" />
           <div className="aurora-flash aurora-3" />
         </div>
+        
+        {/* Hero Floral Decorations */}
+        {!isLoading && (
+          <>
+            <BotanicalSVG 
+              className="floral-decoration floral-animate" 
+              style={{ top: '12%', left: '2%', width: '180px', height: '180px' }} 
+            />
+            <FloralSVG1 
+              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
+              style={{ top: '15%', right: '2%', width: '150px', height: '150px' }} 
+            />
+            <LeafSVG 
+              className="floral-decoration floral-animate floral-animate-delay-1" 
+              style={{ bottom: '12%', left: '3%', width: '100px', height: '200px' }} 
+            />
+            <FloralSVG3 
+              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
+              style={{ bottom: '15%', right: '3%', width: '130px', height: '130px' }} 
+            />
+          </>
+        )}
         
         <div style={{
           position: 'absolute',
@@ -714,6 +814,19 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* Decorative SVGs */}
+        {visibleSections['about'] && (
+          <>
+            <FloralSVG1 
+              className="floral-decoration floral-animate" 
+              style={{ top: '10%', right: '1%', width: '140px', height: '140px' }} 
+            />
+            <LeafSVG 
+              className="floral-decoration floral-animate-slow floral-animate-delay-1" 
+              style={{ bottom: '10%', left: '1%', width: '90px', height: '180px' }} 
+            />
+          </>
+        )}
         <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
@@ -772,29 +885,26 @@ export default function LBRLWebsite() {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius: '16px',
-              padding: '40px 32px',
+              padding: '32px',
               border: `1px solid ${colors.borderDefault}`,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
                 <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: '500', marginBottom: '4px' }}>Daniel Liberal</h3>
                   <p style={{ fontSize: '13px', color: colors.textMuted }}>Lead Artist & Owner</p>
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Experience</span>
                   <span style={{ fontSize: '13px', color: colors.textPrimary }}>12+ Years</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
                   <span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
                   <span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span>
                 </div>
@@ -810,8 +920,20 @@ export default function LBRLWebsite() {
         background: colors.bgPrimary,
         position: 'relative',
         overflow: 'hidden',
-        maxWidth: '100vw',
       }}>
+        {/* Decorative SVGs */}
+        {visibleSections['portfolio'] && (
+          <>
+            <FloralSVG3 
+              className="floral-decoration floral-animate floral-animate-delay-2" 
+              style={{ top: '5%', left: '1%', width: '140px', height: '140px' }} 
+            />
+            <BotanicalSVG 
+              className="floral-decoration floral-animate-slow" 
+              style={{ bottom: '10%', right: '1%', width: '160px', height: '160px' }} 
+            />
+          </>
+        )}
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
             <p style={{
@@ -1023,6 +1145,19 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* Decorative SVGs */}
+        {visibleSections['pricing'] && (
+          <>
+            <FloralSVG2 
+              className="floral-decoration floral-animate" 
+              style={{ top: '20%', right: '1%', width: '110px', height: '150px' }} 
+            />
+            <FloralSVG1 
+              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
+              style={{ bottom: '20%', left: '1%', width: '120px', height: '120px' }} 
+            />
+          </>
+        )}
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -1323,6 +1458,13 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* Decorative SVGs */}
+        {visibleSections['faqs'] && (
+          <LeafSVG 
+            className="floral-decoration floral-animate floral-animate-delay-1" 
+            style={{ top: '10%', left: '1%', width: '90px', height: '180px' }} 
+          />
+        )}
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
             <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
@@ -1424,6 +1566,19 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
+        {/* Decorative SVGs */}
+        {visibleSections['contact'] && (
+          <>
+            <LeafSVG 
+              className="floral-decoration floral-animate" 
+              style={{ top: '15%', left: '2%', width: '80px', height: '160px' }} 
+            />
+            <FloralSVG3 
+              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
+              style={{ bottom: '20%', right: '2%', width: '120px', height: '120px' }} 
+            />
+          </>
+        )}
         <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <p style={{
             fontSize: '12px',
@@ -1669,8 +1824,7 @@ export default function LBRLWebsite() {
       {/* Global Styles */}
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; overflow-x: hidden; }
-        body { overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
@@ -1680,6 +1834,26 @@ export default function LBRLWebsite() {
           50% { transform: rotate(180deg) scale(1.1); }
           100% { transform: rotate(360deg) scale(1); }
         }
+        
+        @keyframes tribalPulse {
+          0%, 100% { opacity: 0.05; }
+          50% { opacity: 0.12; }
+        }
+        
+        @keyframes tribalDraw {
+          0% { stroke-dashoffset: 1000; }
+          100% { stroke-dashoffset: 0; }
+        }
+        
+        .tribal-line-1, .tribal-line-2, .tribal-line-3, .tribal-line-4, .tribal-line-5 {
+          stroke-dasharray: 1000;
+          animation: tribalDraw 3s ease-in-out infinite;
+        }
+        
+        .tribal-line-2 { animation-delay: 0.2s; }
+        .tribal-line-3 { animation-delay: 0.4s; }
+        .tribal-line-4 { animation-delay: 0.6s; }
+        .tribal-line-5 { animation-delay: 0.8s; }
         
         /* Aurora / Northern Lights Effect */
         @keyframes auroraFlash {
@@ -1695,6 +1869,38 @@ export default function LBRLWebsite() {
             opacity: 0.12; 
             transform: translateX(100%) skewX(-15deg);
           }
+        }
+        
+        /* Wind Pan Animation for LBRL Leaf Art */
+        @keyframes windPan {
+          0% { 
+            transform: translateX(-3%) scale(1.02);
+          }
+          50% { 
+            transform: translateX(3%) scale(1);
+          }
+          100% { 
+            transform: translateX(-3%) scale(1.02);
+          }
+        }
+        
+        @keyframes windSway {
+          0%, 100% { 
+            transform: translateX(-2%) rotate(-0.5deg);
+          }
+          25% {
+            transform: translateX(1%) rotate(0.3deg);
+          }
+          50% { 
+            transform: translateX(2%) rotate(0.5deg);
+          }
+          75% {
+            transform: translateX(-1%) rotate(-0.3deg);
+          }
+        }
+        
+        .wind-animation {
+          animation: windSway 20s ease-in-out infinite;
         }
         
         .aurora-flash {
@@ -1734,49 +1940,84 @@ export default function LBRLWebsite() {
           animation-delay: 7s;
         }
         
-        /* Fibonacci circles animation for loading - continuous pulse */
+        /* Fibonacci circles animation for loading */
         .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
-          animation: fibPulse 2.5s ease-in-out infinite;
+          stroke-dasharray: 1000;
+          animation: fibDraw 2s ease-out forwards;
         }
-        .fib-circle-2 { animation-delay: 0.15s; }
-        .fib-circle-3 { animation-delay: 0.3s; }
-        .fib-circle-4 { animation-delay: 0.45s; }
-        .fib-circle-5 { animation-delay: 0.6s; }
+        .fib-circle-2 { animation-delay: 0.1s; }
+        .fib-circle-3 { animation-delay: 0.2s; }
+        .fib-circle-4 { animation-delay: 0.3s; }
+        .fib-circle-5 { animation-delay: 0.4s; }
         
-        @keyframes fibPulse {
-          0%, 100% { 
-            opacity: 0.08; 
-            transform: scale(1);
-          }
-          50% { 
-            opacity: 0.25; 
-            transform: scale(1.05);
-          }
+        @keyframes fibDraw {
+          0% { stroke-dashoffset: 1000; opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.15; }
         }
         
         .fibonacci-spiral {
-          animation: spiralPulse 3s ease-in-out infinite;
+          stroke-dasharray: 800;
+          animation: spiralDraw 2.5s ease-out forwards;
         }
         
-        @keyframes spiralPulse {
-          0%, 100% { 
-            opacity: 0.1; 
-            stroke-dashoffset: 0;
-          }
-          50% { 
-            opacity: 0.3; 
-            stroke-dashoffset: 100;
-          }
+        @keyframes spiralDraw {
+          0% { stroke-dashoffset: 800; opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0.2; }
         }
         
         .organic-line-1, .organic-line-2 {
-          animation: organicPulse 2.8s ease-in-out infinite;
+          stroke-dasharray: 500;
+          animation: organicDraw 2s ease-out forwards;
         }
-        .organic-line-2 { animation-delay: 0.4s; }
+        .organic-line-2 { animation-delay: 0.3s; }
         
-        @keyframes organicPulse {
-          0%, 100% { opacity: 0.08; }
-          50% { opacity: 0.2; }
+        @keyframes organicDraw {
+          0% { stroke-dashoffset: 500; opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        }
+        
+        @keyframes floralFloat {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        
+        @keyframes floralPulse {
+          0%, 100% { opacity: 0.35; transform: scale(1); }
+          50% { opacity: 0.55; transform: scale(1.08); }
+        }
+        
+        @keyframes floralDraw {
+          0% { stroke-dashoffset: 500; opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        }
+        
+        .floral-decoration {
+          position: absolute;
+          pointer-events: none;
+          color: #7dd4c4;
+          z-index: 0;
+          opacity: 0.4;
+        }
+        
+        .floral-animate {
+          animation: floralFloat 8s ease-in-out infinite, floralPulse 4s ease-in-out infinite;
+        }
+        
+        .floral-animate-slow {
+          animation: floralFloat 12s ease-in-out infinite, floralPulse 6s ease-in-out infinite;
+        }
+        
+        .floral-animate-delay-1 { animation-delay: 0.5s; }
+        .floral-animate-delay-2 { animation-delay: 1s; }
+        .floral-animate-delay-3 { animation-delay: 1.5s; }
+        
+        /* Hide floral decorations on tablet and mobile */
+        @media (max-width: 1024px) {
+          .floral-decoration {
+            display: none !important;
+          }
         }
         
         @keyframes fadeInUp {
@@ -1860,8 +2101,6 @@ export default function LBRLWebsite() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
-          
-          html, body { overflow-x: hidden !important; width: 100% !important; }
           
           nav { padding: 12px 16px !important; }
           
