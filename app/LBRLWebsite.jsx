@@ -1429,8 +1429,22 @@ export default function LBRLWebsite() {
                   width: '100%', 
                   borderRadius: '16px',
                   objectFit: 'cover',
+                  marginBottom: '20px',
                 }} 
               />
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                style={{
+                  width: '100%',
+                  borderRadius: '16px',
+                  objectFit: 'cover',
+                }}
+              >
+                <source src="/_users_355de36e-0a13-42b0-a4f8-690006e9848c_generated_0760b186-f9b7-45de-b081-c173128c2802_generated_video.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
@@ -1704,10 +1718,10 @@ export default function LBRLWebsite() {
         @keyframes windBlow {
           0% {
             transform: translateX(-100px);
-            opacity: 0;
+            clip-path: inset(0 100% 0 0);
           }
-          10% {
-            opacity: 1;
+          50% {
+            clip-path: inset(0 0 0 0);
           }
           70% {
             transform: translateX(15px);
@@ -1717,14 +1731,14 @@ export default function LBRLWebsite() {
           }
           100% {
             transform: translateX(0);
-            opacity: 1;
+            clip-path: inset(0 0 0 0);
           }
         }
         
         .wind-blow-image {
           animation: windBlow 1.5s ease-out forwards;
           animation-delay: 1s;
-          opacity: 0;
+          clip-path: inset(0 100% 0 0);
         }
         
         /* Aurora / Northern Lights Effect */
