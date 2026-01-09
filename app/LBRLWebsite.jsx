@@ -678,22 +678,25 @@ export default function LBRLWebsite() {
           </a>
         </div>
 
-        {/* Wind Animation Image */}
+        {/* Wind Animation Image - Full Width */}
         <div style={{
-          marginTop: '60px',
+          position: 'absolute',
+          bottom: '40px',
+          left: 0,
+          right: 0,
+          width: '100%',
+          padding: '0 40px',
           opacity: isLoading ? 0 : 1,
-          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
-          transition: 'all 0.6s ease 1.1s',
+          transition: 'opacity 0.6s ease 1.1s',
         }}>
           <img 
             src="/IMG_4885.png" 
             alt="Decorative floral element" 
             className="wind-blow-image"
             style={{
-              maxWidth: '400px',
-              width: '80vw',
+              width: '100%',
               height: 'auto',
-              opacity: 0.7,
+              objectFit: 'contain',
             }}
           />
         </div>
@@ -1704,28 +1707,31 @@ export default function LBRLWebsite() {
         /* Wind Blow Animation for IMG_4885 */
         @keyframes windBlow {
           0% {
-            transform: translateX(-100px) rotate(-5deg);
+            transform: translateX(-80px) scaleX(0.95);
             opacity: 0;
+            filter: blur(2px);
           }
-          20% {
-            opacity: 0.5;
+          40% {
+            opacity: 0.6;
+            filter: blur(0px);
           }
-          60% {
-            transform: translateX(20px) rotate(2deg);
-            opacity: 0.7;
+          70% {
+            transform: translateX(15px) scaleX(1.01);
+            opacity: 0.75;
           }
-          80% {
-            transform: translateX(-5px) rotate(-1deg);
+          85% {
+            transform: translateX(-5px) scaleX(1);
           }
           100% {
-            transform: translateX(0) rotate(0deg);
-            opacity: 0.7;
+            transform: translateX(0) scaleX(1);
+            opacity: 0.65;
+            filter: blur(0px);
           }
         }
         
         .wind-blow-image {
-          animation: windBlow 2s ease-out forwards;
-          animation-delay: 1.2s;
+          animation: windBlow 1.8s ease-out forwards;
+          animation-delay: 1s;
           opacity: 0;
         }
         
