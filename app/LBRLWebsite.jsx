@@ -17,7 +17,6 @@ export default function LBRLWebsite() {
   const [visibleSections, setVisibleSections] = useState({})
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => setIsLoading(false), 1500)
     return () => clearTimeout(timer)
   }, [])
@@ -33,10 +32,8 @@ export default function LBRLWebsite() {
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     )
-
     const sections = document.querySelectorAll('[data-animate]')
     sections.forEach((section) => observer.observe(section))
-
     return () => observer.disconnect()
   }, [isLoading])
 
@@ -77,61 +74,6 @@ export default function LBRLWebsite() {
     accentTeal: '#5a8a8a',
   }
 
-  // Decorative SVG Components
-  const FloralSVG1 = ({ className, style }) => (
-    <svg className={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M100 20 C120 40, 140 60, 130 90 C150 80, 170 70, 180 100 C170 130, 150 120, 130 110 C140 140, 120 160, 100 180 C80 160, 60 140, 70 110 C50 120, 30 130, 20 100 C30 70, 50 80, 70 90 C60 60, 80 40, 100 20" 
-        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
-      <circle cx="100" cy="100" r="15" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.8"/>
-      <circle cx="100" cy="100" r="8" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.6"/>
-    </svg>
-  )
-
-  const FloralSVG2 = ({ className, style }) => (
-    <svg className={className} style={style} viewBox="0 0 150 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M75 10 Q90 50, 75 80 Q60 50, 75 10" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
-      <path d="M75 80 Q90 120, 75 150 Q60 120, 75 80" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
-      <path d="M75 150 Q90 170, 75 190 Q60 170, 75 150" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
-      <path d="M30 60 Q50 75, 75 80 Q50 85, 30 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
-      <path d="M120 60 Q100 75, 75 80 Q100 85, 120 100" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6"/>
-    </svg>
-  )
-
-  const FloralSVG3 = ({ className, style }) => (
-    <svg className={className} style={style} viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M90 30 C110 50, 120 70, 110 90 C130 80, 150 85, 150 90 C150 95, 130 100, 110 90 C120 110, 110 130, 90 150 C70 130, 60 110, 70 90 C50 100, 30 95, 30 90 C30 85, 50 80, 70 90 C60 70, 70 50, 90 30" 
-        stroke="currentColor" strokeWidth="1.8" fill="none" opacity="0.7"/>
-      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(45 90 90)"/>
-      <ellipse cx="90" cy="90" rx="20" ry="25" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.6" transform="rotate(-45 90 90)"/>
-    </svg>
-  )
-
-  const LeafSVG = ({ className, style }) => (
-    <svg className={className} style={style} viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 10 Q80 50, 70 100 Q90 130, 50 190 Q10 130, 30 100 Q20 50, 50 10" 
-        stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.7"/>
-      <path d="M50 30 Q50 100, 50 180" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M50 50 Q65 60, 60 80" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M50 70 Q35 80, 40 100" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M50 90 Q65 100, 60 120" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M50 110 Q35 120, 40 140" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-    </svg>
-  )
-
-  const BotanicalSVG = ({ className, style }) => (
-    <svg className={className} style={style} viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M150 80 C170 100, 180 130, 165 150 C185 145, 200 150, 200 160 C200 170, 185 175, 165 170 C180 190, 170 210, 150 220 C130 210, 120 190, 135 170 C115 175, 100 170, 100 160 C100 150, 115 145, 135 150 C120 130, 130 100, 150 80" 
-        stroke="currentColor" strokeWidth="2" fill="none" opacity="0.7"/>
-      <circle cx="150" cy="160" r="12" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.8"/>
-      <circle cx="150" cy="160" r="6" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6"/>
-      <path d="M100 200 Q80 180, 90 150 Q70 140, 60 160 Q50 140, 70 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
-      <path d="M200 200 Q220 180, 210 150 Q230 140, 240 160 Q250 140, 230 120" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
-      <path d="M150 220 Q140 250, 150 280" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.6"/>
-      <path d="M150 240 Q130 250, 120 270" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-      <path d="M150 250 Q170 260, 180 280" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.5"/>
-    </svg>
-  )
-
   const stats = [
     { value: '12+', label: 'Years Experience' },
     { value: '2x', label: 'Award Winner' },
@@ -148,7 +90,6 @@ export default function LBRLWebsite() {
   ]
 
   const portfolioItems = [
-    // NEO JAPANESE
     { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
     { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
     { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
@@ -192,7 +133,6 @@ export default function LBRLWebsite() {
     { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp' },
     { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
     { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
-    // BLACKWORK (18)
     { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
     { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
     { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
@@ -210,7 +150,6 @@ export default function LBRLWebsite() {
     { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
     { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
     { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
-    // FLORAL
     { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
     { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
     { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
@@ -229,7 +168,6 @@ export default function LBRLWebsite() {
     { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
     { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
     { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
-    // ORNAMENTAL
     { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
     { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
     { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
@@ -284,11 +222,10 @@ export default function LBRLWebsite() {
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
 
-  // Auto-rotate reviews
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReviewIndex((prev) => (prev + 1) % reviews.length)
-    }, 5000) // Change every 5 seconds
+    }, 5000)
     return () => clearInterval(interval)
   }, [reviews.length])
 
@@ -321,6 +258,9 @@ export default function LBRLWebsite() {
       background: colors.bgDark,
       color: colors.textPrimary,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      overflowX: 'hidden',
+      width: '100%',
+      maxWidth: '100vw',
     }}>
 
       {/* Loading Spinner */}
@@ -340,7 +280,6 @@ export default function LBRLWebsite() {
           gap: '24px',
           overflow: 'hidden',
         }}>
-          {/* Sacred Geometry / Fibonacci Background */}
           <svg style={{
             position: 'absolute',
             width: '100%',
@@ -354,29 +293,20 @@ export default function LBRLWebsite() {
                 <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
             </defs>
-            {/* Golden Spiral approximation */}
-            <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
-              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="fibonacci-spiral" />
-            {/* Fibonacci circles */}
+            <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="fibonacci-spiral" />
             <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-1" />
             <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-2" />
             <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-3" />
             <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-4" />
             <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-5" />
-            {/* Flower of Life petals */}
             <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            {/* Organic floral curves */}
             <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-1" />
             <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-2" />
-            <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" />
-            {/* Fine detail arcs */}
-            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
-            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
           </svg>
           
           <div className="logo-spinner" style={{
@@ -387,23 +317,9 @@ export default function LBRLWebsite() {
             animation: 'spin 1.5s ease-in-out infinite',
             boxShadow: `0 0 60px ${colors.accentCyan}33`,
           }}>
-            <img 
-              src="/Tribal Logo.jpg" 
-              alt="LBRL" 
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-              }} 
-            />
+            <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          <span style={{ 
-            fontSize: '24px', 
-            fontWeight: '300', 
-            letterSpacing: '6px', 
-            color: colors.textPrimary,
-            opacity: 0.8,
-          }}>LBRL</span>
+          <span style={{ fontSize: '24px', fontWeight: '300', letterSpacing: '6px', color: colors.textPrimary, opacity: 0.8 }}>LBRL</span>
         </div>
       )}
 
@@ -417,7 +333,7 @@ export default function LBRLWebsite() {
         padding: scrolled ? '12px 24px' : '20px 24px',
         background: scrolled ? `${colors.bgDark}ee` : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        boxShadow: scrolled ? `0 4px 30px rgba(125, 212, 196, 0.08)` : 'none',
+        boxShadow: scrolled ? '0 4px 30px rgba(125, 212, 196, 0.08)' : 'none',
         transition: 'all 0.3s ease',
         display: 'flex',
         justifyContent: 'space-between',
@@ -429,170 +345,36 @@ export default function LBRLWebsite() {
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
         
-        {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                color: colors.textSecondary,
-                textDecoration: 'none',
-                fontSize: '11px',
-                letterSpacing: '1.5px',
-                textTransform: 'uppercase',
-                transition: 'color 0.3s',
-              }}
+            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', transition: 'color 0.3s' }}
               onMouseOver={(e) => e.target.style.color = colors.accentCyan}
               onMouseOut={(e) => e.target.style.color = colors.textSecondary}
-            >
-              {item}
-            </a>
+            >{item}</a>
           ))}
-          <a
-            href={RELEASE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '10px 20px',
-              background: 'transparent',
-              border: `1px solid ${colors.accentCyan}`,
-              borderRadius: '6px',
-              color: colors.accentCyan,
-              fontSize: '11px',
-              fontWeight: '500',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseOver={(e) => {
-              e.target.style.background = colors.accentCyan
-              e.target.style.color = colors.bgDark
-            }}
-            onMouseOut={(e) => {
-              e.target.style.background = 'transparent'
-              e.target.style.color = colors.accentCyan
-            }}
-          >
-            Release Form
-          </a>
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '10px 20px',
-              background: colors.textPrimary,
-              borderRadius: '6px',
-              color: colors.bgDark,
-              fontSize: '11px',
-              fontWeight: '600',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            Book Now
-          </a>
+          <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, borderRadius: '6px', color: colors.accentCyan, fontSize: '11px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.3s ease' }}
+            onMouseOver={(e) => { e.target.style.background = colors.accentCyan; e.target.style.color = colors.bgDark }}
+            onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = colors.accentCyan }}
+          >Release Form</a>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: colors.textPrimary, borderRadius: '6px', color: colors.bgDark, fontSize: '11px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Book Now</a>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="mobile-menu-btn"
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '8px',
-          }}
-        >
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="mobile-menu-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.textPrimary} strokeWidth="2">
-            {mobileMenuOpen ? (
-              <path d="M18 6L6 18M6 6l12 12" />
-            ) : (
-              <path d="M3 12h18M3 6h18M3 18h18" />
-            )}
+            {mobileMenuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
           </svg>
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '60px',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: colors.bgDark,
-          zIndex: 999,
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '40px 24px',
-          gap: '24px',
-        }}>
+        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: colors.bgDark, zIndex: 999, display: 'flex', flexDirection: 'column', padding: '40px 24px', gap: '24px' }}>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                color: colors.textPrimary,
-                textDecoration: 'none',
-                fontSize: '18px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-              }}
-            >
-              {item}
-            </a>
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase' }}>{item}</a>
           ))}
           <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <a
-              href={RELEASE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                padding: '14px 24px',
-                background: 'transparent',
-                border: `1px solid ${colors.accentCyan}`,
-                borderRadius: '6px',
-                color: colors.accentCyan,
-                fontSize: '13px',
-                fontWeight: '500',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                textAlign: 'center',
-              }}
-            >
-              Release Form
-            </a>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                padding: '14px 24px',
-                background: colors.accentCyan,
-                borderRadius: '6px',
-                color: colors.bgDark,
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                textAlign: 'center',
-              }}
-            >
-              Book Now
-            </a>
+            <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ padding: '14px 24px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, borderRadius: '6px', color: colors.accentCyan, fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', textAlign: 'center' }}>Release Form</a>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ padding: '14px 24px', background: colors.accentCyan, borderRadius: '6px', color: colors.bgDark, fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', textAlign: 'center' }}>Book Now</a>
           </div>
         </div>
       )}
@@ -606,86 +388,18 @@ export default function LBRLWebsite() {
         alignItems: 'center',
         textAlign: 'center',
         padding: '120px 20px 80px',
-        background: `linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        background: colors.bgDark,
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* LBRL Leaf Art with Wind Animation */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}>
-          <img 
-            src="/IMG_4885.png" 
-            alt="" 
-            className="wind-animation"
-            style={{
-              width: '120%',
-              height: '120%',
-              objectFit: 'cover',
-              opacity: 0.15,
-            }}
-          />
-        </div>
-        
-        {/* Aurora / Northern Lights Effect */}
-        <div className="aurora-container" style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}>
+        {/* Aurora Effect */}
+        <div className="aurora-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div className="aurora-flash aurora-1" />
           <div className="aurora-flash aurora-2" />
           <div className="aurora-flash aurora-3" />
         </div>
         
-        {/* Hero Floral Decorations */}
-        {!isLoading && (
-          <>
-            <BotanicalSVG 
-              className="floral-decoration floral-animate" 
-              style={{ top: '12%', left: '2%', width: '180px', height: '180px' }} 
-            />
-            <FloralSVG1 
-              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
-              style={{ top: '15%', right: '2%', width: '150px', height: '150px' }} 
-            />
-            <LeafSVG 
-              className="floral-decoration floral-animate floral-animate-delay-1" 
-              style={{ bottom: '12%', left: '3%', width: '100px', height: '200px' }} 
-            />
-            <FloralSVG3 
-              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
-              style={{ bottom: '15%', right: '3%', width: '130px', height: '130px' }} 
-            />
-          </>
-        )}
-        
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          opacity: 0.06,
-          pointerEvents: 'none',
-        }}>
-          <img src="/Tribal Logo.jpg" alt="" style={{ width: '500px', height: '500px', objectFit: 'contain' }} />
-        </div>
-        
+        {/* Content */}
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -697,6 +411,8 @@ export default function LBRLWebsite() {
           opacity: isLoading ? 0 : 1,
           transform: isLoading ? 'translateY(20px)' : 'translateY(0)',
           transition: 'all 0.6s ease 0.3s',
+          position: 'relative',
+          zIndex: 1,
         }}>
           <span style={{ fontSize: '12px', color: colors.textSecondary }}>📍 Vancouver, WA</span>
           <span style={{ fontSize: '12px', color: colors.textMuted }}>•</span>
@@ -712,6 +428,8 @@ export default function LBRLWebsite() {
           opacity: isLoading ? 0 : 1,
           transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
           transition: 'all 0.6s ease 0.5s',
+          position: 'relative',
+          zIndex: 1,
         }}>
           Art That<br />
           <span style={{ color: colors.accentCyan }}>Becomes You</span>
@@ -726,6 +444,8 @@ export default function LBRLWebsite() {
           opacity: isLoading ? 0 : 1,
           transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
           transition: 'all 0.6s ease 0.7s',
+          position: 'relative',
+          zIndex: 1,
         }}>
           Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy.
         </p>
@@ -738,173 +458,372 @@ export default function LBRLWebsite() {
           opacity: isLoading ? 0 : 1,
           transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
           transition: 'all 0.6s ease 0.9s',
+          position: 'relative',
+          zIndex: 1,
+          marginBottom: '60px',
         }}>
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Start Your Journey</a>
+          <a href="#portfolio" style={{ padding: '16px 32px', background: 'transparent', border: `1px solid ${colors.borderDefault}`, color: colors.textPrimary, borderRadius: '8px', fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>View Portfolio</a>
+        </div>
+
+        {/* LBRL Leaf Art - Decorative Element with Wind Animation */}
+        <div style={{
+          position: 'relative',
+          zIndex: 1,
+          opacity: isLoading ? 0 : 0.6,
+          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
+          transition: 'all 0.8s ease 1.1s',
+        }}>
+          <img 
+            src="/IMG_4885.png" 
+            alt="" 
+            className="wind-animation"
             style={{
-              padding: '16px 32px',
-              background: colors.accentCyan,
-              color: colors.bgDark,
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: '600',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
+              width: '500px',
+              maxWidth: '90vw',
+              height: 'auto',
             }}
-          >
-            Start Your Journey
-          </a>
-          <a
-            href="#portfolio"
-            style={{
-              padding: '16px 32px',
-              background: 'transparent',
-              border: `1px solid ${colors.borderDefault}`,
-              color: colors.textPrimary,
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: '500',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            View Portfolio
-          </a>
+          />
         </div>
       </section>
 
       {/* Stats Bar */}
-      <section style={{
-        padding: '40px 20px',
-        background: colors.bgPrimary,
-        borderTop: `1px solid ${colors.borderSubtle}`,
-        borderBottom: `1px solid ${colors.borderSubtle}`,
-      }}>
-        <div style={{
-          maxWidth: '1000px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '20px',
-          textAlign: 'center',
-        }}>
+      <section style={{ padding: '40px 20px', background: colors.bgPrimary, borderTop: `1px solid ${colors.borderSubtle}`, borderBottom: `1px solid ${colors.borderSubtle}` }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
           {stats.map((stat, i) => (
             <div key={i}>
-              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.accentCyan, marginBottom: '4px' }}>
-                {stat.value}
-              </div>
-              <div style={{ fontSize: '12px', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                {stat.label}
-              </div>
+              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.accentCyan, marginBottom: '4px' }}>{stat.value}</div>
+              <div style={{ fontSize: '12px', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: '1px' }}>{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgDark,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Decorative SVGs */}
-        {visibleSections['about'] && (
-          <>
-            <FloralSVG1 
-              className="floral-decoration floral-animate" 
-              style={{ top: '10%', right: '1%', width: '140px', height: '140px' }} 
-            />
-            <LeafSVG 
-              className="floral-decoration floral-animate-slow floral-animate-delay-1" 
-              style={{ bottom: '10%', left: '1%', width: '90px', height: '180px' }} 
-            />
-          </>
-        )}
-        <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <section id="about" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
-              <img 
-                src="/Dany 3.PNG" 
-                alt="Daniel Liberal tattooing" 
-                style={{ 
-                  width: '100%', 
-                  borderRadius: '16px', 
-                  marginBottom: '30px',
-                  objectFit: 'cover',
-                }} 
-              />
-              <p style={{
-                fontSize: '12px',
-                fontWeight: '500',
-                color: colors.accentCyan,
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                marginBottom: '16px',
-              }}>Body Harmony</p>
-              <h2 style={{
-                fontSize: 'clamp(28px, 4vw, 36px)',
-                fontWeight: '300',
-                marginBottom: '24px',
-                lineHeight: '1.3',
-              }}>
-                Every Design Flows<br />With Your Anatomy
-              </h2>
-              <p style={{
-                fontSize: '16px',
-                color: colors.textSecondary,
-                lineHeight: '1.8',
-                marginBottom: '24px',
-              }}>
-                Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.
-              </p>
-              <p style={{
-                fontSize: '16px',
-                color: colors.textSecondary,
-                lineHeight: '1.8',
-                marginBottom: '24px',
-              }}>
-                With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.
-              </p>
-              <p style={{
-                fontSize: '14px',
-                color: colors.textMuted,
-                fontStyle: 'italic',
-              }}>
-                From Puerto Rico 2013 est. to Vancouver, WA 2016-Present
-              </p>
+              <img src="/Dany 3.PNG" alt="Daniel Liberal tattooing" style={{ width: '100%', borderRadius: '16px', marginBottom: '30px', objectFit: 'cover' }} />
+              <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Body Harmony</p>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px', lineHeight: '1.3' }}>Every Design Flows<br />With Your Anatomy</h2>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.</p>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.</p>
+              <p style={{ fontSize: '14px', color: colors.textMuted, fontStyle: 'italic' }}>From Puerto Rico 2013 est. to Vancouver, WA 2016-Present</p>
             </div>
-            <div className={visibleSections['about'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{
-              background: `linear-gradient(180deg, rgba(42,50,45,0.95) 0%, rgba(42,50,45,0.98) 100%), url('/about-bg.webp')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '16px',
-              padding: '32px',
-              border: `1px solid ${colors.borderDefault}`,
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
+            <div className={visibleSections['about'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{ background: colors.bgCard, borderRadius: '16px', padding: '40px 32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
                 <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: '500', marginBottom: '4px' }}>Daniel Liberal</h3>
                   <p style={{ fontSize: '13px', color: colors.textMuted }}>Lead Artist & Owner</p>
                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Experience</span>
                   <span style={{ fontSize: '13px', color: colors.textPrimary }}>12+ Years</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
                   <span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}>
+                  <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
+                  <span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section */}
+      <section id="portfolio" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary, maxWidth: '100vw' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Portfolio</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '32px' }}>Custom Tattoo Work</h2>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              {styleFilters.map((style) => (
+                <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ padding: '10px 20px', background: activeStyle === style.value ? colors.accentCyan : colors.bgCard, color: activeStyle === style.value ? colors.bgDark : colors.textSecondary, border: 'none', borderRadius: '20px', fontSize: '12px', fontWeight: '500', letterSpacing: '1px', cursor: 'pointer', transition: 'all 0.3s ease' }}>{style.label}</button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ position: 'relative' }}>
+            <button onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))} disabled={sliderIndex === 0} style={{ position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: colors.bgCard, border: `1px solid ${colors.borderDefault}`, color: sliderIndex === 0 ? colors.textMuted : colors.textPrimary, cursor: sliderIndex === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10 }}>←</button>
+            <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
+              <div style={{ display: 'flex', gap: '16px', transform: `translateX(-${sliderIndex * (280 + 16)}px)`, transition: 'transform 0.4s ease' }}>
+                {filteredPortfolio.map((item, index) => (
+                  <div key={item.id} onClick={() => openLightbox(index)} style={{ minWidth: '280px', height: '350px', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }}>
+                    <img src={item.image} alt={`Portfolio ${item.id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button onClick={() => setSliderIndex(Math.min(maxSliderIndex, sliderIndex + 1))} disabled={sliderIndex >= maxSliderIndex} style={{ position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: colors.bgCard, border: `1px solid ${colors.borderDefault}`, color: sliderIndex >= maxSliderIndex ? colors.textMuted : colors.textPrimary, cursor: sliderIndex >= maxSliderIndex ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10 }}>→</button>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '24px' }}>
+            <span style={{ fontSize: '13px', color: colors.textMuted }}>{sliderIndex + 1}-{Math.min(sliderIndex + visibleCount, filteredPortfolio.length)} of {filteredPortfolio.length} pieces</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="process" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div className={visibleSections['process'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>The Process</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>From Vision to Reality</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+            {processSteps.map((step, i) => (
+              <div key={i} className={visibleSections['process'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'} style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px 24px', border: `1px solid ${colors.borderDefault}`, textAlign: 'center' }}>
+                <div style={{ fontSize: '32px', fontWeight: '200', color: colors.accentCyan, marginBottom: '16px' }}>{step.number}</div>
+                <h3 style={{ fontSize: '16px', fontWeight: '500', marginBottom: '12px' }}>{step.title}</h3>
+                <p style={{ fontSize: '13px', color: colors.textSecondary, lineHeight: '1.6' }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Pricing & Booking</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '20px' }}>Investment in Your Art</h2>
+            <p style={{ fontSize: '16px', color: colors.textSecondary, maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>Every project is different. Pricing depends on size, detail, and time. Here's a general breakdown.</p>
+          </div>
+          <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Large-Scale Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', marginBottom: '8px' }}>$260<span style={{ fontSize: '16px', color: colors.textMuted }}>/hour</span></div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$300 deposit to book</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Half sleeves, full sleeves, back pieces, leg pieces. Your deposit goes toward the final session and includes a revision appointment where I present up to three design directions.</p>
+            </div>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Medium Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', marginBottom: '8px' }}>$500 to $750</div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$250 deposit to book</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Flat rate depending on detail. Design is prepared and reviewed the day of your session.</p>
+            </div>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Small Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', marginBottom: '8px' }}>$150 to $350</div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$50 to $100 deposit</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Names, symbols, simple designs. $150 minimum. Design reviewed day of session.</p>
+            </div>
+          </div>
+          <div style={{ background: colors.bgElevated, borderRadius: '12px', padding: '24px 32px', marginBottom: '30px' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: '600', marginBottom: '12px' }}>Deposits & Cancellations</h3>
+            <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0 }}>All deposits are non-refundable. Cancellations or reschedules with less than 72 hours notice forfeit the deposit. Arrivals more than 30 minutes late without notice count as a no-show.</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '20px' }}>Not sure where your project fits? I'll help you figure that out during the consultation.</p>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '16px 40px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '14px', fontWeight: '600', textDecoration: 'none', letterSpacing: '1px', textTransform: 'uppercase' }}>Book Consultation</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section id="reviews" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className={visibleSections['reviews'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Reviews</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>What Clients Say</h2>
+          </div>
+          <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{ background: colors.bgCard, borderRadius: '20px', padding: 'clamp(32px, 5vw, 48px)', border: `1px solid ${colors.borderDefault}`, textAlign: 'center', minHeight: '220px' }}>
+            <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>
+              {[...Array(5)].map((_, j) => (<span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>))}
+            </div>
+            <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px', fontStyle: 'italic' }}>"{reviews[currentReviewIndex].text}"</p>
+            <p style={{ fontSize: '14px', fontWeight: '500', color: colors.accentCyan, marginBottom: '32px' }}>— {reviews[currentReviewIndex].name}</p>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              {reviews.map((_, i) => (<button key={i} onClick={() => setCurrentReviewIndex(i)} style={{ width: currentReviewIndex === i ? '24px' : '10px', height: '10px', borderRadius: '5px', background: currentReviewIndex === i ? colors.accentCyan : colors.bgElevated, border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }} />))}
+            </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+            <span style={{ color: colors.accentOrange, fontSize: '24px' }}>★</span>
+            <span style={{ fontSize: '14px', color: colors.textSecondary }}><strong style={{ color: colors.textPrimary }}>5.0</strong> rating on Google</span>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section id="faqs" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
+            <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
+              <div style={{ marginBottom: '40px' }}>
+                <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>FAQs</p>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>Common Questions</h2>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {faqs.map((faq, i) => (
+                  <div key={i} style={{ background: colors.bgCard, borderRadius: '12px', border: `1px solid ${colors.borderDefault}`, overflow: 'hidden' }}>
+                    <button onClick={() => setExpandedFaq(expandedFaq === i ? null : i)} style={{ width: '100%', padding: '20px 24px', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left' }}>
+                      <h3 style={{ fontSize: '15px', fontWeight: '500', color: colors.textPrimary, margin: 0, paddingRight: '16px' }}>{faq.q}</h3>
+                      <span style={{ color: colors.accentCyan, fontSize: '20px', fontWeight: '300', transform: expandedFaq === i ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}>+</span>
+                    </button>
+                    <div style={{ maxHeight: expandedFaq === i ? '500px' : '0', overflow: 'hidden', transition: 'max-height 0.3s ease' }}>
+                      <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0, padding: '0 24px 20px 24px' }}>{faq.a}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={visibleSections['faqs'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{ position: 'sticky', top: '100px' }}>
+              <img src="/Dani2.png" alt="Daniel Liberal tattooing" style={{ width: '100%', borderRadius: '16px', objectFit: 'cover' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
+        <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Contact</p>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px' }}>Ready to Start?</h2>
+          <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.7', marginBottom: '32px' }}>Fill out the booking form to schedule your consultation. I'll review your idea and get back to you within 1-3 business days.</p>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Book Consultation</a>
+            <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 32px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, color: colors.accentCyan, borderRadius: '8px', fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Release Form</a>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <p style={{ fontSize: '14px', color: colors.textSecondary }}>📍 9013 NE Hwy 99, Vancouver, WA 98665</p>
+            <p style={{ fontSize: '14px', color: colors.textSecondary }}>✉️ Liberaltattoos@gmail.com</p>
+            <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
+              <a href="https://instagram.com/dani_lbrl" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span style={{ fontSize: '14px' }}>@dani_lbrl</span>
+              </a>
+              <a href="https://facebook.com/lbrltattoos" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <span style={{ fontSize: '14px' }}>Facebook</span>
+              </a>
+              <a href="https://share.google/vhS3WwTU20FQj2La2" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                <span style={{ fontSize: '14px' }}>Google</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ padding: '40px 20px', background: colors.bgPrimary, borderTop: `1px solid ${colors.borderSubtle}`, textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
+          <span style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '3px' }}>LBRL</span>
+        </div>
+        <p style={{ fontSize: '12px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
+        <p style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>Appointment Only • Vancouver, WA</p>
+      </footer>
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setLightboxOpen(false)}>
+          <button onClick={() => setLightboxOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', color: 'white', fontSize: '32px', cursor: 'pointer' }}>×</button>
+          <button onClick={(e) => { e.stopPropagation(); setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length) }} style={{ position: 'absolute', left: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '24px', padding: '16px', borderRadius: '50%', cursor: 'pointer' }}>←</button>
+          <img src={filteredPortfolio[currentImage]?.image} alt="Portfolio" style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} onClick={(e) => e.stopPropagation()} />
+          <button onClick={(e) => { e.stopPropagation(); setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length) }} style={{ position: 'absolute', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '24px', padding: '16px', borderRadius: '50%', cursor: 'pointer' }}>→</button>
+          <div style={{ position: 'absolute', bottom: '20px', color: 'white', fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
+        </div>
+      )}
+
+      {/* Global Styles */}
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
+        ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } 100% { transform: rotate(360deg) scale(1); } }
+        
+        /* Wind Animation */
+        @keyframes windSway {
+          0%, 100% { transform: translateX(-2%) rotate(-0.5deg); }
+          25% { transform: translateX(1%) rotate(0.3deg); }
+          50% { transform: translateX(2%) rotate(0.5deg); }
+          75% { transform: translateX(-1%) rotate(-0.3deg); }
+        }
+        .wind-animation { animation: windSway 20s ease-in-out infinite; }
+        
+        /* Aurora Effect */
+        @keyframes auroraFlash {
+          0%, 80%, 100% { opacity: 0; transform: translateX(-100%) skewX(-15deg); }
+          88% { opacity: 0.25; transform: translateX(0%) skewX(-15deg); }
+          94% { opacity: 0.12; transform: translateX(100%) skewX(-15deg); }
+        }
+        .aurora-flash { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(125, 212, 196, 0.05) 15%, rgba(125, 212, 196, 0.15) 35%, rgba(90, 138, 138, 0.2) 50%, rgba(125, 212, 196, 0.15) 65%, rgba(125, 212, 196, 0.05) 85%, transparent 100%); pointer-events: none; }
+        .aurora-1 { top: 0; left: -100%; animation: auroraFlash 10s ease-in-out infinite; }
+        .aurora-2 { top: 25%; left: -100%; animation: auroraFlash 13s ease-in-out infinite; animation-delay: 3s; }
+        .aurora-3 { top: 55%; left: -100%; animation: auroraFlash 16s ease-in-out infinite; animation-delay: 7s; }
+        
+        /* Fibonacci Animation */
+        .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 { animation: fibPulse 2.5s ease-in-out infinite; }
+        .fib-circle-2 { animation-delay: 0.15s; } .fib-circle-3 { animation-delay: 0.3s; } .fib-circle-4 { animation-delay: 0.45s; } .fib-circle-5 { animation-delay: 0.6s; }
+        @keyframes fibPulse { 0%, 100% { opacity: 0.08; transform: scale(1); } 50% { opacity: 0.25; transform: scale(1.05); } }
+        .fibonacci-spiral { animation: spiralPulse 3s ease-in-out infinite; }
+        @keyframes spiralPulse { 0%, 100% { opacity: 0.1; stroke-dashoffset: 0; } 50% { opacity: 0.3; stroke-dashoffset: 100; } }
+        .organic-line-1, .organic-line-2 { animation: organicPulse 2.8s ease-in-out infinite; }
+        .organic-line-2 { animation-delay: 0.4s; }
+        @keyframes organicPulse { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.2; } }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        .animate-hidden { opacity: 0; }
+        .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
+        .animate-fadeInLeft { animation: fadeInLeft 0.8s ease forwards; }
+        .animate-fadeInRight { animation: fadeInRight 0.8s ease forwards; }
+        .animate-delay-1 { animation-delay: 0.1s; } .animate-delay-2 { animation-delay: 0.2s; } .animate-delay-3 { animation-delay: 0.3s; } .animate-delay-4 { animation-delay: 0.4s; } .animate-delay-5 { animation-delay: 0.5s; }
+        
+        .desktop-nav { display: flex; }
+        .mobile-menu-btn { display: none !important; }
+        
+        @media (max-width: 1024px) { .desktop-nav { gap: 16px !important; } .desktop-nav a { font-size: 10px !important; } }
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: block !important; }
+          html, body { overflow-x: hidden !important; width: 100% !important; }
+          nav { padding: 12px 16px !important; }
+          section { padding: 40px 16px !important; }
+          h1 { font-size: 32px !important; } h2 { font-size: 24px !important; }
+          [style*="grid-template-columns: 1fr 1fr"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          [style*="grid-template-columns: repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+          [style*="grid-template-columns: 1fr 300px"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          [style*="grid-template-columns: repeat(auto-fit"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
+          [style*="minWidth: 280px"] { min-width: 240px !important; }
+          [style*="minHeight: 100vh"] { min-height: auto !important; padding-top: 100px !important; padding-bottom: 60px !important; }
+          [style*="position: sticky"] { position: relative !important; }
+          #faqs [style*="position: sticky"] { display: none !important; }
+          section { position: relative !important; z-index: 1 !important; }
+          #contact { margin-top: 0 !important; padding-top: 60px !important; }
+        }
+        @media (max-width: 480px) {
+          h1 { font-size: 26px !important; } h2 { font-size: 20px !important; }
+          [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+          [style*="padding: 32px"] { padding: 16px !important; }
+          [style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+          [style*="minWidth: 280px"] { min-width: 200px !important; height: 280px !important; }
+        }
+      `}</style>
+    </div>
+  )
+}
+</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
+                  <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
+                  <span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}>
                   <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
                   <span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span>
                 </div>
@@ -920,20 +839,8 @@ export default function LBRLWebsite() {
         background: colors.bgPrimary,
         position: 'relative',
         overflow: 'hidden',
+        maxWidth: '100vw',
       }}>
-        {/* Decorative SVGs */}
-        {visibleSections['portfolio'] && (
-          <>
-            <FloralSVG3 
-              className="floral-decoration floral-animate floral-animate-delay-2" 
-              style={{ top: '5%', left: '1%', width: '140px', height: '140px' }} 
-            />
-            <BotanicalSVG 
-              className="floral-decoration floral-animate-slow" 
-              style={{ bottom: '10%', right: '1%', width: '160px', height: '160px' }} 
-            />
-          </>
-        )}
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
             <p style={{
@@ -1145,19 +1052,6 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Decorative SVGs */}
-        {visibleSections['pricing'] && (
-          <>
-            <FloralSVG2 
-              className="floral-decoration floral-animate" 
-              style={{ top: '20%', right: '1%', width: '110px', height: '150px' }} 
-            />
-            <FloralSVG1 
-              className="floral-decoration floral-animate-slow floral-animate-delay-3" 
-              style={{ bottom: '20%', left: '1%', width: '120px', height: '120px' }} 
-            />
-          </>
-        )}
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -1458,13 +1352,6 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Decorative SVGs */}
-        {visibleSections['faqs'] && (
-          <LeafSVG 
-            className="floral-decoration floral-animate floral-animate-delay-1" 
-            style={{ top: '10%', left: '1%', width: '90px', height: '180px' }} 
-          />
-        )}
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
             <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
@@ -1566,19 +1453,6 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Decorative SVGs */}
-        {visibleSections['contact'] && (
-          <>
-            <LeafSVG 
-              className="floral-decoration floral-animate" 
-              style={{ top: '15%', left: '2%', width: '80px', height: '160px' }} 
-            />
-            <FloralSVG3 
-              className="floral-decoration floral-animate-slow floral-animate-delay-2" 
-              style={{ bottom: '20%', right: '2%', width: '120px', height: '120px' }} 
-            />
-          </>
-        )}
         <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <p style={{
             fontSize: '12px',
@@ -1824,7 +1698,8 @@ export default function LBRLWebsite() {
       {/* Global Styles */}
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { overflow-x: hidden; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
@@ -1835,25 +1710,17 @@ export default function LBRLWebsite() {
           100% { transform: rotate(360deg) scale(1); }
         }
         
-        @keyframes tribalPulse {
-          0%, 100% { opacity: 0.05; }
-          50% { opacity: 0.12; }
+        /* Wind Animation for LBRL Leaf Art */
+        @keyframes windSway {
+          0%, 100% { transform: translateX(-2%) rotate(-0.5deg); }
+          25% { transform: translateX(1%) rotate(0.3deg); }
+          50% { transform: translateX(2%) rotate(0.5deg); }
+          75% { transform: translateX(-1%) rotate(-0.3deg); }
         }
         
-        @keyframes tribalDraw {
-          0% { stroke-dashoffset: 1000; }
-          100% { stroke-dashoffset: 0; }
+        .wind-animation {
+          animation: windSway 20s ease-in-out infinite;
         }
-        
-        .tribal-line-1, .tribal-line-2, .tribal-line-3, .tribal-line-4, .tribal-line-5 {
-          stroke-dasharray: 1000;
-          animation: tribalDraw 3s ease-in-out infinite;
-        }
-        
-        .tribal-line-2 { animation-delay: 0.2s; }
-        .tribal-line-3 { animation-delay: 0.4s; }
-        .tribal-line-4 { animation-delay: 0.6s; }
-        .tribal-line-5 { animation-delay: 0.8s; }
         
         /* Aurora / Northern Lights Effect */
         @keyframes auroraFlash {
@@ -1869,38 +1736,6 @@ export default function LBRLWebsite() {
             opacity: 0.12; 
             transform: translateX(100%) skewX(-15deg);
           }
-        }
-        
-        /* Wind Pan Animation for LBRL Leaf Art */
-        @keyframes windPan {
-          0% { 
-            transform: translateX(-3%) scale(1.02);
-          }
-          50% { 
-            transform: translateX(3%) scale(1);
-          }
-          100% { 
-            transform: translateX(-3%) scale(1.02);
-          }
-        }
-        
-        @keyframes windSway {
-          0%, 100% { 
-            transform: translateX(-2%) rotate(-0.5deg);
-          }
-          25% {
-            transform: translateX(1%) rotate(0.3deg);
-          }
-          50% { 
-            transform: translateX(2%) rotate(0.5deg);
-          }
-          75% {
-            transform: translateX(-1%) rotate(-0.3deg);
-          }
-        }
-        
-        .wind-animation {
-          animation: windSway 20s ease-in-out infinite;
         }
         
         .aurora-flash {
@@ -1940,84 +1775,49 @@ export default function LBRLWebsite() {
           animation-delay: 7s;
         }
         
-        /* Fibonacci circles animation for loading */
+        /* Fibonacci circles animation for loading - continuous pulse */
         .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
-          stroke-dasharray: 1000;
-          animation: fibDraw 2s ease-out forwards;
+          animation: fibPulse 2.5s ease-in-out infinite;
         }
-        .fib-circle-2 { animation-delay: 0.1s; }
-        .fib-circle-3 { animation-delay: 0.2s; }
-        .fib-circle-4 { animation-delay: 0.3s; }
-        .fib-circle-5 { animation-delay: 0.4s; }
+        .fib-circle-2 { animation-delay: 0.15s; }
+        .fib-circle-3 { animation-delay: 0.3s; }
+        .fib-circle-4 { animation-delay: 0.45s; }
+        .fib-circle-5 { animation-delay: 0.6s; }
         
-        @keyframes fibDraw {
-          0% { stroke-dashoffset: 1000; opacity: 0; }
-          50% { opacity: 0.3; }
-          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        @keyframes fibPulse {
+          0%, 100% { 
+            opacity: 0.08; 
+            transform: scale(1);
+          }
+          50% { 
+            opacity: 0.25; 
+            transform: scale(1.05);
+          }
         }
         
         .fibonacci-spiral {
-          stroke-dasharray: 800;
-          animation: spiralDraw 2.5s ease-out forwards;
+          animation: spiralPulse 3s ease-in-out infinite;
         }
         
-        @keyframes spiralDraw {
-          0% { stroke-dashoffset: 800; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        @keyframes spiralPulse {
+          0%, 100% { 
+            opacity: 0.1; 
+            stroke-dashoffset: 0;
+          }
+          50% { 
+            opacity: 0.3; 
+            stroke-dashoffset: 100;
+          }
         }
         
         .organic-line-1, .organic-line-2 {
-          stroke-dasharray: 500;
-          animation: organicDraw 2s ease-out forwards;
+          animation: organicPulse 2.8s ease-in-out infinite;
         }
-        .organic-line-2 { animation-delay: 0.3s; }
+        .organic-line-2 { animation-delay: 0.4s; }
         
-        @keyframes organicDraw {
-          0% { stroke-dashoffset: 500; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0.15; }
-        }
-        
-        @keyframes floralFloat {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(3deg); }
-        }
-        
-        @keyframes floralPulse {
-          0%, 100% { opacity: 0.35; transform: scale(1); }
-          50% { opacity: 0.55; transform: scale(1.08); }
-        }
-        
-        @keyframes floralDraw {
-          0% { stroke-dashoffset: 500; opacity: 0; }
-          50% { opacity: 0.3; }
-          100% { stroke-dashoffset: 0; opacity: 0.2; }
-        }
-        
-        .floral-decoration {
-          position: absolute;
-          pointer-events: none;
-          color: #7dd4c4;
-          z-index: 0;
-          opacity: 0.4;
-        }
-        
-        .floral-animate {
-          animation: floralFloat 8s ease-in-out infinite, floralPulse 4s ease-in-out infinite;
-        }
-        
-        .floral-animate-slow {
-          animation: floralFloat 12s ease-in-out infinite, floralPulse 6s ease-in-out infinite;
-        }
-        
-        .floral-animate-delay-1 { animation-delay: 0.5s; }
-        .floral-animate-delay-2 { animation-delay: 1s; }
-        .floral-animate-delay-3 { animation-delay: 1.5s; }
-        
-        /* Hide floral decorations on tablet and mobile */
-        @media (max-width: 1024px) {
-          .floral-decoration {
-            display: none !important;
-          }
+        @keyframes organicPulse {
+          0%, 100% { opacity: 0.08; }
+          50% { opacity: 0.2; }
         }
         
         @keyframes fadeInUp {
@@ -2101,6 +1901,8 @@ export default function LBRLWebsite() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
+          
+          html, body { overflow-x: hidden !important; width: 100% !important; }
           
           nav { padding: 12px 16px !important; }
           
