@@ -684,8 +684,6 @@ export default function LBRLWebsite() {
           maxWidth: '1200px',
           marginTop: '60px',
           padding: '0 40px',
-          opacity: isLoading ? 0 : 1,
-          transition: 'opacity 0.6s ease 1.1s',
         }}>
           <img 
             src="/IMG_4885.png" 
@@ -1705,29 +1703,27 @@ export default function LBRLWebsite() {
         /* Wind Blow Animation for IMG_4885 */
         @keyframes windBlow {
           0% {
-            transform: translateX(-80px) scaleX(0.95);
-            opacity: 0;
+            transform: translateX(-100px);
+            visibility: hidden;
           }
-          40% {
-            opacity: 0.6;
+          1% {
+            visibility: visible;
           }
           70% {
-            transform: translateX(15px) scaleX(1.01);
-            opacity: 0.75;
+            transform: translateX(15px);
           }
           85% {
-            transform: translateX(-5px) scaleX(1);
+            transform: translateX(-5px);
           }
           100% {
-            transform: translateX(0) scaleX(1);
-            opacity: 0.65;
+            transform: translateX(0);
           }
         }
         
         .wind-blow-image {
-          animation: windBlow 1.8s ease-out forwards;
+          animation: windBlow 1.5s ease-out forwards;
           animation-delay: 1s;
-          opacity: 0;
+          visibility: hidden;
         }
         
         /* Aurora / Northern Lights Effect */
