@@ -677,6 +677,26 @@ export default function LBRLWebsite() {
             View Portfolio
           </a>
         </div>
+
+        {/* Wind Animation Image */}
+        <div style={{
+          marginTop: '60px',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
+          transition: 'all 0.6s ease 1.1s',
+        }}>
+          <img 
+            src="/IMG_4885.png" 
+            alt="Decorative floral element" 
+            className="wind-blow-image"
+            style={{
+              maxWidth: '400px',
+              width: '80vw',
+              height: 'auto',
+              opacity: 0.7,
+            }}
+          />
+        </div>
       </section>
 
       {/* Stats Bar */}
@@ -1679,6 +1699,34 @@ export default function LBRLWebsite() {
           0% { transform: rotate(0deg) scale(1); }
           50% { transform: rotate(180deg) scale(1.1); }
           100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        /* Wind Blow Animation for IMG_4885 */
+        @keyframes windBlow {
+          0% {
+            transform: translateX(-100px) rotate(-5deg);
+            opacity: 0;
+          }
+          20% {
+            opacity: 0.5;
+          }
+          60% {
+            transform: translateX(20px) rotate(2deg);
+            opacity: 0.7;
+          }
+          80% {
+            transform: translateX(-5px) rotate(-1deg);
+          }
+          100% {
+            transform: translateX(0) rotate(0deg);
+            opacity: 0.7;
+          }
+        }
+        
+        .wind-blow-image {
+          animation: windBlow 2s ease-out forwards;
+          animation-delay: 1.2s;
+          opacity: 0;
         }
         
         /* Aurora / Northern Lights Effect */
