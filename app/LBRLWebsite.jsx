@@ -17,7 +17,6 @@ export default function LBRLWebsite() {
   const [visibleSections, setVisibleSections] = useState({})
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => setIsLoading(false), 1500)
     return () => clearTimeout(timer)
   }, [])
@@ -93,7 +92,6 @@ export default function LBRLWebsite() {
   ]
 
   const portfolioItems = [
-    // NEO JAPANESE
     { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
     { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
     { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
@@ -137,7 +135,6 @@ export default function LBRLWebsite() {
     { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp' },
     { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
     { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
-    // BLACKWORK (18)
     { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
     { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
     { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
@@ -155,7 +152,6 @@ export default function LBRLWebsite() {
     { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
     { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
     { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
-    // FLORAL
     { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
     { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
     { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
@@ -174,7 +170,6 @@ export default function LBRLWebsite() {
     { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
     { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
     { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
-    // ORNAMENTAL
     { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
     { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
     { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
@@ -229,11 +224,10 @@ export default function LBRLWebsite() {
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
 
-  // Auto-rotate reviews
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReviewIndex((prev) => (prev + 1) % reviews.length)
-    }, 5000) // Change every 5 seconds
+    }, 5000)
     return () => clearInterval(interval)
   }, [reviews.length])
 
@@ -288,7 +282,6 @@ export default function LBRLWebsite() {
           gap: '24px',
           overflow: 'hidden',
         }}>
-          {/* Sacred Geometry / Fibonacci Background */}
           <svg style={{
             position: 'absolute',
             width: '100%',
@@ -302,27 +295,22 @@ export default function LBRLWebsite() {
                 <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
             </defs>
-            {/* Golden Spiral approximation */}
             <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
               stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="fibonacci-spiral" />
-            {/* Fibonacci circles */}
             <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-1" />
             <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-2" />
             <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-3" />
             <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-4" />
             <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-5" />
-            {/* Flower of Life petals */}
             <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
             <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            {/* Organic floral curves */}
             <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-1" />
             <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-2" />
             <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" />
-            {/* Fine detail arcs */}
             <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
             <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
           </svg>
@@ -333,7 +321,7 @@ export default function LBRLWebsite() {
             borderRadius: '50%',
             overflow: 'hidden',
             animation: 'spin 1.5s ease-in-out infinite',
-            boxShadow: `0 0 60px ${colors.accentCyan}33`,
+            boxShadow: \`0 0 60px \${colors.accentCyan}33\`,
           }}>
             <img 
               src="/Tribal Logo.jpg" 
@@ -355,7 +343,7 @@ export default function LBRLWebsite() {
         </div>
       )}
 
-      {/* Navigation */}
+      {/* Navigation - FIXED: boxShadow instead of borderBottom */}
       <nav style={{
         position: 'fixed',
         top: 0,
@@ -363,9 +351,9 @@ export default function LBRLWebsite() {
         right: 0,
         zIndex: 1000,
         padding: scrolled ? '12px 24px' : '20px 24px',
-        background: scrolled ? `${colors.bgDark}ee` : 'transparent',
+        background: scrolled ? \`\${colors.bgDark}ee\` : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? `1px solid ${colors.borderSubtle}` : 'none',
+        boxShadow: scrolled ? '0 4px 30px rgba(125, 212, 196, 0.08)' : 'none',
         transition: 'all 0.3s ease',
         display: 'flex',
         justifyContent: 'space-between',
@@ -377,12 +365,11 @@ export default function LBRLWebsite() {
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
         
-        {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={\`#\${item.toLowerCase()}\`}
               style={{
                 color: colors.textSecondary,
                 textDecoration: 'none',
@@ -404,7 +391,7 @@ export default function LBRLWebsite() {
             style={{
               padding: '10px 20px',
               background: 'transparent',
-              border: `1px solid ${colors.accentCyan}`,
+              border: \`1px solid \${colors.accentCyan}\`,
               borderRadius: '6px',
               color: colors.accentCyan,
               fontSize: '11px',
@@ -446,7 +433,6 @@ export default function LBRLWebsite() {
           </a>
         </div>
 
-        {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="mobile-menu-btn"
@@ -486,7 +472,7 @@ export default function LBRLWebsite() {
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={\`#\${item.toLowerCase()}\`}
               onClick={() => setMobileMenuOpen(false)}
               style={{
                 color: colors.textPrimary,
@@ -508,7 +494,7 @@ export default function LBRLWebsite() {
               style={{
                 padding: '14px 24px',
                 background: 'transparent',
-                border: `1px solid ${colors.accentCyan}`,
+                border: \`1px solid \${colors.accentCyan}\`,
                 borderRadius: '6px',
                 color: colors.accentCyan,
                 fontSize: '13px',
@@ -554,13 +540,13 @@ export default function LBRLWebsite() {
         alignItems: 'center',
         textAlign: 'center',
         padding: '120px 20px 80px',
-        background: `linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')`,
+        background: \`linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')\`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Aurora / Northern Lights Effect */}
+        {/* Aurora Effect */}
         <div className="aurora-container" style={{
           position: 'absolute',
           top: 0,
@@ -663,7 +649,7 @@ export default function LBRLWebsite() {
             style={{
               padding: '16px 32px',
               background: 'transparent',
-              border: `1px solid ${colors.borderDefault}`,
+              border: \`1px solid \${colors.borderDefault}\`,
               color: colors.textPrimary,
               borderRadius: '8px',
               fontSize: '13px',
@@ -676,6 +662,26 @@ export default function LBRLWebsite() {
           >
             View Portfolio
           </a>
+        </div>
+
+        {/* NEW: Leaf Art Decoration with Wind Animation */}
+        <div className="hero-leaf-art" style={{
+          marginTop: '60px',
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? 'translateY(40px)' : 'translateY(0)',
+          transition: 'all 0.8s ease 1.1s',
+        }}>
+          <img 
+            src="/IMG_4885.png" 
+            alt="Botanical Art" 
+            style={{
+              maxWidth: '320px',
+              width: '100%',
+              height: 'auto',
+              filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))',
+              animation: 'windSway 6s ease-in-out infinite',
+            }}
+          />
         </div>
       </section>
 
@@ -828,7 +834,6 @@ export default function LBRLWebsite() {
               marginBottom: '32px',
             }}>Custom Tattoo Work</h2>
             
-            {/* Style Filters */}
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
               {styleFilters.map((style) => (
                 <button
@@ -853,9 +858,7 @@ export default function LBRLWebsite() {
             </div>
           </div>
 
-          {/* Horizontal Slider */}
           <div style={{ position: 'relative' }}>
-            {/* Left Arrow */}
             <button
               onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))}
               disabled={sliderIndex === 0}
@@ -882,7 +885,6 @@ export default function LBRLWebsite() {
               ←
             </button>
 
-            {/* Slider Container */}
             <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
               <div
                 style={{
@@ -922,7 +924,6 @@ export default function LBRLWebsite() {
               </div>
             </div>
 
-            {/* Right Arrow */}
             <button
               onClick={() => setSliderIndex(Math.min(maxSliderIndex, sliderIndex + 1))}
               disabled={sliderIndex >= maxSliderIndex}
@@ -950,7 +951,6 @@ export default function LBRLWebsite() {
             </button>
           </div>
 
-          {/* Image Count */}
           <div style={{ textAlign: 'center', marginTop: '24px' }}>
             <span style={{ fontSize: '13px', color: colors.textMuted }}>
               {sliderIndex + 1}-{Math.min(sliderIndex + visibleCount, filteredPortfolio.length)} of {filteredPortfolio.length} pieces
@@ -1051,7 +1051,6 @@ export default function LBRLWebsite() {
             </p>
           </div>
 
-          {/* Pricing Cards */}
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -1059,7 +1058,6 @@ export default function LBRLWebsite() {
             marginBottom: '40px',
           }}>
             
-            {/* Large Scale */}
             <div style={{
               background: colors.bgCard,
               borderRadius: '16px',
@@ -1094,7 +1092,6 @@ export default function LBRLWebsite() {
               </p>
             </div>
 
-            {/* Medium */}
             <div style={{
               background: colors.bgCard,
               borderRadius: '16px',
@@ -1129,7 +1126,6 @@ export default function LBRLWebsite() {
               </p>
             </div>
 
-            {/* Small */}
             <div style={{
               background: colors.bgCard,
               borderRadius: '16px',
@@ -1166,7 +1162,6 @@ export default function LBRLWebsite() {
 
           </div>
 
-          {/* Deposits Info */}
           <div style={{
             background: colors.bgElevated,
             borderRadius: '12px',
@@ -1189,7 +1184,6 @@ export default function LBRLWebsite() {
             </p>
           </div>
 
-          {/* Not Sure CTA */}
           <div style={{ textAlign: 'center' }}>
             <p style={{
               fontSize: '16px',
@@ -1244,7 +1238,6 @@ export default function LBRLWebsite() {
             }}>What Clients Say</h2>
           </div>
 
-          {/* Single Review Carousel */}
           <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
             background: colors.bgCard,
             borderRadius: '20px',
@@ -1254,14 +1247,12 @@ export default function LBRLWebsite() {
             position: 'relative',
             minHeight: '220px',
           }}>
-            {/* Stars */}
             <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>
               {[...Array(5)].map((_, j) => (
                 <span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>
               ))}
             </div>
             
-            {/* Review Text */}
             <p style={{
               fontSize: 'clamp(16px, 2vw, 18px)',
               color: colors.textSecondary,
@@ -1271,7 +1262,6 @@ export default function LBRLWebsite() {
               transition: 'opacity 0.5s ease',
             }}>"{reviews[currentReviewIndex].text}"</p>
             
-            {/* Client Name */}
             <p style={{
               fontSize: '14px',
               fontWeight: '500',
@@ -1279,7 +1269,6 @@ export default function LBRLWebsite() {
               marginBottom: '32px',
             }}>— {reviews[currentReviewIndex].name}</p>
             
-            {/* Navigation Dots */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
               {reviews.map((_, i) => (
                 <button
@@ -1299,7 +1288,6 @@ export default function LBRLWebsite() {
             </div>
           </div>
           
-          {/* Google Rating Badge */}
           <div style={{ 
             textAlign: 'center', 
             marginTop: '32px',
@@ -1500,7 +1488,6 @@ export default function LBRLWebsite() {
               ✉️ Liberaltattoos@gmail.com
             </p>
             
-            {/* Social Media Links */}
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
               <a
                 href="https://instagram.com/dani_lbrl"
@@ -1681,6 +1668,22 @@ export default function LBRLWebsite() {
           100% { transform: rotate(360deg) scale(1); }
         }
         
+        /* Wind Sway Animation for Hero Leaf */
+        @keyframes windSway {
+          0%, 100% { 
+            transform: rotate(0deg) translateX(0px);
+          }
+          25% { 
+            transform: rotate(2deg) translateX(8px);
+          }
+          50% { 
+            transform: rotate(-1deg) translateX(-4px);
+          }
+          75% { 
+            transform: rotate(1.5deg) translateX(6px);
+          }
+        }
+        
         /* Aurora / Northern Lights Effect */
         @keyframes auroraFlash {
           0%, 80%, 100% { 
@@ -1734,7 +1737,7 @@ export default function LBRLWebsite() {
           animation-delay: 7s;
         }
         
-        /* Fibonacci circles animation for loading - continuous pulse */
+        /* Fibonacci circles animation for loading */
         .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
           animation: fibPulse 2.5s ease-in-out infinite;
         }
@@ -1900,7 +1903,6 @@ export default function LBRLWebsite() {
             gap: 16px !important;
           }
           
-          /* Portfolio filter buttons */
           [style*="gap: 12px"][style*="flex-wrap"] {
             gap: 8px !important;
           }
@@ -1910,39 +1912,38 @@ export default function LBRLWebsite() {
             font-size: 10px !important;
           }
           
-          /* Fix slider on mobile */
           [style*="minWidth: 280px"] {
             min-width: 240px !important;
           }
           
-          /* Fix hero section */
           [style*="minHeight: 100vh"] {
             min-height: auto !important;
             padding-top: 100px !important;
             padding-bottom: 60px !important;
           }
           
-          /* Remove any fixed positioning issues */
           [style*="position: sticky"] {
             position: relative !important;
           }
           
-          /* Fix FAQs section on mobile - hide image */
           #faqs [style*="position: sticky"] {
             display: none !important;
           }
           
-          /* Ensure proper spacing between sections */
           section {
             position: relative !important;
             z-index: 1 !important;
             overflow: visible !important;
           }
           
-          /* Fix contact section overlap */
           #contact {
             margin-top: 0 !important;
             padding-top: 60px !important;
+          }
+          
+          /* Hero leaf responsive */
+          .hero-leaf-art img {
+            max-width: 240px !important;
           }
         }
         
@@ -1958,12 +1959,10 @@ export default function LBRLWebsite() {
             padding: 16px !important;
           }
           
-          /* Stats bar single column */
           [style*="grid-template-columns: repeat(4, 1fr)"] {
             grid-template-columns: repeat(2, 1fr) !important;
           }
           
-          /* Portfolio filter buttons wrap better */
           [style*="gap: 12px"][style*="flex-wrap"] {
             justify-content: center !important;
           }
@@ -1974,10 +1973,14 @@ export default function LBRLWebsite() {
             letter-spacing: 0.5px !important;
           }
           
-          /* Slider cards smaller */
           [style*="minWidth: 280px"] {
             min-width: 200px !important;
             height: 280px !important;
+          }
+          
+          /* Hero leaf smaller on mobile */
+          .hero-leaf-art img {
+            max-width: 180px !important;
           }
         }
       `}</style>
