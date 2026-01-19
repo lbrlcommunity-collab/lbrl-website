@@ -4,9 +4,16 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/thank-you', '/api/'],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
       },
     ],
-    sitemap: 'https://lbrltattoos.com/sitemap.xml',
+    sitemap: 'https://www.lbrltattoos.com/sitemap.xml',
   }
 }
