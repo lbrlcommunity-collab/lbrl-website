@@ -1,21 +1,12 @@
-import { MetadataRoute } from 'next'
-
-export default function robots(): MetadataRoute.Robots {
+export default function robots() {
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Bingbot',
-        allow: '/',
+        disallow: ['/thank-you', '/api/'],
       },
     ],
-    sitemap: 'https://www.lbrltattoos.com/sitemap.xml',
+    sitemap: 'https://lbrltattoos.com/sitemap.xml',
   }
 }
