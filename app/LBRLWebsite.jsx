@@ -1536,7 +1536,7 @@ export default function LBRLWebsite() {
             {/* Social Media Links */}
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
               <a
-                href="https://instagram.com/dani_lbrl"
+                href="https://instagram.com/danilbrl_tattoo"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
