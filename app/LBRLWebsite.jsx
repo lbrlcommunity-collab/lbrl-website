@@ -260,6 +260,13 @@ export default function LBRLWebsite() {
     setLightboxOpen(true)
   }
 
+  // Tattoodo Icon Component - Official T Logo
+  const TattoodoIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 4h16v4h-6v12h-4V8H4V4z"/>
+    </svg>
+  )
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -379,6 +386,23 @@ export default function LBRLWebsite() {
         
         {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
+          {/* Tattoodo Icon - ANTES de Portfolio */}
+          <a
+            href="https://www.tattoodo.com/artists/Dani_lbrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View on Tattoodo"
+            style={{
+              color: colors.textSecondary,
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = colors.accentCyan}
+            onMouseOut={(e) => e.currentTarget.style.color = colors.textSecondary}
+          >
+            <TattoodoIcon />
+          </a>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
@@ -483,6 +507,26 @@ export default function LBRLWebsite() {
           padding: '40px 24px',
           gap: '24px',
         }}>
+          {/* Tattoodo Icon - Mobile Menu */}
+          <a
+            href="https://www.tattoodo.com/artists/Dani_lbrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: colors.textPrimary,
+              textDecoration: 'none',
+              fontSize: '18px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+          >
+            <TattoodoIcon />
+            <span>Tattoodo</span>
+          </a>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
@@ -1535,6 +1579,19 @@ export default function LBRLWebsite() {
             
             {/* Social Media Links */}
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
+              {/* Tattoodo Link */}
+              <a
+                href="https://www.tattoodo.com/artists/Dani_lbrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                <TattoodoIcon />
+                <span style={{ fontSize: '14px' }}>Tattoodo</span>
+              </a>
+              
               <a
                 href="https://instagram.com/danilbrl_tattoo"
                 target="_blank"
