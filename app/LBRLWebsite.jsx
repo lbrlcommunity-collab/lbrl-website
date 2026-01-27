@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-const BOOKING_URL = 'https://book.lbrltattoos.com/'
+const BOOKING_URL = 'https://ta2.do/Dani_lbrl'
 const RELEASE_URL = 'https://book.lbrltattoos.com/release-form'
 
 export default function LBRLWebsite() {
