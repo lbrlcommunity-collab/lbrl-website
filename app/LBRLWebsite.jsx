@@ -15,12 +15,51 @@ export default function LBRLWebsite() {
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [visibleSections, setVisibleSections] = useState({})
+  
+  // ========== TATTOODO MODAL STATE ==========
+  const [tattoodoModalOpen, setTattoodoModalOpen] = useState(false)
 
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => setIsLoading(false), 1500)
     return () => clearTimeout(timer)
   }, [])
+
+  // ========== LOAD TATTOODO SDK WHEN MODAL OPENS ==========
+  useEffect(() => {
+    if (tattoodoModalOpen) {
+      // Check if script already exists
+      const existingScript = document.querySelector('script[src="https://www.tattoodo.com/static/assets/sdk.js"]')
+      
+      if (!existingScript) {
+        const script = document.createElement('script')
+        script.src = 'https://www.tattoodo.com/static/assets/sdk.js'
+        script.async = true
+        script.defer = true
+        document.body.appendChild(script)
+      }
+      
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [tattoodoModalOpen])
+
+  // ========== CLOSE MODAL ON ESCAPE KEY ==========
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && tattoodoModalOpen) {
+        setTattoodoModalOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [tattoodoModalOpen])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -278,6 +317,131 @@ export default function LBRLWebsite() {
       maxWidth: '100vw',
     }}>
 
+      {/* ========== TATTOODO EMBED MODAL ========== */}
+      {tattoodoModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.9)',
+            zIndex: 3000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={() => setTattoodoModalOpen(false)}
+        >
+          {/* Modal Content */}
+          <div
+            style={{
+              background: colors.bgCard,
+              borderRadius: '16px',
+              width: '100%',
+              maxWidth: '600px',
+              maxHeight: '90vh',
+              overflow: 'hidden',
+              position: 'relative',
+              border: `1px solid ${colors.borderDefault}`,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '20px 24px',
+              borderBottom: `1px solid ${colors.borderSubtle}`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <TattoodoIcon />
+                <span style={{
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: colors.textPrimary,
+                }}>Book via Tattoodo</span>
+              </div>
+              <button
+                onClick={() => setTattoodoModalOpen(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: colors.textSecondary,
+                  fontSize: '28px',
+                  cursor: 'pointer',
+                  lineHeight: 1,
+                  padding: '0',
+                  transition: 'color 0.3s',
+                }}
+                onMouseOver={(e) => e.target.style.color = colors.textPrimary}
+                onMouseOut={(e) => e.target.style.color = colors.textSecondary}
+              >
+                ×
+              </button>
+            </div>
+            
+            {/* Tattoodo Embed Container */}
+            <div style={{
+              padding: '24px',
+              overflowY: 'auto',
+              maxHeight: 'calc(90vh - 80px)',
+            }}>
+              {/* Tattoodo Booking Form Embed */}
+              <div 
+                className="ta2do-booking-form" 
+                data-user="Dani_lbrl"
+                style={{
+                  minHeight: '400px',
+                }}
+              />
+              
+              {/* Fallback Link */}
+              <div style={{
+                marginTop: '20px',
+                textAlign: 'center',
+                padding: '16px',
+                background: colors.bgElevated,
+                borderRadius: '8px',
+              }}>
+                <p style={{
+                  fontSize: '13px',
+                  color: colors.textMuted,
+                  marginBottom: '12px',
+                }}>
+                  Having trouble? Book directly on Tattoodo:
+                </p>
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '10px 20px',
+                    background: colors.accentCyan,
+                    color: colors.bgDark,
+                    borderRadius: '6px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  <TattoodoIcon />
+                  Open Tattoodo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Loading Spinner */}
       {isLoading && (
         <div style={{
@@ -386,23 +550,25 @@ export default function LBRLWebsite() {
         
         {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
-          {/* Tattoodo Icon - ANTES de Portfolio */}
-          <a
-            href="https://www.tattoodo.com/artists/Dani_lbrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="View on Tattoodo"
+          {/* ========== TATTOODO ICON - NOW OPENS MODAL ========== */}
+          <button
+            onClick={() => setTattoodoModalOpen(true)}
+            aria-label="Book via Tattoodo"
             style={{
+              background: 'none',
+              border: 'none',
               color: colors.textSecondary,
+              cursor: 'pointer',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
+              padding: '4px',
             }}
             onMouseOver={(e) => e.currentTarget.style.color = colors.accentCyan}
             onMouseOut={(e) => e.currentTarget.style.color = colors.textSecondary}
           >
             <TattoodoIcon />
-          </a>
+          </button>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
@@ -507,26 +673,30 @@ export default function LBRLWebsite() {
           padding: '40px 24px',
           gap: '24px',
         }}>
-          {/* Tattoodo Icon - Mobile Menu */}
-          <a
-            href="https://www.tattoodo.com/artists/Dani_lbrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMobileMenuOpen(false)}
+          {/* ========== TATTOODO ICON - MOBILE MENU - NOW OPENS MODAL ========== */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false)
+              setTattoodoModalOpen(true)
+            }}
             style={{
+              background: 'none',
+              border: 'none',
               color: colors.textPrimary,
-              textDecoration: 'none',
               fontSize: '18px',
               letterSpacing: '2px',
               textTransform: 'uppercase',
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
+              cursor: 'pointer',
+              padding: '0',
+              textAlign: 'left',
             }}
           >
             <TattoodoIcon />
-            <span>Tattoodo</span>
-          </a>
+            <span>Book on Tattoodo</span>
+          </button>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a
               key={item}
@@ -683,10 +853,8 @@ export default function LBRLWebsite() {
           transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
           transition: 'all 0.6s ease 0.9s',
         }}>
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setTattoodoModalOpen(true)}
             style={{
               padding: '16px 32px',
               background: colors.accentCyan,
@@ -696,12 +864,13 @@ export default function LBRLWebsite() {
               fontWeight: '600',
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}
           >
             Start Your Journey
-          </a>
+          </button>
           <a
             href="#portfolio"
             style={{
@@ -1579,18 +1748,27 @@ export default function LBRLWebsite() {
             
             {/* Social Media Links */}
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
-              {/* Tattoodo Link */}
-              <a
-                href="https://www.tattoodo.com/artists/Dani_lbrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
+              {/* Tattoodo Link - NOW OPENS MODAL */}
+              <button
+                onClick={() => setTattoodoModalOpen(true)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  color: colors.accentCyan, 
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'opacity 0.3s',
+                  padding: '0',
+                  fontSize: '14px',
+                }}
                 onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
                 onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
               >
                 <TattoodoIcon />
-                <span style={{ fontSize: '14px' }}>Tattoodo</span>
-              </a>
+                <span>Tattoodo</span>
+              </button>
               
               <a
                 href="https://instagram.com/danilbrl_tattoo"
@@ -1764,6 +1942,12 @@ export default function LBRLWebsite() {
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
+        
+        /* Tattoodo Embed Styles */
+        .ta2do-booking-form {
+          width: 100%;
+          min-height: 400px;
+        }
         
         @keyframes spin {
           0% { transform: rotate(0deg) scale(1); }
