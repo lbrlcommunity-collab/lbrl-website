@@ -441,7 +441,6 @@ export default function LBRLWebsite() {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Loading Spinner */}
       {isLoading && (
