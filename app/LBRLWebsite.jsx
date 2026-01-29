@@ -25,21 +25,23 @@ export default function LBRLWebsite() {
     return () => clearTimeout(timer)
   }, [])
 
-  // ========== LOAD TATTOODO SDK WHEN MODAL OPENS ==========
+  // ========== LOAD TATTOODO SDK ON MOUNT ==========
+  useEffect(() => {
+    // Load script once on component mount
+    const existingScript = document.querySelector('script[src="https://www.tattoodo.com/static/assets/sdk.js"]')
+    
+    if (!existingScript) {
+      const script = document.createElement('script')
+      script.src = 'https://www.tattoodo.com/static/assets/sdk.js'
+      script.async = true
+      script.defer = true
+      document.body.appendChild(script)
+    }
+  }, [])
+
+  // ========== CONTROL BODY SCROLL WHEN MODAL OPENS ==========
   useEffect(() => {
     if (tattoodoModalOpen) {
-      // Check if script already exists
-      const existingScript = document.querySelector('script[src="https://www.tattoodo.com/static/assets/sdk.js"]')
-      
-      if (!existingScript) {
-        const script = document.createElement('script')
-        script.src = 'https://www.tattoodo.com/static/assets/sdk.js'
-        script.async = true
-        script.defer = true
-        document.body.appendChild(script)
-      }
-      
-      // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -318,23 +320,22 @@ export default function LBRLWebsite() {
     }}>
 
       {/* ========== TATTOODO EMBED MODAL ========== */}
-      {tattoodoModalOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0, 0, 0, 0.9)',
-            zIndex: 3000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-          }}
-          onClick={() => setTattoodoModalOpen(false)}
-        >
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.9)',
+          zIndex: 3000,
+          display: tattoodoModalOpen ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px',
+        }}
+        onClick={() => setTattoodoModalOpen(false)}
+      >
           {/* Modal Content */}
           <div
             style={{
@@ -440,7 +441,7 @@ export default function LBRLWebsite() {
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Loading Spinner */}
       {isLoading && (
@@ -615,10 +616,8 @@ export default function LBRLWebsite() {
           >
             Release Form
           </a>
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setTattoodoModalOpen(true)}
             style={{
               padding: '10px 20px',
               background: colors.textPrimary,
@@ -628,12 +627,13 @@ export default function LBRLWebsite() {
               fontWeight: '600',
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}
           >
             Book Now
-          </a>
+          </button>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -735,11 +735,11 @@ export default function LBRLWebsite() {
             >
               Release Form
             </a>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false)
+                setTattoodoModalOpen(true)
+              }}
               style={{
                 padding: '14px 24px',
                 background: colors.accentCyan,
@@ -749,12 +749,13 @@ export default function LBRLWebsite() {
                 fontWeight: '600',
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
-                textDecoration: 'none',
+                border: 'none',
+                cursor: 'pointer',
                 textAlign: 'center',
               }}
             >
               Book Now
-            </a>
+            </button>
           </div>
         </div>
       )}
