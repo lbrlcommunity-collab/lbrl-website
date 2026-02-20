@@ -14,22 +14,24 @@ export default function LBRLWebsite() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [loadingPhase, setLoadingPhase] = useState(0) // 0=draw, 1=logo, 2=text, 3=exit
   const [visibleSections, setVisibleSections] = useState({})
   
   // ========== TATTOODO MODAL STATE ==========
   const [tattoodoModalOpen, setTattoodoModalOpen] = useState(false)
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => setIsLoading(false), 1500)
-    return () => clearTimeout(timer)
+    // Phase-based loading sequence
+    const phase1 = setTimeout(() => setLoadingPhase(1), 400)   // Logo appears
+    const phase2 = setTimeout(() => setLoadingPhase(2), 900)   // Text reveals
+    const phase3 = setTimeout(() => setLoadingPhase(3), 1800)  // Exit begins
+    const done   = setTimeout(() => setIsLoading(false), 2400) // Done
+    return () => { clearTimeout(phase1); clearTimeout(phase2); clearTimeout(phase3); clearTimeout(done) }
   }, [])
 
   // ========== LOAD TATTOODO SDK ON MOUNT ==========
   useEffect(() => {
-    // Load script once on component mount
     const existingScript = document.querySelector('script[src="https://www.tattoodo.com/static/assets/sdk.js"]')
-    
     if (!existingScript) {
       const script = document.createElement('script')
       script.src = 'https://www.tattoodo.com/static/assets/sdk.js'
@@ -46,10 +48,7 @@ export default function LBRLWebsite() {
     } else {
       document.body.style.overflow = 'unset'
     }
-    
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
+    return () => { document.body.style.overflow = 'unset' }
   }, [tattoodoModalOpen])
 
   // ========== CLOSE MODAL ON ESCAPE KEY ==========
@@ -74,10 +73,8 @@ export default function LBRLWebsite() {
       },
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     )
-
     const sections = document.querySelectorAll('[data-animate]')
     sections.forEach((section) => observer.observe(section))
-
     return () => observer.disconnect()
   }, [isLoading])
 
@@ -271,7 +268,6 @@ export default function LBRLWebsite() {
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
 
-  // Auto-rotate reviews
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReviewIndex((prev) => (prev + 1) % reviews.length)
@@ -302,7 +298,6 @@ export default function LBRLWebsite() {
     setLightboxOpen(true)
   }
 
-  // Tattoodo Icon Component - Official T Logo
   const TattoodoIcon = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
       <path d="M4 4h16v4h-6v12h-4V8H4V4z"/>
@@ -337,7 +332,6 @@ export default function LBRLWebsite() {
         }}
         onClick={() => setTattoodoModalOpen(false)}
       >
-          {/* Modal Content */}
           <div
             style={{
               background: colors.bgCard,
@@ -351,7 +345,6 @@ export default function LBRLWebsite() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -361,11 +354,7 @@ export default function LBRLWebsite() {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <TattoodoIcon />
-                <span style={{
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  color: colors.textPrimary,
-                }}>Book via Tattoodo</span>
+                <span style={{ fontSize: '16px', fontWeight: '500', color: colors.textPrimary }}>Book via Tattoodo</span>
               </div>
               <button
                 onClick={() => setTattoodoModalOpen(false)}
@@ -385,23 +374,8 @@ export default function LBRLWebsite() {
                 ×
               </button>
             </div>
-            
-            {/* Tattoodo Embed Container */}
-            <div style={{
-              padding: '24px',
-              overflowY: 'auto',
-              maxHeight: 'calc(90vh - 80px)',
-            }}>
-              {/* Tattoodo Booking Form Embed */}
-              <div 
-                className="ta2do-booking-form" 
-                data-user="Dani_lbrl"
-                style={{
-                  minHeight: '400px',
-                }}
-              />
-              
-              {/* Fallback Link */}
+            <div style={{ padding: '24px', overflowY: 'auto', maxHeight: 'calc(90vh - 80px)' }}>
+              <div className="ta2do-booking-form" data-user="Dani_lbrl" style={{ minHeight: '400px' }} />
               <div style={{
                 marginTop: '20px',
                 textAlign: 'center',
@@ -409,11 +383,7 @@ export default function LBRLWebsite() {
                 background: colors.bgElevated,
                 borderRadius: '8px',
               }}>
-                <p style={{
-                  fontSize: '13px',
-                  color: colors.textMuted,
-                  marginBottom: '12px',
-                }}>
+                <p style={{ fontSize: '13px', color: colors.textMuted, marginBottom: '12px' }}>
                   Having trouble? Book directly on Tattoodo:
                 </p>
                 <a
@@ -443,9 +413,9 @@ export default function LBRLWebsite() {
           </div>
         </div>
 
-      {/* Loading Spinner */}
+      {/* ========== PREMIUM LOADING EXPERIENCE ========== */}
       {isLoading && (
-        <div style={{
+        <div className={`loader-screen ${loadingPhase >= 3 ? 'loader-exit' : ''}`} style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -457,15 +427,17 @@ export default function LBRLWebsite() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '24px',
+          gap: '0px',
           overflow: 'hidden',
         }}>
-          {/* Sacred Geometry / Fibonacci Background */}
-          <svg style={{
+          
+          {/* ===== LAYER 1: Sacred Geometry — Self-Drawing Lines ===== */}
+          <svg className="sacred-geo-svg" style={{
             position: 'absolute',
             width: '100%',
             height: '100%',
-            opacity: 0.12,
+            opacity: loadingPhase >= 3 ? 0 : 1,
+            transition: 'opacity 0.6s ease',
           }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
             <defs>
               <linearGradient id="sacredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -473,57 +445,162 @@ export default function LBRLWebsite() {
                 <stop offset="50%" stopColor={colors.accentTeal} />
                 <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
+              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.15" />
+                <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0" />
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
-            {/* Golden Spiral approximation */}
+            
+            {/* Center glow pulse */}
+            <circle cx="250" cy="250" r="120" fill="url(#glowGrad)" className="center-glow" />
+            
+            {/* Fibonacci circles — draw themselves */}
+            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" 
+              className="draw-circle draw-d1" filter="url(#glow)" />
+            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" 
+              className="draw-circle draw-d2" filter="url(#glow)" />
+            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" 
+              className="draw-circle draw-d3" filter="url(#glow)" />
+            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" 
+              className="draw-circle draw-d4" filter="url(#glow)" />
+            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" 
+              className="draw-circle draw-d5" filter="url(#glow)" />
+            
+            {/* Golden spiral — draws itself */}
             <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
-              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="fibonacci-spiral" />
-            {/* Fibonacci circles */}
-            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-1" />
-            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-2" />
-            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="fib-circle-3" />
-            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-4" />
-            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="fib-circle-5" />
-            {/* Flower of Life petals */}
-            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" />
-            {/* Organic floral curves */}
-            <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-1" />
-            <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="organic-line-2" />
-            <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" />
+              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="draw-spiral" filter="url(#glow)" />
+            
+            {/* Flower of Life petals — draw with stagger */}
+            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p1" />
+            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p2" />
+            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p3" />
+            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p4" />
+            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p5" />
+            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p6" />
+            
+            {/* Organic flowing curves */}
+            <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" 
+              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="draw-organic draw-o1" />
+            <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" 
+              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="draw-organic draw-o2" />
+            
             {/* Fine detail arcs */}
-            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
-            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" />
+            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="draw-arc draw-a1" />
+            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="draw-arc draw-a2" />
+            
+            {/* Rotating outer ring */}
+            <circle cx="250" cy="250" r="200" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" 
+              strokeDasharray="8 12" className="rotate-ring" />
           </svg>
-          
-          <div className="logo-spinner" style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            animation: 'spin 1.5s ease-in-out infinite',
-            boxShadow: `0 0 60px ${colors.accentCyan}33`,
+
+          {/* ===== LAYER 2: Morphing Ring around Logo ===== */}
+          <div className="logo-ring-container" style={{
+            position: 'relative',
+            width: '140px',
+            height: '140px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
-            <img 
-              src="/Tribal Logo.jpg" 
-              alt="LBRL" 
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-              }} 
-            />
+            {/* Outer glowing ring */}
+            <svg className="morph-ring" style={{
+              position: 'absolute',
+              width: '140px',
+              height: '140px',
+              opacity: loadingPhase >= 1 ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }} viewBox="0 0 140 140">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.8" />
+                  <stop offset="50%" stopColor={colors.accentTeal} stopOpacity="0.4" />
+                  <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0.8" />
+                </linearGradient>
+              </defs>
+              <circle cx="70" cy="70" r="65" stroke="url(#ringGrad)" strokeWidth="1" fill="none" 
+                className="ring-draw" filter="url(#glow)" />
+              <circle cx="70" cy="70" r="62" stroke={colors.accentCyan} strokeWidth="0.3" fill="none" 
+                strokeDasharray="3 8" className="ring-dots" />
+            </svg>
+            
+            {/* Logo with premium reveal */}
+            <div className={`logo-reveal ${loadingPhase >= 1 ? 'logo-visible' : ''}`} style={{
+              width: '90px',
+              height: '90px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              position: 'relative',
+              zIndex: 2,
+            }}>
+              <img 
+                src="/Tribal Logo.jpg" 
+                alt="LBRL" 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover',
+                }} 
+              />
+            </div>
           </div>
-          <span style={{ 
-            fontSize: '24px', 
-            fontWeight: '300', 
-            letterSpacing: '6px', 
-            color: colors.textPrimary,
-            opacity: 0.8,
-          }}>LBRL</span>
+
+          {/* ===== LAYER 3: Text Reveal ===== */}
+          <div className={`text-reveal ${loadingPhase >= 2 ? 'text-visible' : ''}`} style={{
+            marginTop: '28px',
+            display: 'flex',
+            gap: '8px',
+            overflow: 'hidden',
+          }}>
+            {'LBRL'.split('').map((letter, i) => (
+              <span key={i} className={`letter-reveal letter-${i}`} style={{
+                fontSize: '28px',
+                fontWeight: '200',
+                letterSpacing: '8px',
+                color: colors.textPrimary,
+              }}>{letter}</span>
+            ))}
+          </div>
+
+          {/* ===== LAYER 4: Subtitle ===== */}
+          <div className={`subtitle-reveal ${loadingPhase >= 2 ? 'subtitle-visible' : ''}`} style={{
+            marginTop: '12px',
+            overflow: 'hidden',
+          }}>
+            <span style={{
+              fontSize: '10px',
+              fontWeight: '400',
+              letterSpacing: '4px',
+              textTransform: 'uppercase',
+              color: colors.accentCyan,
+              opacity: 0.7,
+            }}>Tattoo Studio</span>
+          </div>
+
+          {/* ===== LAYER 5: Progress Line ===== */}
+          <div style={{
+            position: 'absolute',
+            bottom: '60px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '120px',
+            height: '1px',
+            background: colors.borderDefault,
+            borderRadius: '1px',
+            overflow: 'hidden',
+          }}>
+            <div className="progress-fill" style={{
+              height: '100%',
+              background: `linear-gradient(90deg, ${colors.accentCyan}, ${colors.accentTeal})`,
+              borderRadius: '1px',
+            }} />
+          </div>
         </div>
       )}
 
@@ -551,7 +628,6 @@ export default function LBRLWebsite() {
         
         {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
-          {/* ========== TATTOODO ICON - NOW OPENS MODAL ========== */}
           <button
             onClick={() => setTattoodoModalOpen(true)}
             aria-label="Book via Tattoodo"
@@ -636,7 +712,7 @@ export default function LBRLWebsite() {
           </button>
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="mobile-menu-btn"
@@ -774,13 +850,10 @@ export default function LBRLWebsite() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Aurora / Northern Lights Effect */}
+        {/* Aurora Effect */}
         <div className="aurora-container" style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          top: 0, left: 0, right: 0, bottom: 0,
           pointerEvents: 'none',
           overflow: 'hidden',
         }}>
@@ -891,7 +964,7 @@ export default function LBRLWebsite() {
           </a>
         </div>
 
-        {/* Wind Animation Image - Below Buttons */}
+        {/* Wind Animation Image */}
         <div style={{
           width: '100%',
           maxWidth: '1200px',
@@ -952,50 +1025,25 @@ export default function LBRLWebsite() {
               <img 
                 src="/Dany 3.PNG" 
                 alt="Daniel Liberal tattooing a client at LBRL Tattoo Studio Vancouver WA" 
-                style={{ 
-                  width: '100%', 
-                  borderRadius: '16px', 
-                  marginBottom: '30px',
-                  objectFit: 'cover',
-                }} 
+                style={{ width: '100%', borderRadius: '16px', marginBottom: '30px', objectFit: 'cover' }} 
               />
               <p style={{
-                fontSize: '12px',
-                fontWeight: '500',
-                color: colors.accentCyan,
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                marginBottom: '16px',
+                fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+                letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
               }}>Body Harmony</p>
               <h2 style={{
-                fontSize: 'clamp(28px, 4vw, 36px)',
-                fontWeight: '300',
-                marginBottom: '24px',
-                lineHeight: '1.3',
+                fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300',
+                marginBottom: '24px', lineHeight: '1.3',
               }}>
                 Every Design Flows<br />With Your Anatomy
               </h2>
-              <p style={{
-                fontSize: '16px',
-                color: colors.textSecondary,
-                lineHeight: '1.8',
-                marginBottom: '24px',
-              }}>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>
                 Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.
               </p>
-              <p style={{
-                fontSize: '16px',
-                color: colors.textSecondary,
-                lineHeight: '1.8',
-                marginBottom: '24px',
-              }}>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>
                 With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.
               </p>
-              <p style={{
-                fontSize: '14px',
-                color: colors.textMuted,
-                fontStyle: 'italic',
-              }}>
+              <p style={{ fontSize: '14px', color: colors.textMuted, fontStyle: 'italic' }}>
                 From Puerto Rico 2013 est. to Vancouver, WA 2016-Present
               </p>
             </div>
@@ -1047,20 +1095,13 @@ export default function LBRLWebsite() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
             <p style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
+              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
             }}>Portfolio</p>
             <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)',
-              fontWeight: '300',
-              marginBottom: '32px',
+              fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '32px',
             }}>Custom Tattoo Work</h2>
             
-            {/* Style Filters */}
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
               {styleFilters.map((style) => (
                 <button
@@ -1085,66 +1126,44 @@ export default function LBRLWebsite() {
             </div>
           </div>
 
-          {/* Horizontal Slider */}
           <div style={{ position: 'relative' }}>
-            {/* Left Arrow */}
             <button
               onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))}
               disabled={sliderIndex === 0}
               style={{
-                position: 'absolute',
-                left: '-20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                background: colors.bgCard,
+                position: 'absolute', left: '-20px', top: '50%',
+                transform: 'translateY(-50%)', width: '48px', height: '48px',
+                borderRadius: '50%', background: colors.bgCard,
                 border: `1px solid ${colors.borderDefault}`,
                 color: sliderIndex === 0 ? colors.textMuted : colors.textPrimary,
                 cursor: sliderIndex === 0 ? 'not-allowed' : 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                zIndex: 10,
-                transition: 'all 0.3s ease',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease',
               }}
             >
               ←
             </button>
 
-            {/* Slider Container */}
             <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '16px',
-                  transform: `translateX(-${sliderIndex * (280 + 16)}px)`,
-                  transition: 'transform 0.4s ease',
-                }}
-              >
+              <div style={{
+                display: 'flex', gap: '16px',
+                transform: `translateX(-${sliderIndex * (280 + 16)}px)`,
+                transition: 'transform 0.4s ease',
+              }}>
                 {filteredPortfolio.map((item, index) => (
                   <div
                     key={item.id}
                     onClick={() => openLightbox(index)}
                     style={{
-                      minWidth: '280px',
-                      height: '350px',
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      position: 'relative',
+                      minWidth: '280px', height: '350px', borderRadius: '12px',
+                      overflow: 'hidden', cursor: 'pointer', position: 'relative',
                     }}
                   >
-                    {/* ========== SEO FIX: alt text from item.alt ========== */}
                     <img
                       src={item.image}
                       alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
                       style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
+                        width: '100%', height: '100%', objectFit: 'cover',
                         transition: 'transform 0.4s ease',
                       }}
                       onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
@@ -1155,35 +1174,24 @@ export default function LBRLWebsite() {
               </div>
             </div>
 
-            {/* Right Arrow */}
             <button
               onClick={() => setSliderIndex(Math.min(maxSliderIndex, sliderIndex + 1))}
               disabled={sliderIndex >= maxSliderIndex}
               style={{
-                position: 'absolute',
-                right: '-20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                background: colors.bgCard,
+                position: 'absolute', right: '-20px', top: '50%',
+                transform: 'translateY(-50%)', width: '48px', height: '48px',
+                borderRadius: '50%', background: colors.bgCard,
                 border: `1px solid ${colors.borderDefault}`,
                 color: sliderIndex >= maxSliderIndex ? colors.textMuted : colors.textPrimary,
                 cursor: sliderIndex >= maxSliderIndex ? 'not-allowed' : 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px',
-                zIndex: 10,
-                transition: 'all 0.3s ease',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease',
               }}
             >
               →
             </button>
           </div>
 
-          {/* Image Count */}
           <div style={{ textAlign: 'center', marginTop: '24px' }}>
             <span style={{ fontSize: '13px', color: colors.textMuted }}>
               {sliderIndex + 1}-{Math.min(sliderIndex + visibleCount, filteredPortfolio.length)} of {filteredPortfolio.length} pieces
@@ -1200,49 +1208,25 @@ export default function LBRLWebsite() {
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div className={visibleSections['process'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
+              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
             }}>The Process</p>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)',
-              fontWeight: '300',
-            }}>From Vision to Reality</h2>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>From Vision to Reality</h2>
           </div>
-
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {processSteps.map((step, i) => (
               <div
                 key={i}
                 className={visibleSections['process'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'}
                 style={{
-                  background: colors.bgCard,
-                  borderRadius: '16px',
-                  padding: '32px 24px',
-                  border: `1px solid ${colors.borderDefault}`,
-                  textAlign: 'center',
+                  background: colors.bgCard, borderRadius: '16px', padding: '32px 24px',
+                  border: `1px solid ${colors.borderDefault}`, textAlign: 'center',
                   transition: 'all 0.3s ease',
                 }}
               >
-                <div style={{
-                  fontSize: '32px',
-                  fontWeight: '200',
-                  color: colors.accentCyan,
-                  marginBottom: '16px',
-                }}>{step.number}</div>
-                <h3 style={{
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  marginBottom: '12px',
-                }}>{step.title}</h3>
-                <p style={{
-                  fontSize: '13px',
-                  color: colors.textSecondary,
-                  lineHeight: '1.6',
-                }}>{step.desc}</p>
+                <div style={{ fontSize: '32px', fontWeight: '200', color: colors.accentCyan, marginBottom: '16px' }}>{step.number}</div>
+                <h3 style={{ fontSize: '16px', fontWeight: '500', marginBottom: '12px' }}>{step.title}</h3>
+                <p style={{ fontSize: '13px', color: colors.textSecondary, lineHeight: '1.6' }}>{step.desc}</p>
               </div>
             ))}
           </div>
@@ -1257,178 +1241,59 @@ export default function LBRLWebsite() {
         overflow: 'hidden',
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
+              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
             }}>Pricing & Booking</p>
             <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)',
-              fontWeight: '300',
-              color: colors.textPrimary,
-              marginBottom: '20px',
+              fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300',
+              color: colors.textPrimary, marginBottom: '20px',
             }}>Investment in Your Art</h2>
             <p style={{
-              fontSize: '16px',
-              color: colors.textSecondary,
-              maxWidth: '600px',
-              margin: '0 auto',
-              lineHeight: '1.7',
+              fontSize: '16px', color: colors.textSecondary, maxWidth: '600px',
+              margin: '0 auto', lineHeight: '1.7',
             }}>
               Every project is different. Pricing depends on size, detail, and time. Here's a general breakdown.
             </p>
           </div>
-
-          {/* Pricing Cards */}
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px',
-            marginBottom: '40px',
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px', marginBottom: '40px',
           }}>
-            
-            {/* Large Scale */}
-            <div style={{
-              background: colors.bgCard,
-              borderRadius: '16px',
-              padding: '32px',
-              border: `1px solid ${colors.borderDefault}`,
-            }}>
-              <div style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: colors.accentCyan,
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '12px',
-              }}>Large-Scale Work</div>
-              <div style={{
-                fontSize: '32px',
-                fontWeight: '300',
-                color: colors.textPrimary,
-                marginBottom: '8px',
-              }}>$260<span style={{ fontSize: '16px', color: colors.textMuted }}>/hour</span></div>
-              <div style={{
-                fontSize: '14px',
-                color: colors.accentCyan,
-                marginBottom: '20px',
-              }}>$300 deposit to book</div>
-              <p style={{
-                fontSize: '14px',
-                color: colors.textSecondary,
-                lineHeight: '1.7',
-              }}>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Large-Scale Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$260<span style={{ fontSize: '16px', color: colors.textMuted }}>/hour</span></div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$300 deposit to book</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
                 Half sleeves, full sleeves, back pieces, leg pieces. Your deposit goes toward the final session and includes a revision appointment where I present up to three design directions. Large projects get priority scheduling.
               </p>
             </div>
-
-            {/* Medium */}
-            <div style={{
-              background: colors.bgCard,
-              borderRadius: '16px',
-              padding: '32px',
-              border: `1px solid ${colors.borderDefault}`,
-            }}>
-              <div style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: colors.accentCyan,
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '12px',
-              }}>Medium Work</div>
-              <div style={{
-                fontSize: '32px',
-                fontWeight: '300',
-                color: colors.textPrimary,
-                marginBottom: '8px',
-              }}>$500 to $750</div>
-              <div style={{
-                fontSize: '14px',
-                color: colors.accentCyan,
-                marginBottom: '20px',
-              }}>$250 deposit to book</div>
-              <p style={{
-                fontSize: '14px',
-                color: colors.textSecondary,
-                lineHeight: '1.7',
-              }}>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Medium Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$500 to $750</div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$250 deposit to book</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
                 Flat rate depending on detail. Design is prepared and reviewed the day of your session.
               </p>
             </div>
-
-            {/* Small */}
-            <div style={{
-              background: colors.bgCard,
-              borderRadius: '16px',
-              padding: '32px',
-              border: `1px solid ${colors.borderDefault}`,
-            }}>
-              <div style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: colors.accentCyan,
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '12px',
-              }}>Small Work</div>
-              <div style={{
-                fontSize: '32px',
-                fontWeight: '300',
-                color: colors.textPrimary,
-                marginBottom: '8px',
-              }}>$150 to $350</div>
-              <div style={{
-                fontSize: '14px',
-                color: colors.accentCyan,
-                marginBottom: '20px',
-              }}>$50 to $100 deposit</div>
-              <p style={{
-                fontSize: '14px',
-                color: colors.textSecondary,
-                lineHeight: '1.7',
-              }}>
+            <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
+              <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Small Work</div>
+              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$150 to $350</div>
+              <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$50 to $100 deposit</div>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
                 Names, symbols, simple designs. $150 minimum. Design reviewed day of session.
               </p>
             </div>
-
           </div>
-
-          {/* Deposits Info */}
-          <div style={{
-            background: colors.bgElevated,
-            borderRadius: '12px',
-            padding: '24px 32px',
-            marginBottom: '30px',
-          }}>
-            <h3 style={{
-              fontSize: '14px',
-              fontWeight: '600',
-              color: colors.textPrimary,
-              marginBottom: '12px',
-            }}>Deposits & Cancellations</h3>
-            <p style={{
-              fontSize: '14px',
-              color: colors.textSecondary,
-              lineHeight: '1.7',
-              margin: 0,
-            }}>
+          <div style={{ background: colors.bgElevated, borderRadius: '12px', padding: '24px 32px', marginBottom: '30px' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: '600', color: colors.textPrimary, marginBottom: '12px' }}>Deposits & Cancellations</h3>
+            <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0 }}>
               All deposits are non-refundable. Cancellations or reschedules with less than 72 hours notice forfeit the deposit. Arrivals more than 30 minutes late without notice count as a no-show.
             </p>
           </div>
-
-          {/* Not Sure CTA */}
           <div style={{ textAlign: 'center' }}>
-            <p style={{
-              fontSize: '16px',
-              color: colors.textSecondary,
-              marginBottom: '20px',
-            }}>
+            <p style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '20px' }}>
               Not sure where your project fits? I'll help you figure that out during the consultation.
             </p>
             <a
@@ -1436,23 +1301,15 @@ export default function LBRLWebsite() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: 'inline-block',
-                padding: '16px 40px',
-                background: colors.accentCyan,
-                color: colors.bgDark,
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '600',
-                textDecoration: 'none',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
+                display: 'inline-block', padding: '16px 40px',
+                background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px',
+                fontSize: '14px', fontWeight: '600', textDecoration: 'none',
+                letterSpacing: '1px', textTransform: 'uppercase', transition: 'all 0.3s ease',
               }}
             >
               Book Consultation
             </a>
           </div>
-
         </div>
       </section>
 
@@ -1464,55 +1321,30 @@ export default function LBRLWebsite() {
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className={visibleSections['reviews'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
+              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
             }}>Reviews</p>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)',
-              fontWeight: '300',
-            }}>What Clients Say</h2>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>What Clients Say</h2>
           </div>
-
-          {/* Single Review Carousel */}
           <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
-            background: colors.bgCard,
-            borderRadius: '20px',
+            background: colors.bgCard, borderRadius: '20px',
             padding: 'clamp(32px, 5vw, 48px)',
-            border: `1px solid ${colors.borderDefault}`,
-            textAlign: 'center',
-            position: 'relative',
-            minHeight: '220px',
+            border: `1px solid ${colors.borderDefault}`, textAlign: 'center',
+            position: 'relative', minHeight: '220px',
           }}>
-            {/* Stars */}
             <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>
               {[...Array(5)].map((_, j) => (
                 <span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>
               ))}
             </div>
-            
-            {/* Review Text */}
             <p style={{
-              fontSize: 'clamp(16px, 2vw, 18px)',
-              color: colors.textSecondary,
-              lineHeight: '1.8',
-              marginBottom: '24px',
-              fontStyle: 'italic',
+              fontSize: 'clamp(16px, 2vw, 18px)', color: colors.textSecondary,
+              lineHeight: '1.8', marginBottom: '24px', fontStyle: 'italic',
               transition: 'opacity 0.5s ease',
             }}>"{reviews[currentReviewIndex].text}"</p>
-            
-            {/* Client Name */}
             <p style={{
-              fontSize: '14px',
-              fontWeight: '500',
-              color: colors.accentCyan,
-              marginBottom: '32px',
+              fontSize: '14px', fontWeight: '500', color: colors.accentCyan, marginBottom: '32px',
             }}>— {reviews[currentReviewIndex].name}</p>
-            
-            {/* Navigation Dots */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
               {reviews.map((_, i) => (
                 <button
@@ -1520,26 +1352,17 @@ export default function LBRLWebsite() {
                   onClick={() => setCurrentReviewIndex(i)}
                   style={{
                     width: currentReviewIndex === i ? '24px' : '10px',
-                    height: '10px',
-                    borderRadius: '5px',
+                    height: '10px', borderRadius: '5px',
                     background: currentReviewIndex === i ? colors.accentCyan : colors.bgElevated,
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
+                    border: 'none', cursor: 'pointer', transition: 'all 0.3s ease',
                   }}
                 />
               ))}
             </div>
           </div>
-          
-          {/* Google Rating Badge */}
           <div style={{ 
-            textAlign: 'center', 
-            marginTop: '32px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
+            textAlign: 'center', marginTop: '32px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
           }}>
             <span style={{ color: colors.accentOrange, fontSize: '24px' }}>★</span>
             <span style={{ fontSize: '14px', color: colors.textSecondary }}>
@@ -1561,102 +1384,51 @@ export default function LBRLWebsite() {
             <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <div style={{ marginBottom: '40px' }}>
                 <p style={{
-                  fontSize: '12px',
-                  fontWeight: '500',
-                  color: colors.accentCyan,
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  marginBottom: '16px',
+                  fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+                  letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
                 }}>FAQs</p>
-                <h2 style={{
-                  fontSize: 'clamp(28px, 4vw, 36px)',
-                  fontWeight: '300',
-                }}>Common Questions</h2>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>Common Questions</h2>
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {faqs.map((faq, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      background: colors.bgCard,
-                      borderRadius: '12px',
-                      border: `1px solid ${colors.borderDefault}`,
-                      overflow: 'hidden',
-                    }}
-                  >
+                  <div key={i} style={{
+                    background: colors.bgCard, borderRadius: '12px',
+                    border: `1px solid ${colors.borderDefault}`, overflow: 'hidden',
+                  }}>
                     <button
                       onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
                       style={{
-                        width: '100%',
-                        padding: '20px 24px',
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        textAlign: 'left',
+                        width: '100%', padding: '20px 24px', background: 'transparent',
+                        border: 'none', cursor: 'pointer', display: 'flex',
+                        justifyContent: 'space-between', alignItems: 'center', textAlign: 'left',
                       }}
                     >
                       <h3 style={{
-                        fontSize: '15px',
-                        fontWeight: '500',
-                        color: colors.textPrimary,
-                        margin: 0,
-                        paddingRight: '16px',
+                        fontSize: '15px', fontWeight: '500', color: colors.textPrimary,
+                        margin: 0, paddingRight: '16px',
                       }}>{faq.q}</h3>
                       <span style={{
-                        color: colors.accentCyan,
-                        fontSize: '20px',
-                        fontWeight: '300',
+                        color: colors.accentCyan, fontSize: '20px', fontWeight: '300',
                         transform: expandedFaq === i ? 'rotate(45deg)' : 'rotate(0deg)',
                         transition: 'transform 0.3s ease',
                       }}>+</span>
                     </button>
                     <div style={{
                       maxHeight: expandedFaq === i ? '500px' : '0',
-                      overflow: 'hidden',
-                      transition: 'max-height 0.3s ease',
+                      overflow: 'hidden', transition: 'max-height 0.3s ease',
                     }}>
                       <p style={{
-                        fontSize: '14px',
-                        color: colors.textSecondary,
-                        lineHeight: '1.7',
-                        margin: 0,
-                        padding: '0 24px 20px 24px',
+                        fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7',
+                        margin: 0, padding: '0 24px 20px 24px',
                       }}>{faq.a}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            
-            <div className={visibleSections['faqs'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{
-              position: 'sticky',
-              top: '100px',
-            }}>
-              <img 
-                src="/Dani2.png" 
-                alt="Daniel Liberal tattoo artist at work - LBRL Tattoo Studio Vancouver WA" 
-                style={{ 
-                  width: '100%', 
-                  borderRadius: '16px',
-                  objectFit: 'cover',
-                  marginBottom: '20px',
-                }} 
-              />
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                style={{
-                  width: '100%',
-                  borderRadius: '16px',
-                  objectFit: 'cover',
-                }}
-              >
+            <div className={visibleSections['faqs'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{ position: 'sticky', top: '100px' }}>
+              <img src="/Dani2.png" alt="Daniel Liberal tattoo artist at work - LBRL Tattoo Studio Vancouver WA" style={{ width: '100%', borderRadius: '16px', objectFit: 'cover', marginBottom: '20px' }} />
+              <video autoPlay loop muted playsInline style={{ width: '100%', borderRadius: '16px', objectFit: 'cover' }}>
                 <source src="/_users_355de36e-0a13-42b0-a4f8-690006e9848c_generated_0760b186-f9b7-45de-b081-c173128c2802_generated_video.mp4" type="video/mp4" />
               </video>
             </div>
@@ -1673,42 +1445,26 @@ export default function LBRLWebsite() {
       }}>
         <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <p style={{
-            fontSize: '12px',
-            fontWeight: '500',
-            color: colors.accentCyan,
-            letterSpacing: '3px',
-            textTransform: 'uppercase',
-            marginBottom: '16px',
+            fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
+            letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
           }}>Contact</p>
           <h2 style={{
-            fontSize: 'clamp(28px, 4vw, 36px)',
-            fontWeight: '300',
-            marginBottom: '24px',
+            fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px',
           }}>Ready to Start?</h2>
           <p style={{
-            fontSize: '16px',
-            color: colors.textSecondary,
-            lineHeight: '1.7',
-            marginBottom: '32px',
+            fontSize: '16px', color: colors.textSecondary, lineHeight: '1.7', marginBottom: '32px',
           }}>
             Fill out the booking form to schedule your consultation. I'll review your idea and get back to you within 1-3 business days.
           </p>
-
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
             <a
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                padding: '16px 32px',
-                background: colors.accentCyan,
-                color: colors.bgDark,
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
+                padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark,
+                borderRadius: '8px', fontSize: '13px', fontWeight: '600',
+                letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none',
               }}
             >
               Book Consultation
@@ -1718,51 +1474,29 @@ export default function LBRLWebsite() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                padding: '16px 32px',
-                background: 'transparent',
-                border: `1px solid ${colors.accentCyan}`,
-                color: colors.accentCyan,
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '500',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
+                padding: '16px 32px', background: 'transparent',
+                border: `1px solid ${colors.accentCyan}`, color: colors.accentCyan,
+                borderRadius: '8px', fontSize: '13px', fontWeight: '500',
+                letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none',
               }}
             >
               Release Form
             </a>
           </div>
-
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px',
-            alignItems: 'center',
-          }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
             <p style={{ fontSize: '14px', color: colors.textSecondary }}>
               📍 9013 NE Hwy 99, Vancouver, WA 98665
             </p>
             <p style={{ fontSize: '14px', color: colors.textSecondary }}>
               ✉️ Liberaltattoos@gmail.com
             </p>
-            
-            {/* Social Media Links */}
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
-              {/* Tattoodo Link - NOW OPENS MODAL */}
               <button
                 onClick={() => setTattoodoModalOpen(true)}
                 style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '8px', 
-                  color: colors.accentCyan, 
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'opacity 0.3s',
-                  padding: '0',
-                  fontSize: '14px',
+                  display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, 
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  transition: 'opacity 0.3s', padding: '0', fontSize: '14px',
                 }}
                 onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
                 onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
@@ -1770,7 +1504,6 @@ export default function LBRLWebsite() {
                 <TattoodoIcon />
                 <span>Tattoodo</span>
               </button>
-              
               <a
                 href="https://instagram.com/danilbrl_tattoo"
                 target="_blank"
@@ -1784,7 +1517,6 @@ export default function LBRLWebsite() {
                 </svg>
                 <span style={{ fontSize: '14px' }}>@danilbrl_tattoo</span>
               </a>
-              
               <a
                 href="https://facebook.com/lbrltattoos"
                 target="_blank"
@@ -1798,7 +1530,6 @@ export default function LBRLWebsite() {
                 </svg>
                 <span style={{ fontSize: '14px' }}>Facebook</span>
               </a>
-              
               <a
                 href="https://share.google/vhS3WwTU20FQj2La2"
                 target="_blank"
@@ -1843,94 +1574,59 @@ export default function LBRLWebsite() {
       {lightboxOpen && (
         <div
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0,0,0,0.95)',
-            zIndex: 2000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.95)', zIndex: 2000,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
           onClick={() => setLightboxOpen(false)}
         >
           <button
             onClick={() => setLightboxOpen(false)}
             style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              background: 'none',
-              border: 'none',
-              color: 'white',
-              fontSize: '32px',
-              cursor: 'pointer',
+              position: 'absolute', top: '20px', right: '20px',
+              background: 'none', border: 'none', color: 'white',
+              fontSize: '32px', cursor: 'pointer',
             }}
           >
             ×
           </button>
-          
           <button
             onClick={(e) => {
               e.stopPropagation()
               setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
             }}
             style={{
-              position: 'absolute',
-              left: '20px',
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
-              color: 'white',
-              fontSize: '24px',
-              padding: '16px',
-              borderRadius: '50%',
-              cursor: 'pointer',
+              position: 'absolute', left: '20px',
+              background: 'rgba(255,255,255,0.1)', border: 'none',
+              color: 'white', fontSize: '24px', padding: '16px',
+              borderRadius: '50%', cursor: 'pointer',
             }}
           >
             ←
           </button>
-
-          {/* ========== SEO FIX: lightbox alt text ========== */}
           <img
             src={filteredPortfolio[currentImage]?.image}
             alt={filteredPortfolio[currentImage]?.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
             style={{
-              maxWidth: '90vw',
-              maxHeight: '90vh',
-              objectFit: 'contain',
-              borderRadius: '8px',
+              maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px',
             }}
             onClick={(e) => e.stopPropagation()}
           />
-
           <button
             onClick={(e) => {
               e.stopPropagation()
               setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
             }}
             style={{
-              position: 'absolute',
-              right: '20px',
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
-              color: 'white',
-              fontSize: '24px',
-              padding: '16px',
-              borderRadius: '50%',
-              cursor: 'pointer',
+              position: 'absolute', right: '20px',
+              background: 'rgba(255,255,255,0.1)', border: 'none',
+              color: 'white', fontSize: '24px', padding: '16px',
+              borderRadius: '50%', cursor: 'pointer',
             }}
           >
             →
           </button>
-
-          <div style={{
-            position: 'absolute',
-            bottom: '20px',
-            color: 'white',
-            fontSize: '14px',
-          }}>
+          <div style={{ position: 'absolute', bottom: '20px', color: 'white', fontSize: '14px' }}>
             {currentImage + 1} / {filteredPortfolio.length}
           </div>
         </div>
@@ -1945,37 +1641,228 @@ export default function LBRLWebsite() {
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
         
-        /* Tattoodo Embed Styles */
-        .ta2do-booking-form {
-          width: 100%;
-          min-height: 400px;
+        .ta2do-booking-form { width: 100%; min-height: 400px; }
+        
+        /* ================================================================
+           PREMIUM LOADING EXPERIENCE — Sacred Geometry Reveal
+           ================================================================ */
+        
+        /* === EXIT ANIMATION === */
+        .loader-exit {
+          animation: loaderFadeOut 0.6s ease-in forwards;
         }
         
-        @keyframes spin {
-          0% { transform: rotate(0deg) scale(1); }
-          50% { transform: rotate(180deg) scale(1.1); }
-          100% { transform: rotate(360deg) scale(1); }
+        @keyframes loaderFadeOut {
+          0% { opacity: 1; transform: scale(1); }
+          100% { opacity: 0; transform: scale(1.05); }
         }
         
-        /* Wind Blow Animation for IMG_4885 */
+        /* === SACRED GEOMETRY: Self-Drawing Circles === */
+        .draw-circle {
+          stroke-dasharray: 600;
+          stroke-dashoffset: 600;
+          animation: drawStroke 1.2s ease-out forwards;
+        }
+        .draw-d1 { animation-delay: 0s; stroke-dasharray: 132; stroke-dashoffset: 132; }
+        .draw-d2 { animation-delay: 0.08s; stroke-dasharray: 214; stroke-dashoffset: 214; }
+        .draw-d3 { animation-delay: 0.16s; stroke-dasharray: 346; stroke-dashoffset: 346; }
+        .draw-d4 { animation-delay: 0.24s; stroke-dasharray: 559; stroke-dashoffset: 559; }
+        .draw-d5 { animation-delay: 0.32s; stroke-dasharray: 905; stroke-dashoffset: 905; }
+        
+        @keyframes drawStroke {
+          0% { stroke-dashoffset: inherit; opacity: 0; }
+          10% { opacity: 0.6; }
+          100% { stroke-dashoffset: 0; opacity: 0.2; }
+        }
+        
+        /* === GOLDEN SPIRAL: Draws Itself === */
+        .draw-spiral {
+          stroke-dasharray: 800;
+          stroke-dashoffset: 800;
+          animation: drawSpiral 1.6s ease-in-out forwards;
+          animation-delay: 0.2s;
+        }
+        
+        @keyframes drawSpiral {
+          0% { stroke-dashoffset: 800; opacity: 0; }
+          10% { opacity: 0.5; }
+          100% { stroke-dashoffset: 0; opacity: 0.25; }
+        }
+        
+        /* === FLOWER OF LIFE PETALS: Staggered Draw === */
+        .draw-petal {
+          stroke-dasharray: 220;
+          stroke-dashoffset: 220;
+          animation: drawPetal 0.8s ease-out forwards;
+        }
+        .draw-p1 { animation-delay: 0.4s; }
+        .draw-p2 { animation-delay: 0.5s; }
+        .draw-p3 { animation-delay: 0.6s; }
+        .draw-p4 { animation-delay: 0.7s; }
+        .draw-p5 { animation-delay: 0.8s; }
+        .draw-p6 { animation-delay: 0.9s; }
+        
+        @keyframes drawPetal {
+          0% { stroke-dashoffset: 220; opacity: 0; }
+          10% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.15; }
+        }
+        
+        /* === ORGANIC LINES === */
+        .draw-organic {
+          stroke-dasharray: 400;
+          stroke-dashoffset: 400;
+          animation: drawOrganic 1.4s ease-out forwards;
+        }
+        .draw-o1 { animation-delay: 0.3s; }
+        .draw-o2 { animation-delay: 0.5s; }
+        
+        @keyframes drawOrganic {
+          0% { stroke-dashoffset: 400; opacity: 0; }
+          10% { opacity: 0.3; }
+          100% { stroke-dashoffset: 0; opacity: 0.12; }
+        }
+        
+        /* === FINE ARCS === */
+        .draw-arc {
+          stroke-dasharray: 120;
+          stroke-dashoffset: 120;
+          animation: drawArc 0.6s ease-out forwards;
+        }
+        .draw-a1 { animation-delay: 0.6s; }
+        .draw-a2 { animation-delay: 0.8s; }
+        
+        @keyframes drawArc {
+          0% { stroke-dashoffset: 120; opacity: 0; }
+          100% { stroke-dashoffset: 0; opacity: 0.1; }
+        }
+        
+        /* === ROTATING OUTER RING === */
+        .rotate-ring {
+          animation: rotateRing 8s linear infinite;
+          transform-origin: 250px 250px;
+          opacity: 0;
+          animation: rotateRingIn 1s ease-out 0.5s forwards, rotateRingSpin 8s linear 0.5s infinite;
+        }
+        
+        @keyframes rotateRingIn {
+          0% { opacity: 0; }
+          100% { opacity: 0.15; }
+        }
+        
+        @keyframes rotateRingSpin {
+          0% { transform: rotate(0deg); transform-origin: 250px 250px; }
+          100% { transform: rotate(360deg); transform-origin: 250px 250px; }
+        }
+        
+        /* === CENTER GLOW PULSE === */
+        .center-glow {
+          animation: glowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.3; r: 120; }
+          50% { opacity: 0.6; r: 140; }
+        }
+        
+        /* === LOGO REVEAL — Morphing Ring === */
+        .ring-draw {
+          stroke-dasharray: 408;
+          stroke-dashoffset: 408;
+          animation: ringDraw 0.8s ease-out forwards;
+        }
+        
+        @keyframes ringDraw {
+          0% { stroke-dashoffset: 408; }
+          100% { stroke-dashoffset: 0; }
+        }
+        
+        .ring-dots {
+          animation: ringDotsRotate 6s linear infinite;
+          transform-origin: 70px 70px;
+        }
+        
+        @keyframes ringDotsRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* === LOGO IMAGE REVEAL === */
+        .logo-reveal {
+          opacity: 0;
+          transform: scale(0.6);
+          filter: blur(8px);
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 0 0px rgba(125, 212, 196, 0);
+        }
+        
+        .logo-reveal.logo-visible {
+          opacity: 1;
+          transform: scale(1);
+          filter: blur(0px);
+          box-shadow: 0 0 60px rgba(125, 212, 196, 0.2), 0 0 120px rgba(125, 212, 196, 0.1);
+        }
+        
+        /* === TEXT REVEAL — Letter by Letter === */
+        .text-reveal .letter-reveal {
+          opacity: 0;
+          transform: translateY(20px);
+          display: inline-block;
+        }
+        
+        .text-reveal.text-visible .letter-reveal {
+          animation: letterReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        
+        .text-visible .letter-0 { animation-delay: 0s; }
+        .text-visible .letter-1 { animation-delay: 0.08s; }
+        .text-visible .letter-2 { animation-delay: 0.16s; }
+        .text-visible .letter-3 { animation-delay: 0.24s; }
+        
+        @keyframes letterReveal {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 0.9; transform: translateY(0); }
+        }
+        
+        /* === SUBTITLE REVEAL === */
+        .subtitle-reveal span {
+          opacity: 0;
+          transform: translateY(10px);
+          display: inline-block;
+          transition: all 0.5s ease;
+        }
+        
+        .subtitle-reveal.subtitle-visible span {
+          opacity: 0.7;
+          transform: translateY(0);
+          transition-delay: 0.3s;
+        }
+        
+        /* === PROGRESS LINE === */
+        .progress-fill {
+          width: 0%;
+          animation: progressFill 2.2s ease-in-out forwards;
+        }
+        
+        @keyframes progressFill {
+          0% { width: 0%; }
+          30% { width: 30%; }
+          60% { width: 65%; }
+          80% { width: 85%; }
+          100% { width: 100%; }
+        }
+        
+        /* ================================================================
+           ORIGINAL ANIMATIONS (UNCHANGED)
+           ================================================================ */
+        
+        /* Wind Blow Animation */
         @keyframes windBlow {
-          0% {
-            transform: translateX(-100px);
-            clip-path: inset(0 100% 0 0);
-          }
-          50% {
-            clip-path: inset(0 0 0 0);
-          }
-          70% {
-            transform: translateX(15px);
-          }
-          85% {
-            transform: translateX(-5px);
-          }
-          100% {
-            transform: translateX(0);
-            clip-path: inset(0 0 0 0);
-          }
+          0% { transform: translateX(-100px); clip-path: inset(0 100% 0 0); }
+          50% { clip-path: inset(0 0 0 0); }
+          70% { transform: translateX(15px); }
+          85% { transform: translateX(-5px); }
+          100% { transform: translateX(0); clip-path: inset(0 0 0 0); }
         }
         
         .wind-blow-image {
@@ -1984,174 +1871,43 @@ export default function LBRLWebsite() {
           clip-path: inset(0 100% 0 0);
         }
         
-        /* Aurora / Northern Lights Effect */
+        /* Aurora Effect */
         @keyframes auroraFlash {
-          0%, 80%, 100% { 
-            opacity: 0; 
-            transform: translateX(-100%) skewX(-15deg);
-          }
-          88% { 
-            opacity: 0.25; 
-            transform: translateX(0%) skewX(-15deg);
-          }
-          94% { 
-            opacity: 0.12; 
-            transform: translateX(100%) skewX(-15deg);
-          }
+          0%, 80%, 100% { opacity: 0; transform: translateX(-100%) skewX(-15deg); }
+          88% { opacity: 0.25; transform: translateX(0%) skewX(-15deg); }
+          94% { opacity: 0.12; transform: translateX(100%) skewX(-15deg); }
         }
         
         .aurora-flash {
           position: absolute;
           width: 200%;
           height: 100%;
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(125, 212, 196, 0.05) 15%,
-            rgba(125, 212, 196, 0.15) 35%,
-            rgba(90, 138, 138, 0.2) 50%,
-            rgba(125, 212, 196, 0.15) 65%,
-            rgba(125, 212, 196, 0.05) 85%,
-            transparent 100%
-          );
+          background: linear-gradient(90deg, transparent 0%, rgba(125,212,196,0.05) 15%, rgba(125,212,196,0.15) 35%, rgba(90,138,138,0.2) 50%, rgba(125,212,196,0.15) 65%, rgba(125,212,196,0.05) 85%, transparent 100%);
           pointer-events: none;
         }
         
-        .aurora-1 {
-          top: 0;
-          left: -100%;
-          animation: auroraFlash 10s ease-in-out infinite;
-        }
+        .aurora-1 { top: 0; left: -100%; animation: auroraFlash 10s ease-in-out infinite; }
+        .aurora-2 { top: 25%; left: -100%; animation: auroraFlash 13s ease-in-out infinite; animation-delay: 3s; }
+        .aurora-3 { top: 55%; left: -100%; animation: auroraFlash 16s ease-in-out infinite; animation-delay: 7s; }
         
-        .aurora-2 {
-          top: 25%;
-          left: -100%;
-          animation: auroraFlash 13s ease-in-out infinite;
-          animation-delay: 3s;
-        }
+        /* Section Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
-        .aurora-3 {
-          top: 55%;
-          left: -100%;
-          animation: auroraFlash 16s ease-in-out infinite;
-          animation-delay: 7s;
-        }
-        
-        /* Fibonacci circles animation for loading - continuous pulse */
-        .fib-circle-1, .fib-circle-2, .fib-circle-3, .fib-circle-4, .fib-circle-5 {
-          animation: fibPulse 2.5s ease-in-out infinite;
-        }
-        .fib-circle-2 { animation-delay: 0.15s; }
-        .fib-circle-3 { animation-delay: 0.3s; }
-        .fib-circle-4 { animation-delay: 0.45s; }
-        .fib-circle-5 { animation-delay: 0.6s; }
-        
-        @keyframes fibPulse {
-          0%, 100% { 
-            opacity: 0.08; 
-            transform: scale(1);
-          }
-          50% { 
-            opacity: 0.25; 
-            transform: scale(1.05);
-          }
-        }
-        
-        .fibonacci-spiral {
-          animation: spiralPulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes spiralPulse {
-          0%, 100% { 
-            opacity: 0.1; 
-            stroke-dashoffset: 0;
-          }
-          50% { 
-            opacity: 0.3; 
-            stroke-dashoffset: 100;
-          }
-        }
-        
-        .organic-line-1, .organic-line-2 {
-          animation: organicPulse 2.8s ease-in-out infinite;
-        }
-        .organic-line-2 { animation-delay: 0.4s; }
-        
-        @keyframes organicPulse {
-          0%, 100% { opacity: 0.08; }
-          50% { opacity: 0.2; }
-        }
-        
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes fadeInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes fadeInRight {
-          from {
-            opacity: 0;
-            transform: translateX(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        .animate-hidden {
-          opacity: 0;
-        }
-        
-        .animate-fadeInUp {
-          animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .animate-fadeInLeft {
-          animation: fadeInLeft 0.8s ease forwards;
-        }
-        
-        .animate-fadeInRight {
-          animation: fadeInRight 0.8s ease forwards;
-        }
-        
-        .animate-fadeInScale {
-          animation: fadeInScale 0.8s ease forwards;
-        }
-        
+        .animate-hidden { opacity: 0; }
+        .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
+        .animate-fadeInLeft { animation: fadeInLeft 0.8s ease forwards; }
+        .animate-fadeInRight { animation: fadeInRight 0.8s ease forwards; }
+        .animate-fadeInScale { animation: fadeInScale 0.8s ease forwards; }
         .animate-delay-1 { animation-delay: 0.1s; }
         .animate-delay-2 { animation-delay: 0.2s; }
         .animate-delay-3 { animation-delay: 0.3s; }
         .animate-delay-4 { animation-delay: 0.4s; }
         .animate-delay-5 { animation-delay: 0.5s; }
         
+        /* Responsive */
         .desktop-nav { display: flex; }
         .mobile-menu-btn { display: none !important; }
         
@@ -2163,125 +1919,40 @@ export default function LBRLWebsite() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
-          
           html, body { overflow-x: hidden !important; width: 100% !important; }
-          
           nav { padding: 12px 16px !important; }
-          
           section { padding: 40px 16px !important; }
-          
           h1 { font-size: 32px !important; }
           h2 { font-size: 24px !important; }
+          [style*="grid-template-columns: 1fr 1fr"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          [style*="grid-template-columns: repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+          [style*="grid-template-columns: repeat(3"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
+          [style*="grid-template-columns: 1fr 300px"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          [style*="grid-template-columns: repeat(auto-fit"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] { gap: 8px !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 8px 12px !important; font-size: 10px !important; }
+          [style*="minWidth: 280px"] { min-width: 240px !important; }
+          [style*="minHeight: 100vh"] { min-height: auto !important; padding-top: 100px !important; padding-bottom: 60px !important; }
+          [style*="position: sticky"] { position: relative !important; }
+          #faqs [style*="position: sticky"] { display: none !important; }
+          section { position: relative !important; z-index: 1 !important; overflow: visible !important; }
+          #contact { margin-top: 0 !important; padding-top: 60px !important; }
           
-          [style*="grid-template-columns: 1fr 1fr"] { 
-            display: flex !important; 
-            flex-direction: column !important; 
-            gap: 30px !important; 
-          }
-          
-          [style*="grid-template-columns: repeat(4"] { 
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important; 
-            gap: 12px !important;
-          }
-          
-          [style*="grid-template-columns: repeat(3"] { 
-            display: flex !important; 
-            flex-direction: column !important; 
-            gap: 16px !important;
-          }
-          
-          [style*="grid-template-columns: 1fr 300px"] {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 30px !important;
-          }
-          
-          [style*="grid-template-columns: repeat(auto-fit"] {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 16px !important;
-          }
-          
-          /* Portfolio filter buttons */
-          [style*="gap: 12px"][style*="flex-wrap"] {
-            gap: 8px !important;
-          }
-          
-          [style*="gap: 12px"][style*="flex-wrap"] button {
-            padding: 8px 12px !important;
-            font-size: 10px !important;
-          }
-          
-          /* Fix slider on mobile */
-          [style*="minWidth: 280px"] {
-            min-width: 240px !important;
-          }
-          
-          /* Fix hero section */
-          [style*="minHeight: 100vh"] {
-            min-height: auto !important;
-            padding-top: 100px !important;
-            padding-bottom: 60px !important;
-          }
-          
-          /* Remove any fixed positioning issues */
-          [style*="position: sticky"] {
-            position: relative !important;
-          }
-          
-          /* Fix FAQs section on mobile - hide image */
-          #faqs [style*="position: sticky"] {
-            display: none !important;
-          }
-          
-          /* Ensure proper spacing between sections */
-          section {
-            position: relative !important;
-            z-index: 1 !important;
-            overflow: visible !important;
-          }
-          
-          /* Fix contact section overlap */
-          #contact {
-            margin-top: 0 !important;
-            padding-top: 60px !important;
-          }
+          /* Spinner mobile adjustments */
+          .logo-ring-container { width: 110px !important; height: 110px !important; }
+          .logo-reveal { width: 70px !important; height: 70px !important; }
+          .morph-ring { width: 110px !important; height: 110px !important; }
         }
         
         @media (max-width: 480px) {
           h1 { font-size: 26px !important; }
           h2 { font-size: 20px !important; }
-          
-          [style*="grid-template-columns: repeat(4"] { 
-            grid-template-columns: 1fr !important;
-          }
-          
-          [style*="padding: 32px"] {
-            padding: 16px !important;
-          }
-          
-          /* Stats bar single column */
-          [style*="grid-template-columns: repeat(4, 1fr)"] {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          
-          /* Portfolio filter buttons wrap better */
-          [style*="gap: 12px"][style*="flex-wrap"] {
-            justify-content: center !important;
-          }
-          
-          [style*="gap: 12px"][style*="flex-wrap"] button {
-            padding: 6px 10px !important;
-            font-size: 9px !important;
-            letter-spacing: 0.5px !important;
-          }
-          
-          /* Slider cards smaller */
-          [style*="minWidth: 280px"] {
-            min-width: 200px !important;
-            height: 280px !important;
-          }
+          [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+          [style*="padding: 32px"] { padding: 16px !important; }
+          [style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] { justify-content: center !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 6px 10px !important; font-size: 9px !important; letter-spacing: 0.5px !important; }
+          [style*="minWidth: 280px"] { min-width: 200px !important; height: 280px !important; }
         }
       `}</style>
     </div>
