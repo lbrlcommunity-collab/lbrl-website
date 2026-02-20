@@ -42,7 +42,7 @@ export const metadata = {
     images: ['https://www.lbrltattoos.com/Tribal%20Logo.jpg'],
   },
   verification: {
-    google: 'ArYpD1e2h-wSSrfa7MVjVn13znFx-hoVl_DOl0pgQrc',
+    google: ['ArYpD1e2h-wSSrfa7MVjVn13znFx-hoVl_DOl0pgQrc', 'sPkWJasPQpZeqpNkBpstRvwe5hel_uzv7cam_ZVlsxQ'],
   },
 }
 
