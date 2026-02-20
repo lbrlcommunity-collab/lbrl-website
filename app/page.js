@@ -2,8 +2,6 @@ import Script from 'next/script'
 import LBRLWebsite from './LBRLWebsite'
 
 // ========== LOCAL BUSINESS SCHEMA ==========
-// Reviews removed: Google rejects self-served review snippets (policy since 2019)
-// aggregateRating stays — generates ★★★★★ in search results
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -14,7 +12,7 @@ const localBusinessSchema = {
   description:
     'Multi-award winning custom tattoo studio specializing in Japanese, blackwork, ornamental, and botanical fine line tattoos. Body Harmony approach designs each piece to flow with your natural anatomy.',
   url: 'https://www.lbrltattoos.com',
-  telephone: '',
+  telephone: '+1-360-901-0636',
   email: 'Liberaltattoos@gmail.com',
   address: {
     '@type': 'PostalAddress',
@@ -26,17 +24,31 @@ const localBusinessSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 45.6797,
-    longitude: -122.6615,
+    latitude: 45.6879,
+    longitude: -122.6578,
   },
   image: 'https://www.lbrltattoos.com/Tribal%20Logo.jpg',
   priceRange: '$$-$$$',
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    opens: '10:00',
-    closes: '18:00',
-  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Friday', 'Sunday'],
+      opens: '10:00',
+      closes: '17:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Friday', 'Sunday'],
+      opens: '18:00',
+      closes: '22:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Saturday', 'Monday', 'Tuesday'],
+      opens: '10:00',
+      closes: '17:00',
+    },
+  ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Custom Tattoo Services',
@@ -72,7 +84,7 @@ const localBusinessSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0',
-    reviewCount: '18',
+    reviewCount: '22',
     bestRating: '5',
     worstRating: '1',
   },
