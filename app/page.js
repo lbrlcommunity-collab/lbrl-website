@@ -1,6 +1,9 @@
+import Script from 'next/script'
 import LBRLWebsite from './LBRLWebsite'
 
-// ========== JSON-LD SCHEMAS (server component = renders exactly once) ==========
+// ========== LOCAL BUSINESS SCHEMA ==========
+// Reviews removed: Google rejects self-served review snippets (policy since 2019)
+// aggregateRating stays — generates ★★★★★ in search results
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -73,56 +76,6 @@ const localBusinessSchema = {
     bestRating: '5',
     worstRating: '1',
   },
-  review: [
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Ivan Martinez' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Got my first tattoo done here, and I couldn\'t have asked for a better experience. Dani was amazing—super chill, easy to talk to, and made the whole process really comfortable.',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Andrew Ammerman' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Dani designed two beautiful and unique sleeves for me. He was amazing through the process and tuned in to my pain tolerance while working around more sensitive spots.',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Logan Sherlock' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Been going to Dani since I was 18, now almost two sleeves down. Always great at working with the client and giving them what they ask for. A true professional.',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'T Boyter' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Clean, professional, personable. Dani will work with you to create your one of a kind masterpiece. His tattoo skills are impressive—clean lines, incredible shading. 10/10',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Sara Sargent' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Dani is the only artist I will go to. Hands down the best experience, every time. If you\'re looking for someone to bring your feelings to life, this is your person.',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Shainna Thompson' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'He listened to my ideas and had the most beautiful concept drawn up. If you want your body to become a walking piece of art, contact him!',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Emily Heacock' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'Love my new tattoo! Dani is very professional and communicative. He makes you feel very welcome and comfortable through the process.',
-    },
-    {
-      '@type': 'Review',
-      author: { '@type': 'Person', name: 'Jessica Allen' },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: 'I have gone to Dani for the past 3 years and gotten 3 different tattoos from him. He is very professional but also exceptionally talented and fast!',
-    },
-  ],
   sameAs: [
     'https://www.instagram.com/danilbrl_tattoo/',
     'https://www.instagram.com/lbrltattoostudio/',
@@ -131,6 +84,7 @@ const localBusinessSchema = {
   ],
 }
 
+// ========== FAQ SCHEMA ==========
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -185,7 +139,7 @@ const faqSchema = {
       name: 'How should I prepare for my tattoo session?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Get a good night\'s rest, eat beforehand, stay hydrated, and bring snacks if you\'d like. You\'re welcome to bring a blanket or anything that helps you stay comfortable during the session.',
+        text: "Get a good night's rest, eat beforehand, stay hydrated, and bring snacks if you'd like. You're welcome to bring a blanket or anything that helps you stay comfortable during the session.",
       },
     },
     {
@@ -193,7 +147,7 @@ const faqSchema = {
       name: 'What do I agree to when I book an appointment?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'By booking an appointment, you acknowledge and agree to the pricing, deposit policy, and process outlined on the website. You\'re also agreeing to follow studio guidelines so the session runs smoothly.',
+        text: "By booking an appointment, you acknowledge and agree to the pricing, deposit policy, and process outlined on the website. You're also agreeing to follow studio guidelines so the session runs smoothly.",
       },
     },
   ],
@@ -202,12 +156,16 @@ const faqSchema = {
 export default function Home() {
   return (
     <>
-      <script
+      <Script
+        id="lbrl-local-business"
         type="application/ld+json"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
-      <script
+      <Script
+        id="lbrl-faq"
         type="application/ld+json"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <LBRLWebsite />
