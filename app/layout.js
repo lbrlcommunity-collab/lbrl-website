@@ -46,7 +46,7 @@ export const metadata = {
   },
 }
 
-// ========== JSON-LD SCHEMAS (server-rendered, no duplication) ==========
+// ========== JSON-LD SCHEMAS (in body to prevent Next.js head duplication) ==========
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -248,7 +248,7 @@ const faqSchema = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
@@ -257,8 +257,8 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
-      </head>
-      <body>{children}</body>
+        {children}
+      </body>
     </html>
   )
 }
