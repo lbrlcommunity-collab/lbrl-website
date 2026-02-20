@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 
 const BOOKING_URL = 'https://ta2.do/Dani_lbrl'
 const RELEASE_URL = 'https://book.lbrltattoos.com/release-form'
@@ -14,18 +14,38 @@ export default function LBRLWebsite() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [loadingPhase, setLoadingPhase] = useState(0) // 0=draw, 1=logo, 2=text, 3=exit
+  const [loadingPhase, setLoadingPhase] = useState(0)
   const [visibleSections, setVisibleSections] = useState({})
+  const [particles, setParticles] = useState([])
   
   // ========== TATTOODO MODAL STATE ==========
   const [tattoodoModalOpen, setTattoodoModalOpen] = useState(false)
 
+  // ========== PARTICLE SYSTEM ==========
   useEffect(() => {
-    // Phase-based loading sequence
-    const phase1 = setTimeout(() => setLoadingPhase(1), 400)   // Logo appears
-    const phase2 = setTimeout(() => setLoadingPhase(2), 900)   // Text reveals
-    const phase3 = setTimeout(() => setLoadingPhase(3), 1800)  // Exit begins
-    const done   = setTimeout(() => setIsLoading(false), 2400) // Done
+    if (!isLoading) return
+    const pts = []
+    for (let i = 0; i < 35; i++) {
+      pts.push({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 3 + 1,
+        delay: Math.random() * 2,
+        duration: Math.random() * 4 + 3,
+        drift: (Math.random() - 0.5) * 40,
+        opacity: Math.random() * 0.4 + 0.1,
+      })
+    }
+    setParticles(pts)
+  }, [isLoading])
+
+  useEffect(() => {
+    // Phase sequence — cinematic timing
+    const phase1 = setTimeout(() => setLoadingPhase(1), 600)    // Geometry drawn → Logo materializes
+    const phase2 = setTimeout(() => setLoadingPhase(2), 1200)   // Logo solid → Text reveals
+    const phase3 = setTimeout(() => setLoadingPhase(3), 2200)   // Hold moment → Exit begins
+    const done   = setTimeout(() => setIsLoading(false), 2900)  // Cleanup
     return () => { clearTimeout(phase1); clearTimeout(phase2); clearTimeout(phase3); clearTimeout(done) }
   }, [])
 
@@ -318,126 +338,94 @@ export default function LBRLWebsite() {
       {/* ========== TATTOODO EMBED MODAL ========== */}
       <div
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0, 0, 0, 0.9)',
-          zIndex: 3000,
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0, 0, 0, 0.9)', zIndex: 3000,
           display: tattoodoModalOpen ? 'flex' : 'none',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px',
+          alignItems: 'center', justifyContent: 'center', padding: '20px',
         }}
         onClick={() => setTattoodoModalOpen(false)}
       >
-          <div
-            style={{
-              background: colors.bgCard,
-              borderRadius: '16px',
-              width: '100%',
-              maxWidth: '600px',
-              maxHeight: '90vh',
-              overflow: 'hidden',
-              position: 'relative',
-              border: `1px solid ${colors.borderDefault}`,
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '20px 24px',
-              borderBottom: `1px solid ${colors.borderSubtle}`,
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <TattoodoIcon />
-                <span style={{ fontSize: '16px', fontWeight: '500', color: colors.textPrimary }}>Book via Tattoodo</span>
-              </div>
-              <button
-                onClick={() => setTattoodoModalOpen(false)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: colors.textSecondary,
-                  fontSize: '28px',
-                  cursor: 'pointer',
-                  lineHeight: 1,
-                  padding: '0',
-                  transition: 'color 0.3s',
-                }}
-                onMouseOver={(e) => e.target.style.color = colors.textPrimary}
-                onMouseOut={(e) => e.target.style.color = colors.textSecondary}
-              >
-                ×
-              </button>
+        <div
+          style={{
+            background: colors.bgCard, borderRadius: '16px', width: '100%',
+            maxWidth: '600px', maxHeight: '90vh', overflow: 'hidden',
+            position: 'relative', border: `1px solid ${colors.borderDefault}`,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '20px 24px', borderBottom: `1px solid ${colors.borderSubtle}`,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <TattoodoIcon />
+              <span style={{ fontSize: '16px', fontWeight: '500', color: colors.textPrimary }}>Book via Tattoodo</span>
             </div>
-            <div style={{ padding: '24px', overflowY: 'auto', maxHeight: 'calc(90vh - 80px)' }}>
-              <div className="ta2do-booking-form" data-user="Dani_lbrl" style={{ minHeight: '400px' }} />
-              <div style={{
-                marginTop: '20px',
-                textAlign: 'center',
-                padding: '16px',
-                background: colors.bgElevated,
-                borderRadius: '8px',
-              }}>
-                <p style={{ fontSize: '13px', color: colors.textMuted, marginBottom: '12px' }}>
-                  Having trouble? Book directly on Tattoodo:
-                </p>
-                <a
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '10px 20px',
-                    background: colors.accentCyan,
-                    color: colors.bgDark,
-                    borderRadius: '6px',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    textDecoration: 'none',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                  }}
-                >
-                  <TattoodoIcon />
-                  Open Tattoodo
-                </a>
-              </div>
+            <button
+              onClick={() => setTattoodoModalOpen(false)}
+              style={{ background: 'none', border: 'none', color: colors.textSecondary, fontSize: '28px', cursor: 'pointer', lineHeight: 1, padding: '0', transition: 'color 0.3s' }}
+              onMouseOver={(e) => e.target.style.color = colors.textPrimary}
+              onMouseOut={(e) => e.target.style.color = colors.textSecondary}
+            >×</button>
+          </div>
+          <div style={{ padding: '24px', overflowY: 'auto', maxHeight: 'calc(90vh - 80px)' }}>
+            <div className="ta2do-booking-form" data-user="Dani_lbrl" style={{ minHeight: '400px' }} />
+            <div style={{ marginTop: '20px', textAlign: 'center', padding: '16px', background: colors.bgElevated, borderRadius: '8px' }}>
+              <p style={{ fontSize: '13px', color: colors.textMuted, marginBottom: '12px' }}>Having trouble? Book directly on Tattoodo:</p>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px',
+                background: colors.accentCyan, color: colors.bgDark, borderRadius: '6px',
+                fontSize: '12px', fontWeight: '600', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '1px',
+              }}><TattoodoIcon /> Open Tattoodo</a>
             </div>
           </div>
         </div>
+      </div>
 
-      {/* ========== PREMIUM LOADING EXPERIENCE ========== */}
+      {/* ================================================================
+          ★ PREMIUM LOADING EXPERIENCE — "The Needle Traces" ★
+          ================================================================ */}
       {isLoading && (
         <div className={`loader-screen ${loadingPhase >= 3 ? 'loader-exit' : ''}`} style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: colors.bgDark,
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '0px',
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: colors.bgDark, zIndex: 9999,
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
           overflow: 'hidden',
         }}>
           
-          {/* ===== LAYER 1: Sacred Geometry — Self-Drawing Lines ===== */}
-          <svg className="sacred-geo-svg" style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
+          {/* ===== FLOATING INK PARTICLES ===== */}
+          {particles.map((p) => (
+            <div key={p.id} className="ink-particle" style={{
+              position: 'absolute',
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              borderRadius: '50%',
+              background: colors.accentCyan,
+              opacity: 0,
+              animationDelay: `${p.delay}s`,
+              animationDuration: `${p.duration}s`,
+              '--drift': `${p.drift}px`,
+              '--target-opacity': p.opacity,
+              pointerEvents: 'none',
+            }} />
+          ))}
+
+          {/* ===== BREATHING VIGNETTE ===== */}
+          <div className="vignette" style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
+            pointerEvents: 'none', zIndex: 1,
+          }} />
+
+          {/* ===== SACRED GEOMETRY WITH NEEDLE TRACER ===== */}
+          <svg className="sacred-geo" style={{
+            position: 'absolute', width: '100%', height: '100%',
             opacity: loadingPhase >= 3 ? 0 : 1,
-            transition: 'opacity 0.6s ease',
+            transition: 'opacity 0.8s ease',
+            zIndex: 2,
           }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
             <defs>
               <linearGradient id="sacredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -445,619 +433,292 @@ export default function LBRLWebsite() {
                 <stop offset="50%" stopColor={colors.accentTeal} />
                 <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
-              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.15" />
+              <radialGradient id="needleGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="1" />
+                <stop offset="40%" stopColor={colors.accentCyan} stopOpacity="0.4" />
                 <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0" />
               </radialGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
+              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.12" />
+                <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0" />
+              </radialGradient>
+              <filter id="softGlow">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="strongGlow">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feComposite in="blur" in2="SourceGraphic" operator="over"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
             </defs>
             
-            {/* Center glow pulse */}
-            <circle cx="250" cy="250" r="120" fill="url(#glowGrad)" className="center-glow" />
+            {/* Breathing center glow */}
+            <circle cx="250" cy="250" r="130" fill="url(#centerGlow)" className="breath-glow" />
             
-            {/* Fibonacci circles — draw themselves */}
-            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" 
-              className="draw-circle draw-d1" filter="url(#glow)" />
-            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" 
-              className="draw-circle draw-d2" filter="url(#glow)" />
-            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" 
-              className="draw-circle draw-d3" filter="url(#glow)" />
-            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" 
-              className="draw-circle draw-d4" filter="url(#glow)" />
-            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" 
-              className="draw-circle draw-d5" filter="url(#glow)" />
+            {/* Fibonacci circles — traced by needle */}
+            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-line trace-c1" filter="url(#softGlow)" />
+            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-line trace-c2" filter="url(#softGlow)" />
+            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-line trace-c3" filter="url(#softGlow)" />
+            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-line trace-c4" filter="url(#softGlow)" />
+            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" className="trace-line trace-c5" filter="url(#softGlow)" />
             
-            {/* Golden spiral — draws itself */}
+            {/* Needle tracer dots — bright points that travel along the circles */}
+            <circle r="3" fill="url(#needleGlow)" className="needle-dot needle-n1" filter="url(#strongGlow)">
+              <animateMotion dur="1.2s" begin="0s" fill="freeze" repeatCount="1">
+                <mpath href="#tracePath1" />
+              </animateMotion>
+            </circle>
+            <circle r="4" fill="url(#needleGlow)" className="needle-dot needle-n2" filter="url(#strongGlow)">
+              <animateMotion dur="1.4s" begin="0.15s" fill="freeze" repeatCount="1">
+                <mpath href="#tracePath2" />
+              </animateMotion>
+            </circle>
+            <circle r="4.5" fill="url(#needleGlow)" className="needle-dot needle-n3" filter="url(#strongGlow)">
+              <animateMotion dur="1.6s" begin="0.3s" fill="freeze" repeatCount="1">
+                <mpath href="#tracePath3" />
+              </animateMotion>
+            </circle>
+            
+            {/* Hidden paths for needle motion */}
+            <path id="tracePath1" d="M271,250 A21,21 0 1,1 270.99,250" fill="none" stroke="none" />
+            <path id="tracePath2" d="M305,250 A55,55 0 1,1 304.99,250" fill="none" stroke="none" />
+            <path id="tracePath3" d="M394,250 A144,144 0 1,1 393.99,250" fill="none" stroke="none" />
+            
+            {/* Golden spiral — draws with bright head */}
             <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
-              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="draw-spiral" filter="url(#glow)" />
+              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="trace-spiral" filter="url(#softGlow)" />
             
-            {/* Flower of Life petals — draw with stagger */}
-            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p1" />
-            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p2" />
-            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p3" />
-            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p4" />
-            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p5" />
-            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="draw-petal draw-p6" />
+            {/* Flower of Life — petals bloom inward */}
+            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p1" />
+            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p2" />
+            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p3" />
+            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p4" />
+            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p5" />
+            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p6" />
             
-            {/* Organic flowing curves */}
+            {/* Organic flowing vines */}
             <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" 
-              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="draw-organic draw-o1" />
+              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-vine trace-v1" />
             <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" 
-              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="draw-organic draw-o2" />
+              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-vine trace-v2" />
+            <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" 
+              stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-vine trace-v3" />
+
+            {/* Fine arcs */}
+            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="trace-arc trace-a1" />
+            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="trace-arc trace-a2" />
             
-            {/* Fine detail arcs */}
-            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="draw-arc draw-a1" />
-            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="draw-arc draw-a2" />
-            
-            {/* Rotating outer ring */}
-            <circle cx="250" cy="250" r="200" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" 
-              strokeDasharray="8 12" className="rotate-ring" />
+            {/* Spinning outer ring — dashed */}
+            <circle cx="250" cy="250" r="210" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" 
+              strokeDasharray="4 10" className="spin-ring" />
+            <circle cx="250" cy="250" r="205" stroke="url(#sacredGrad)" strokeWidth="0.2" fill="none" 
+              strokeDasharray="1 20" className="spin-ring-inner" />
           </svg>
 
-          {/* ===== LAYER 2: Morphing Ring around Logo ===== */}
-          <div className="logo-ring-container" style={{
-            position: 'relative',
-            width: '140px',
-            height: '140px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            {/* Outer glowing ring */}
-            <svg className="morph-ring" style={{
-              position: 'absolute',
-              width: '140px',
-              height: '140px',
-              opacity: loadingPhase >= 1 ? 1 : 0,
-              transition: 'opacity 0.5s ease',
-            }} viewBox="0 0 140 140">
-              <defs>
-                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.8" />
-                  <stop offset="50%" stopColor={colors.accentTeal} stopOpacity="0.4" />
-                  <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0.8" />
-                </linearGradient>
-              </defs>
-              <circle cx="70" cy="70" r="65" stroke="url(#ringGrad)" strokeWidth="1" fill="none" 
-                className="ring-draw" filter="url(#glow)" />
-              <circle cx="70" cy="70" r="62" stroke={colors.accentCyan} strokeWidth="0.3" fill="none" 
-                strokeDasharray="3 8" className="ring-dots" />
-            </svg>
-            
-            {/* Logo with premium reveal */}
-            <div className={`logo-reveal ${loadingPhase >= 1 ? 'logo-visible' : ''}`} style={{
-              width: '90px',
-              height: '90px',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              position: 'relative',
-              zIndex: 2,
+          {/* ===== CENTRAL CONTENT ===== */}
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+            {/* Logo Container with Morphing Ring */}
+            <div className="logo-area" style={{
+              position: 'relative', width: '150px', height: '150px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <img 
-                src="/Tribal Logo.jpg" 
-                alt="LBRL" 
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover',
-                }} 
-              />
+              {/* Outer ring — draws itself */}
+              <svg className="logo-ring-svg" style={{
+                position: 'absolute', width: '150px', height: '150px',
+              }} viewBox="0 0 150 150">
+                <circle cx="75" cy="75" r="70" stroke={colors.accentCyan} strokeWidth="0.8" fill="none" 
+                  className={`ring-trace ${loadingPhase >= 1 ? 'ring-visible' : ''}`} filter="url(#softGlow)" />
+                <circle cx="75" cy="75" r="67" stroke={colors.accentCyan} strokeWidth="0.3" fill="none" 
+                  strokeDasharray="2 8" className={`ring-dots ${loadingPhase >= 1 ? 'ring-dots-visible' : ''}`} />
+                {/* Tick marks like a compass */}
+                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
+                  const rad = (angle * Math.PI) / 180
+                  const x1 = 75 + Math.cos(rad) * 63
+                  const y1 = 75 + Math.sin(rad) * 63
+                  const x2 = 75 + Math.cos(rad) * 60
+                  const y2 = 75 + Math.sin(rad) * 60
+                  return (
+                    <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} 
+                      stroke={colors.accentCyan} strokeWidth="0.5" 
+                      className={`tick-mark tick-${i}`}
+                      style={{ opacity: loadingPhase >= 1 ? 0.4 : 0 , transition: `opacity 0.3s ease ${0.1 * i}s` }} />
+                  )
+                })}
+              </svg>
+
+              {/* Logo — ink reveal */}
+              <div className={`logo-ink-reveal ${loadingPhase >= 1 ? 'logo-materialized' : ''}`} style={{
+                width: '96px', height: '96px', borderRadius: '50%',
+                overflow: 'hidden', position: 'relative', zIndex: 2,
+              }}>
+                <img src="/Tribal Logo.jpg" alt="LBRL" style={{ 
+                  width: '100%', height: '100%', objectFit: 'cover',
+                }} />
+              </div>
+
+              {/* Orbiting micro-dots */}
+              <div className={`orbit-system ${loadingPhase >= 1 ? 'orbit-active' : ''}`}>
+                <div className="orbit-dot orbit-dot-1" />
+                <div className="orbit-dot orbit-dot-2" />
+                <div className="orbit-dot orbit-dot-3" />
+              </div>
+            </div>
+
+            {/* Brand Text */}
+            <div className={`brand-text ${loadingPhase >= 2 ? 'brand-visible' : ''}`} style={{ marginTop: '32px' }}>
+              <div className="brand-letters" style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                {'LBRL'.split('').map((letter, i) => (
+                  <span key={i} className={`brand-letter bl-${i}`} style={{
+                    fontSize: '30px', fontWeight: '200', letterSpacing: '10px',
+                    color: colors.textPrimary, display: 'inline-block',
+                  }}>{letter}</span>
+                ))}
+              </div>
+              <div className="brand-divider" style={{
+                width: '0px', height: '1px', margin: '14px auto 0',
+                background: `linear-gradient(90deg, transparent, ${colors.accentCyan}, transparent)`,
+              }} />
+              <p className="brand-subtitle" style={{
+                fontSize: '9px', fontWeight: '500', letterSpacing: '5px',
+                textTransform: 'uppercase', color: colors.accentCyan,
+                marginTop: '12px', textAlign: 'center', opacity: 0,
+              }}>Tattoo Studio • Vancouver, WA</p>
             </div>
           </div>
 
-          {/* ===== LAYER 3: Text Reveal ===== */}
-          <div className={`text-reveal ${loadingPhase >= 2 ? 'text-visible' : ''}`} style={{
-            marginTop: '28px',
-            display: 'flex',
-            gap: '8px',
-            overflow: 'hidden',
-          }}>
-            {'LBRL'.split('').map((letter, i) => (
-              <span key={i} className={`letter-reveal letter-${i}`} style={{
-                fontSize: '28px',
-                fontWeight: '200',
-                letterSpacing: '8px',
-                color: colors.textPrimary,
-              }}>{letter}</span>
-            ))}
-          </div>
-
-          {/* ===== LAYER 4: Subtitle ===== */}
-          <div className={`subtitle-reveal ${loadingPhase >= 2 ? 'subtitle-visible' : ''}`} style={{
-            marginTop: '12px',
-            overflow: 'hidden',
-          }}>
-            <span style={{
-              fontSize: '10px',
-              fontWeight: '400',
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              color: colors.accentCyan,
-              opacity: 0.7,
-            }}>Tattoo Studio</span>
-          </div>
-
-          {/* ===== LAYER 5: Progress Line ===== */}
+          {/* ===== PROGRESS INDICATOR — Needle Line ===== */}
           <div style={{
-            position: 'absolute',
-            bottom: '60px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '120px',
-            height: '1px',
-            background: colors.borderDefault,
-            borderRadius: '1px',
-            overflow: 'hidden',
+            position: 'absolute', bottom: '50px', left: '50%',
+            transform: 'translateX(-50%)', zIndex: 10,
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
           }}>
-            <div className="progress-fill" style={{
-              height: '100%',
-              background: `linear-gradient(90deg, ${colors.accentCyan}, ${colors.accentTeal})`,
-              borderRadius: '1px',
-            }} />
+            <div style={{
+              width: '100px', height: '1px',
+              background: `${colors.borderDefault}`,
+              borderRadius: '1px', overflow: 'hidden',
+              position: 'relative',
+            }}>
+              <div className="progress-needle" style={{
+                height: '100%', borderRadius: '1px',
+                background: `linear-gradient(90deg, ${colors.accentTeal}, ${colors.accentCyan})`,
+                position: 'relative',
+              }}>
+                {/* Bright head of the progress line */}
+                <div style={{
+                  position: 'absolute', right: '-2px', top: '-2px',
+                  width: '5px', height: '5px', borderRadius: '50%',
+                  background: colors.accentCyan,
+                  boxShadow: `0 0 8px ${colors.accentCyan}, 0 0 16px ${colors.accentCyan}44`,
+                }} />
+              </div>
+            </div>
+            <span className="progress-label" style={{
+              fontSize: '8px', letterSpacing: '3px', textTransform: 'uppercase',
+              color: colors.textMuted, opacity: 0,
+            }}>Loading</span>
           </div>
         </div>
       )}
 
       {/* Navigation */}
       <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
         padding: scrolled ? '12px 24px' : '20px 24px',
         background: scrolled ? `${colors.bgDark}ee` : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         borderBottom: scrolled ? `1px solid ${colors.borderSubtle}` : 'none',
         transition: 'all 0.3s ease',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         opacity: isLoading ? 0 : 1,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img src="/Tribal Logo.jpg" alt="LBRL Tattoo Studio Vancouver WA" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
-        
-        {/* Desktop Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="desktop-nav">
-          <button
-            onClick={() => setTattoodoModalOpen(true)}
-            aria-label="Book via Tattoodo"
-            style={{
-              background: 'none',
-              border: 'none',
-              color: colors.textSecondary,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              padding: '4px',
-            }}
-            onMouseOver={(e) => e.currentTarget.style.color = colors.accentCyan}
-            onMouseOut={(e) => e.currentTarget.style.color = colors.textSecondary}
-          >
-            <TattoodoIcon />
-          </button>
+          <button onClick={() => setTattoodoModalOpen(true)} aria-label="Book via Tattoodo" style={{ background: 'none', border: 'none', color: colors.textSecondary, cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', padding: '4px' }} onMouseOver={(e) => e.currentTarget.style.color = colors.accentCyan} onMouseOut={(e) => e.currentTarget.style.color = colors.textSecondary}><TattoodoIcon /></button>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                color: colors.textSecondary,
-                textDecoration: 'none',
-                fontSize: '11px',
-                letterSpacing: '1.5px',
-                textTransform: 'uppercase',
-                transition: 'color 0.3s',
-              }}
-              onMouseOver={(e) => e.target.style.color = colors.accentCyan}
-              onMouseOut={(e) => e.target.style.color = colors.textSecondary}
-            >
-              {item}
-            </a>
+            <a key={item} href={`#${item.toLowerCase()}`} style={{ color: colors.textSecondary, textDecoration: 'none', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color = colors.accentCyan} onMouseOut={(e) => e.target.style.color = colors.textSecondary}>{item}</a>
           ))}
-          <a
-            href={RELEASE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '10px 20px',
-              background: 'transparent',
-              border: `1px solid ${colors.accentCyan}`,
-              borderRadius: '6px',
-              color: colors.accentCyan,
-              fontSize: '11px',
-              fontWeight: '500',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-            }}
-            onMouseOver={(e) => {
-              e.target.style.background = colors.accentCyan
-              e.target.style.color = colors.bgDark
-            }}
-            onMouseOut={(e) => {
-              e.target.style.background = 'transparent'
-              e.target.style.color = colors.accentCyan
-            }}
-          >
-            Release Form
-          </a>
-          <button
-            onClick={() => setTattoodoModalOpen(true)}
-            style={{
-              padding: '10px 20px',
-              background: colors.textPrimary,
-              borderRadius: '6px',
-              color: colors.bgDark,
-              fontSize: '11px',
-              fontWeight: '600',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            Book Now
-          </button>
+          <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, borderRadius: '6px', color: colors.accentCyan, fontSize: '11px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.3s ease' }} onMouseOver={(e) => { e.target.style.background = colors.accentCyan; e.target.style.color = colors.bgDark }} onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = colors.accentCyan }}>Release Form</a>
+          <button onClick={() => setTattoodoModalOpen(true)} style={{ padding: '10px 20px', background: colors.textPrimary, borderRadius: '6px', color: colors.bgDark, fontSize: '11px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Book Now</button>
         </div>
-
-        {/* Mobile Hamburger */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="mobile-menu-btn"
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '8px',
-          }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.textPrimary} strokeWidth="2">
-            {mobileMenuOpen ? (
-              <path d="M18 6L6 18M6 6l12 12" />
-            ) : (
-              <path d="M3 12h18M3 6h18M3 18h18" />
-            )}
-          </svg>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="mobile-menu-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.textPrimary} strokeWidth="2">{mobileMenuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}</svg>
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '60px',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: colors.bgDark,
-          zIndex: 999,
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '40px 24px',
-          gap: '24px',
-        }}>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false)
-              setTattoodoModalOpen(true)
-            }}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: colors.textPrimary,
-              fontSize: '18px',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              cursor: 'pointer',
-              padding: '0',
-              textAlign: 'left',
-            }}
-          >
-            <TattoodoIcon />
-            <span>Book on Tattoodo</span>
-          </button>
+        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: colors.bgDark, zIndex: 999, display: 'flex', flexDirection: 'column', padding: '40px 24px', gap: '24px' }}>
+          <button onClick={() => { setMobileMenuOpen(false); setTattoodoModalOpen(true) }} style={{ background: 'none', border: 'none', color: colors.textPrimary, fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', padding: '0', textAlign: 'left' }}><TattoodoIcon /><span>Book on Tattoodo</span></button>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                color: colors.textPrimary,
-                textDecoration: 'none',
-                fontSize: '18px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-              }}
-            >
-              {item}
-            </a>
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase' }}>{item}</a>
           ))}
           <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <a
-              href={RELEASE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                padding: '14px 24px',
-                background: 'transparent',
-                border: `1px solid ${colors.accentCyan}`,
-                borderRadius: '6px',
-                color: colors.accentCyan,
-                fontSize: '13px',
-                fontWeight: '500',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                textAlign: 'center',
-              }}
-            >
-              Release Form
-            </a>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false)
-                setTattoodoModalOpen(true)
-              }}
-              style={{
-                padding: '14px 24px',
-                background: colors.accentCyan,
-                borderRadius: '6px',
-                color: colors.bgDark,
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'center',
-              }}
-            >
-              Book Now
-            </button>
+            <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ padding: '14px 24px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, borderRadius: '6px', color: colors.accentCyan, fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', textAlign: 'center' }}>Release Form</a>
+            <button onClick={() => { setMobileMenuOpen(false); setTattoodoModalOpen(true) }} style={{ padding: '14px 24px', background: colors.accentCyan, borderRadius: '6px', color: colors.bgDark, fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', border: 'none', cursor: 'pointer', textAlign: 'center' }}>Book Now</button>
           </div>
         </div>
       )}
 
       {/* Hero Section */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '120px 20px 80px',
-        background: `linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Aurora Effect */}
-        <div className="aurora-container" style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0, bottom: 0,
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}>
+      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '120px 20px 80px', background: `linear-gradient(180deg, rgba(61,74,66,0.9) 0%, rgba(26,31,28,0.95) 100%), url('/IMG_4330.WEBP')`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div className="aurora-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div className="aurora-flash aurora-1" />
           <div className="aurora-flash aurora-2" />
           <div className="aurora-flash aurora-3" />
         </div>
-        
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          opacity: 0.06,
-          pointerEvents: 'none',
-        }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.06, pointerEvents: 'none' }}>
           <img src="/Tribal Logo.jpg" alt="" style={{ width: '500px', height: '500px', objectFit: 'contain' }} />
         </div>
-        
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '8px 16px',
-          background: colors.bgCard,
-          borderRadius: '20px',
-          marginBottom: '32px',
-          opacity: isLoading ? 0 : 1,
-          transform: isLoading ? 'translateY(20px)' : 'translateY(0)',
-          transition: 'all 0.6s ease 0.3s',
-        }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: colors.bgCard, borderRadius: '20px', marginBottom: '32px', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(20px)' : 'translateY(0)', transition: 'all 0.6s ease 0.3s' }}>
           <span style={{ fontSize: '12px', color: colors.textSecondary }}>📍 Vancouver, WA</span>
           <span style={{ fontSize: '12px', color: colors.textMuted }}>•</span>
           <span style={{ fontSize: '12px', color: colors.accentCyan }}>Award Winner: NYC 2016 & Portland 2024</span>
         </div>
-
-        <h1 style={{
-          fontSize: 'clamp(40px, 8vw, 72px)',
-          fontWeight: '300',
-          letterSpacing: '-1px',
-          marginBottom: '24px',
-          lineHeight: '1.1',
-          opacity: isLoading ? 0 : 1,
-          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
-          transition: 'all 0.6s ease 0.5s',
-        }}>
-          Art That<br />
-          <span style={{ color: colors.accentCyan }}>Becomes You</span>
+        <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '300', letterSpacing: '-1px', marginBottom: '24px', lineHeight: '1.1', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(30px)' : 'translateY(0)', transition: 'all 0.6s ease 0.5s' }}>
+          Art That<br /><span style={{ color: colors.accentCyan }}>Becomes You</span>
         </h1>
-
-        <p style={{
-          fontSize: 'clamp(16px, 2vw, 20px)',
-          color: colors.textSecondary,
-          maxWidth: '600px',
-          lineHeight: '1.7',
-          marginBottom: '40px',
-          opacity: isLoading ? 0 : 1,
-          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
-          transition: 'all 0.6s ease 0.7s',
-        }}>
+        <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: colors.textSecondary, maxWidth: '600px', lineHeight: '1.7', marginBottom: '40px', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(30px)' : 'translateY(0)', transition: 'all 0.6s ease 0.7s' }}>
           Multi-award winning custom tattoos designed in harmony with your body. Every piece flows with your anatomy.
         </p>
-
-        <div style={{ 
-          display: 'flex', 
-          gap: '16px', 
-          flexWrap: 'wrap', 
-          justifyContent: 'center',
-          opacity: isLoading ? 0 : 1,
-          transform: isLoading ? 'translateY(30px)' : 'translateY(0)',
-          transition: 'all 0.6s ease 0.9s',
-        }}>
-          <button
-            onClick={() => setTattoodoModalOpen(true)}
-            style={{
-              padding: '16px 32px',
-              background: colors.accentCyan,
-              color: colors.bgDark,
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: '600',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            Start Your Journey
-          </button>
-          <a
-            href="#portfolio"
-            style={{
-              padding: '16px 32px',
-              background: 'transparent',
-              border: `1px solid ${colors.borderDefault}`,
-              color: colors.textPrimary,
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: '500',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            View Portfolio
-          </a>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(30px)' : 'translateY(0)', transition: 'all 0.6s ease 0.9s' }}>
+          <button onClick={() => setTattoodoModalOpen(true)} style={{ padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Start Your Journey</button>
+          <a href="#portfolio" style={{ padding: '16px 32px', background: 'transparent', border: `1px solid ${colors.borderDefault}`, color: colors.textPrimary, borderRadius: '8px', fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.3s ease' }}>View Portfolio</a>
         </div>
-
-        {/* Wind Animation Image */}
-        <div style={{
-          width: '100%',
-          maxWidth: '1200px',
-          marginTop: '60px',
-          padding: '0 40px',
-        }}>
-          <img 
-            src="/IMG_4885.png" 
-            alt="Decorative floral element" 
-            className="wind-blow-image"
-            style={{
-              width: '100%',
-              height: 'auto',
-              objectFit: 'contain',
-            }}
-          />
+        <div style={{ width: '100%', maxWidth: '1200px', marginTop: '60px', padding: '0 40px' }}>
+          <img src="/IMG_4885.png" alt="Decorative floral element" className="wind-blow-image" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
       </section>
 
       {/* Stats Bar */}
-      <section style={{
-        padding: '40px 20px',
-        background: colors.bgPrimary,
-        borderTop: `1px solid ${colors.borderSubtle}`,
-        borderBottom: `1px solid ${colors.borderSubtle}`,
-      }}>
-        <div style={{
-          maxWidth: '1000px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '20px',
-          textAlign: 'center',
-        }}>
+      <section style={{ padding: '40px 20px', background: colors.bgPrimary, borderTop: `1px solid ${colors.borderSubtle}`, borderBottom: `1px solid ${colors.borderSubtle}` }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
           {stats.map((stat, i) => (
             <div key={i}>
-              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.accentCyan, marginBottom: '4px' }}>
-                {stat.value}
-              </div>
-              <div style={{ fontSize: '12px', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                {stat.label}
-              </div>
+              <div style={{ fontSize: '32px', fontWeight: '300', color: colors.accentCyan, marginBottom: '4px' }}>{stat.value}</div>
+              <div style={{ fontSize: '12px', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: '1px' }}>{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgDark,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
+      <section id="about" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
             <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
-              <img 
-                src="/Dany 3.PNG" 
-                alt="Daniel Liberal tattooing a client at LBRL Tattoo Studio Vancouver WA" 
-                style={{ width: '100%', borderRadius: '16px', marginBottom: '30px', objectFit: 'cover' }} 
-              />
-              <p style={{
-                fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-                letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-              }}>Body Harmony</p>
-              <h2 style={{
-                fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300',
-                marginBottom: '24px', lineHeight: '1.3',
-              }}>
-                Every Design Flows<br />With Your Anatomy
-              </h2>
-              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>
-                Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.
-              </p>
-              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>
-                With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.
-              </p>
-              <p style={{ fontSize: '14px', color: colors.textMuted, fontStyle: 'italic' }}>
-                From Puerto Rico 2013 est. to Vancouver, WA 2016-Present
-              </p>
+              <img src="/Dany 3.PNG" alt="Daniel Liberal tattooing a client at LBRL Tattoo Studio Vancouver WA" style={{ width: '100%', borderRadius: '16px', marginBottom: '30px', objectFit: 'cover' }} />
+              <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Body Harmony</p>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px', lineHeight: '1.3' }}>Every Design Flows<br />With Your Anatomy</h2>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>Tattooing, for me, starts with understanding how the body carries a design. I think about flow, movement, and how a tattoo lives on the skin over time.</p>
+              <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px' }}>With over 12 years of experience and recognition from tattoo conventions in New York and Portland, my approach stays the same: one-on-one collaboration and fully custom work.</p>
+              <p style={{ fontSize: '14px', color: colors.textMuted, fontStyle: 'italic' }}>From Puerto Rico 2013 est. to Vancouver, WA 2016-Present</p>
             </div>
-            <div className={visibleSections['about'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{
-              background: `linear-gradient(180deg, rgba(42,50,45,0.95) 0%, rgba(42,50,45,0.98) 100%), url('/about-bg.webp')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '16px',
-              padding: '40px 32px',
-              border: `1px solid ${colors.borderDefault}`,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-            }}>
+            <div className={visibleSections['about'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{ background: `linear-gradient(180deg, rgba(42,50,45,0.95) 0%, rgba(42,50,45,0.98) 100%), url('/about-bg.webp')`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '16px', padding: '40px 32px', border: `1px solid ${colors.borderDefault}`, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
                 <img src="/Dani1.png" alt="Daniel Liberal headshot - Lead Artist and Owner LBRL Tattoo Studio" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
@@ -1066,18 +727,9 @@ export default function LBRLWebsite() {
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}>
-                  <span style={{ fontSize: '13px', color: colors.textMuted }}>Experience</span>
-                  <span style={{ fontSize: '13px', color: colors.textPrimary }}>12+ Years</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}>
-                  <span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span>
-                  <span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}>
-                  <span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span>
-                  <span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span>
-                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}` }}><span style={{ fontSize: '13px', color: colors.textMuted }}>Experience</span><span style={{ fontSize: '13px', color: colors.textPrimary }}>12+ Years</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${colors.borderSubtle}`, flexWrap: 'wrap', gap: '4px' }}><span style={{ fontSize: '13px', color: colors.textMuted }}>Specialties</span><span style={{ fontSize: '13px', color: colors.textPrimary, textAlign: 'right' }}>Neo Japanese, Blackwork,<br />Ornamental, Floral</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}><span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span><span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span></div>
               </div>
             </div>
           </div>
@@ -1085,145 +737,44 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgPrimary,
-        position: 'relative',
-        overflow: 'hidden',
-        maxWidth: '100vw',
-      }}>
+      <section id="portfolio" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary, position: 'relative', overflow: 'hidden', maxWidth: '100vw' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['portfolio'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <p style={{
-              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-            }}>Portfolio</p>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '32px',
-            }}>Custom Tattoo Work</h2>
-            
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Portfolio</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '32px' }}>Custom Tattoo Work</h2>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
               {styleFilters.map((style) => (
-                <button
-                  key={style.value}
-                  onClick={() => setActiveStyle(style.value)}
-                  style={{
-                    padding: '10px 20px',
-                    background: activeStyle === style.value ? colors.accentCyan : colors.bgCard,
-                    color: activeStyle === style.value ? colors.bgDark : colors.textSecondary,
-                    border: 'none',
-                    borderRadius: '20px',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    letterSpacing: '1px',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  {style.label}
-                </button>
+                <button key={style.value} onClick={() => setActiveStyle(style.value)} style={{ padding: '10px 20px', background: activeStyle === style.value ? colors.accentCyan : colors.bgCard, color: activeStyle === style.value ? colors.bgDark : colors.textSecondary, border: 'none', borderRadius: '20px', fontSize: '12px', fontWeight: '500', letterSpacing: '1px', cursor: 'pointer', transition: 'all 0.3s ease' }}>{style.label}</button>
               ))}
             </div>
           </div>
-
           <div style={{ position: 'relative' }}>
-            <button
-              onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))}
-              disabled={sliderIndex === 0}
-              style={{
-                position: 'absolute', left: '-20px', top: '50%',
-                transform: 'translateY(-50%)', width: '48px', height: '48px',
-                borderRadius: '50%', background: colors.bgCard,
-                border: `1px solid ${colors.borderDefault}`,
-                color: sliderIndex === 0 ? colors.textMuted : colors.textPrimary,
-                cursor: sliderIndex === 0 ? 'not-allowed' : 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease',
-              }}
-            >
-              ←
-            </button>
-
+            <button onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))} disabled={sliderIndex === 0} style={{ position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: colors.bgCard, border: `1px solid ${colors.borderDefault}`, color: sliderIndex === 0 ? colors.textMuted : colors.textPrimary, cursor: sliderIndex === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease' }}>←</button>
             <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
-              <div style={{
-                display: 'flex', gap: '16px',
-                transform: `translateX(-${sliderIndex * (280 + 16)}px)`,
-                transition: 'transform 0.4s ease',
-              }}>
+              <div style={{ display: 'flex', gap: '16px', transform: `translateX(-${sliderIndex * (280 + 16)}px)`, transition: 'transform 0.4s ease' }}>
                 {filteredPortfolio.map((item, index) => (
-                  <div
-                    key={item.id}
-                    onClick={() => openLightbox(index)}
-                    style={{
-                      minWidth: '280px', height: '350px', borderRadius: '12px',
-                      overflow: 'hidden', cursor: 'pointer', position: 'relative',
-                    }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
-                      style={{
-                        width: '100%', height: '100%', objectFit: 'cover',
-                        transition: 'transform 0.4s ease',
-                      }}
-                      onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-                      onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
-                    />
+                  <div key={item.id} onClick={() => openLightbox(index)} style={{ minWidth: '280px', height: '350px', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative' }}>
+                    <img src={item.image} alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
                   </div>
                 ))}
               </div>
             </div>
-
-            <button
-              onClick={() => setSliderIndex(Math.min(maxSliderIndex, sliderIndex + 1))}
-              disabled={sliderIndex >= maxSliderIndex}
-              style={{
-                position: 'absolute', right: '-20px', top: '50%',
-                transform: 'translateY(-50%)', width: '48px', height: '48px',
-                borderRadius: '50%', background: colors.bgCard,
-                border: `1px solid ${colors.borderDefault}`,
-                color: sliderIndex >= maxSliderIndex ? colors.textMuted : colors.textPrimary,
-                cursor: sliderIndex >= maxSliderIndex ? 'not-allowed' : 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease',
-              }}
-            >
-              →
-            </button>
+            <button onClick={() => setSliderIndex(Math.min(maxSliderIndex, sliderIndex + 1))} disabled={sliderIndex >= maxSliderIndex} style={{ position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: colors.bgCard, border: `1px solid ${colors.borderDefault}`, color: sliderIndex >= maxSliderIndex ? colors.textMuted : colors.textPrimary, cursor: sliderIndex >= maxSliderIndex ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease' }}>→</button>
           </div>
-
-          <div style={{ textAlign: 'center', marginTop: '24px' }}>
-            <span style={{ fontSize: '13px', color: colors.textMuted }}>
-              {sliderIndex + 1}-{Math.min(sliderIndex + visibleCount, filteredPortfolio.length)} of {filteredPortfolio.length} pieces
-            </span>
-          </div>
+          <div style={{ textAlign: 'center', marginTop: '24px' }}><span style={{ fontSize: '13px', color: colors.textMuted }}>{sliderIndex + 1}-{Math.min(sliderIndex + visibleCount, filteredPortfolio.length)} of {filteredPortfolio.length} pieces</span></div>
         </div>
       </section>
 
       {/* Process Section */}
-      <section id="process" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgDark,
-      }}>
+      <section id="process" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div className={visibleSections['process'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <p style={{
-              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-            }}>The Process</p>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>The Process</p>
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>From Vision to Reality</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {processSteps.map((step, i) => (
-              <div
-                key={i}
-                className={visibleSections['process'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'}
-                style={{
-                  background: colors.bgCard, borderRadius: '16px', padding: '32px 24px',
-                  border: `1px solid ${colors.borderDefault}`, textAlign: 'center',
-                  transition: 'all 0.3s ease',
-                }}
-              >
+              <div key={i} className={visibleSections['process'] ? `animate-fadeInUp animate-delay-${i + 1}` : 'animate-hidden'} style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px 24px', border: `1px solid ${colors.borderDefault}`, textAlign: 'center', transition: 'all 0.3s ease' }}>
                 <div style={{ fontSize: '32px', fontWeight: '200', color: colors.accentCyan, marginBottom: '16px' }}>{step.number}</div>
                 <h3 style={{ fontSize: '16px', fontWeight: '500', marginBottom: '12px' }}>{step.title}</h3>
                 <p style={{ fontSize: '13px', color: colors.textSecondary, lineHeight: '1.6' }}>{step.desc}</p>
@@ -1234,193 +785,84 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgPrimary,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
+      <section id="pricing" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div className={visibleSections['pricing'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <p style={{
-              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-            }}>Pricing & Booking</p>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300',
-              color: colors.textPrimary, marginBottom: '20px',
-            }}>Investment in Your Art</h2>
-            <p style={{
-              fontSize: '16px', color: colors.textSecondary, maxWidth: '600px',
-              margin: '0 auto', lineHeight: '1.7',
-            }}>
-              Every project is different. Pricing depends on size, detail, and time. Here's a general breakdown.
-            </p>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Pricing & Booking</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', color: colors.textPrimary, marginBottom: '20px' }}>Investment in Your Art</h2>
+            <p style={{ fontSize: '16px', color: colors.textSecondary, maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>Every project is different. Pricing depends on size, detail, and time. Here's a general breakdown.</p>
           </div>
-          <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
-            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px', marginBottom: '40px',
-          }}>
+          <div className={visibleSections['pricing'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
             <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
               <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Large-Scale Work</div>
               <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$260<span style={{ fontSize: '16px', color: colors.textMuted }}>/hour</span></div>
               <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$300 deposit to book</div>
-              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
-                Half sleeves, full sleeves, back pieces, leg pieces. Your deposit goes toward the final session and includes a revision appointment where I present up to three design directions. Large projects get priority scheduling.
-              </p>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Half sleeves, full sleeves, back pieces, leg pieces. Your deposit goes toward the final session and includes a revision appointment where I present up to three design directions. Large projects get priority scheduling.</p>
             </div>
             <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
               <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Medium Work</div>
               <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$500 to $750</div>
               <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$250 deposit to book</div>
-              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
-                Flat rate depending on detail. Design is prepared and reviewed the day of your session.
-              </p>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Flat rate depending on detail. Design is prepared and reviewed the day of your session.</p>
             </div>
             <div style={{ background: colors.bgCard, borderRadius: '16px', padding: '32px', border: `1px solid ${colors.borderDefault}` }}>
               <div style={{ fontSize: '12px', fontWeight: '600', color: colors.accentCyan, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Small Work</div>
               <div style={{ fontSize: '32px', fontWeight: '300', color: colors.textPrimary, marginBottom: '8px' }}>$150 to $350</div>
               <div style={{ fontSize: '14px', color: colors.accentCyan, marginBottom: '20px' }}>$50 to $100 deposit</div>
-              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>
-                Names, symbols, simple designs. $150 minimum. Design reviewed day of session.
-              </p>
+              <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7' }}>Names, symbols, simple designs. $150 minimum. Design reviewed day of session.</p>
             </div>
           </div>
           <div style={{ background: colors.bgElevated, borderRadius: '12px', padding: '24px 32px', marginBottom: '30px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '600', color: colors.textPrimary, marginBottom: '12px' }}>Deposits & Cancellations</h3>
-            <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0 }}>
-              All deposits are non-refundable. Cancellations or reschedules with less than 72 hours notice forfeit the deposit. Arrivals more than 30 minutes late without notice count as a no-show.
-            </p>
+            <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0 }}>All deposits are non-refundable. Cancellations or reschedules with less than 72 hours notice forfeit the deposit. Arrivals more than 30 minutes late without notice count as a no-show.</p>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '20px' }}>
-              Not sure where your project fits? I'll help you figure that out during the consultation.
-            </p>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-block', padding: '16px 40px',
-                background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px',
-                fontSize: '14px', fontWeight: '600', textDecoration: 'none',
-                letterSpacing: '1px', textTransform: 'uppercase', transition: 'all 0.3s ease',
-              }}
-            >
-              Book Consultation
-            </a>
+            <p style={{ fontSize: '16px', color: colors.textSecondary, marginBottom: '20px' }}>Not sure where your project fits? I'll help you figure that out during the consultation.</p>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '16px 40px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '14px', fontWeight: '600', textDecoration: 'none', letterSpacing: '1px', textTransform: 'uppercase', transition: 'all 0.3s ease' }}>Book Consultation</a>
           </div>
         </div>
       </section>
 
       {/* Reviews Section */}
-      <section id="reviews" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgDark,
-      }}>
+      <section id="reviews" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className={visibleSections['reviews'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <p style={{
-              fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-              letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-            }}>Reviews</p>
+            <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Reviews</p>
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>What Clients Say</h2>
           </div>
-          <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{
-            background: colors.bgCard, borderRadius: '20px',
-            padding: 'clamp(32px, 5vw, 48px)',
-            border: `1px solid ${colors.borderDefault}`, textAlign: 'center',
-            position: 'relative', minHeight: '220px',
-          }}>
-            <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>
-              {[...Array(5)].map((_, j) => (
-                <span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>
-              ))}
-            </div>
-            <p style={{
-              fontSize: 'clamp(16px, 2vw, 18px)', color: colors.textSecondary,
-              lineHeight: '1.8', marginBottom: '24px', fontStyle: 'italic',
-              transition: 'opacity 0.5s ease',
-            }}>"{reviews[currentReviewIndex].text}"</p>
-            <p style={{
-              fontSize: '14px', fontWeight: '500', color: colors.accentCyan, marginBottom: '32px',
-            }}>— {reviews[currentReviewIndex].name}</p>
+          <div className={visibleSections['reviews'] ? 'animate-fadeInUp animate-delay-2' : 'animate-hidden'} style={{ background: colors.bgCard, borderRadius: '20px', padding: 'clamp(32px, 5vw, 48px)', border: `1px solid ${colors.borderDefault}`, textAlign: 'center', position: 'relative', minHeight: '220px' }}>
+            <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '24px' }}>{[...Array(5)].map((_, j) => (<span key={j} style={{ color: colors.accentOrange, fontSize: '20px' }}>★</span>))}</div>
+            <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: colors.textSecondary, lineHeight: '1.8', marginBottom: '24px', fontStyle: 'italic', transition: 'opacity 0.5s ease' }}>"{reviews[currentReviewIndex].text}"</p>
+            <p style={{ fontSize: '14px', fontWeight: '500', color: colors.accentCyan, marginBottom: '32px' }}>— {reviews[currentReviewIndex].name}</p>
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-              {reviews.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentReviewIndex(i)}
-                  style={{
-                    width: currentReviewIndex === i ? '24px' : '10px',
-                    height: '10px', borderRadius: '5px',
-                    background: currentReviewIndex === i ? colors.accentCyan : colors.bgElevated,
-                    border: 'none', cursor: 'pointer', transition: 'all 0.3s ease',
-                  }}
-                />
-              ))}
+              {reviews.map((_, i) => (<button key={i} onClick={() => setCurrentReviewIndex(i)} style={{ width: currentReviewIndex === i ? '24px' : '10px', height: '10px', borderRadius: '5px', background: currentReviewIndex === i ? colors.accentCyan : colors.bgElevated, border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }} />))}
             </div>
           </div>
-          <div style={{ 
-            textAlign: 'center', marginTop: '32px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
-          }}>
+          <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
             <span style={{ color: colors.accentOrange, fontSize: '24px' }}>★</span>
-            <span style={{ fontSize: '14px', color: colors.textSecondary }}>
-              <strong style={{ color: colors.textPrimary }}>5.0</strong> rating on Google
-            </span>
+            <span style={{ fontSize: '14px', color: colors.textSecondary }}><strong style={{ color: colors.textPrimary }}>5.0</strong> rating on Google</span>
           </div>
         </div>
       </section>
 
       {/* FAQs Section */}
-      <section id="faqs" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgPrimary,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
+      <section id="faqs" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgPrimary, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '60px', alignItems: 'start' }}>
             <div className={visibleSections['faqs'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <div style={{ marginBottom: '40px' }}>
-                <p style={{
-                  fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-                  letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-                }}>FAQs</p>
+                <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>FAQs</p>
                 <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300' }}>Common Questions</h2>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {faqs.map((faq, i) => (
-                  <div key={i} style={{
-                    background: colors.bgCard, borderRadius: '12px',
-                    border: `1px solid ${colors.borderDefault}`, overflow: 'hidden',
-                  }}>
-                    <button
-                      onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                      style={{
-                        width: '100%', padding: '20px 24px', background: 'transparent',
-                        border: 'none', cursor: 'pointer', display: 'flex',
-                        justifyContent: 'space-between', alignItems: 'center', textAlign: 'left',
-                      }}
-                    >
-                      <h3 style={{
-                        fontSize: '15px', fontWeight: '500', color: colors.textPrimary,
-                        margin: 0, paddingRight: '16px',
-                      }}>{faq.q}</h3>
-                      <span style={{
-                        color: colors.accentCyan, fontSize: '20px', fontWeight: '300',
-                        transform: expandedFaq === i ? 'rotate(45deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s ease',
-                      }}>+</span>
+                  <div key={i} style={{ background: colors.bgCard, borderRadius: '12px', border: `1px solid ${colors.borderDefault}`, overflow: 'hidden' }}>
+                    <button onClick={() => setExpandedFaq(expandedFaq === i ? null : i)} style={{ width: '100%', padding: '20px 24px', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left' }}>
+                      <h3 style={{ fontSize: '15px', fontWeight: '500', color: colors.textPrimary, margin: 0, paddingRight: '16px' }}>{faq.q}</h3>
+                      <span style={{ color: colors.accentCyan, fontSize: '20px', fontWeight: '300', transform: expandedFaq === i ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}>+</span>
                     </button>
-                    <div style={{
-                      maxHeight: expandedFaq === i ? '500px' : '0',
-                      overflow: 'hidden', transition: 'max-height 0.3s ease',
-                    }}>
-                      <p style={{
-                        fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7',
-                        margin: 0, padding: '0 24px 20px 24px',
-                      }}>{faq.a}</p>
+                    <div style={{ maxHeight: expandedFaq === i ? '500px' : '0', overflow: 'hidden', transition: 'max-height 0.3s ease' }}>
+                      <p style={{ fontSize: '14px', color: colors.textSecondary, lineHeight: '1.7', margin: 0, padding: '0 24px 20px 24px' }}>{faq.a}</p>
                     </div>
                   </div>
                 ))}
@@ -1428,122 +870,37 @@ export default function LBRLWebsite() {
             </div>
             <div className={visibleSections['faqs'] ? 'animate-fadeInRight animate-delay-2' : 'animate-hidden'} style={{ position: 'sticky', top: '100px' }}>
               <img src="/Dani2.png" alt="Daniel Liberal tattoo artist at work - LBRL Tattoo Studio Vancouver WA" style={{ width: '100%', borderRadius: '16px', objectFit: 'cover', marginBottom: '20px' }} />
-              <video autoPlay loop muted playsInline style={{ width: '100%', borderRadius: '16px', objectFit: 'cover' }}>
-                <source src="/_users_355de36e-0a13-42b0-a4f8-690006e9848c_generated_0760b186-f9b7-45de-b081-c173128c2802_generated_video.mp4" type="video/mp4" />
-              </video>
+              <video autoPlay loop muted playsInline style={{ width: '100%', borderRadius: '16px', objectFit: 'cover' }}><source src="/_users_355de36e-0a13-42b0-a4f8-690006e9848c_generated_0760b186-f9b7-45de-b081-c173128c2802_generated_video.mp4" type="video/mp4" /></video>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" data-animate style={{
-        padding: 'clamp(60px, 10vw, 100px) 20px',
-        background: colors.bgDark,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
+      <section id="contact" data-animate style={{ padding: 'clamp(60px, 10vw, 100px) 20px', background: colors.bgDark, position: 'relative', overflow: 'hidden' }}>
         <div className={visibleSections['contact'] ? 'animate-fadeInUp' : 'animate-hidden'} style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <p style={{
-            fontSize: '12px', fontWeight: '500', color: colors.accentCyan,
-            letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px',
-          }}>Contact</p>
-          <h2 style={{
-            fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px',
-          }}>Ready to Start?</h2>
-          <p style={{
-            fontSize: '16px', color: colors.textSecondary, lineHeight: '1.7', marginBottom: '32px',
-          }}>
-            Fill out the booking form to schedule your consultation. I'll review your idea and get back to you within 1-3 business days.
-          </p>
+          <p style={{ fontSize: '12px', fontWeight: '500', color: colors.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>Contact</p>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: '300', marginBottom: '24px' }}>Ready to Start?</h2>
+          <p style={{ fontSize: '16px', color: colors.textSecondary, lineHeight: '1.7', marginBottom: '32px' }}>Fill out the booking form to schedule your consultation. I'll review your idea and get back to you within 1-3 business days.</p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark,
-                borderRadius: '8px', fontSize: '13px', fontWeight: '600',
-                letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none',
-              }}
-            >
-              Book Consultation
-            </a>
-            <a
-              href={RELEASE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                padding: '16px 32px', background: 'transparent',
-                border: `1px solid ${colors.accentCyan}`, color: colors.accentCyan,
-                borderRadius: '8px', fontSize: '13px', fontWeight: '500',
-                letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none',
-              }}
-            >
-              Release Form
-            </a>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Book Consultation</a>
+            <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 32px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, color: colors.accentCyan, borderRadius: '8px', fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none' }}>Release Form</a>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
-            <p style={{ fontSize: '14px', color: colors.textSecondary }}>
-              📍 9013 NE Hwy 99, Vancouver, WA 98665
-            </p>
-            <p style={{ fontSize: '14px', color: colors.textSecondary }}>
-              ✉️ Liberaltattoos@gmail.com
-            </p>
+            <p style={{ fontSize: '14px', color: colors.textSecondary }}>📍 9013 NE Hwy 99, Vancouver, WA 98665</p>
+            <p style={{ fontSize: '14px', color: colors.textSecondary }}>✉️ Liberaltattoos@gmail.com</p>
             <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
-              <button
-                onClick={() => setTattoodoModalOpen(true)}
-                style={{ 
-                  display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, 
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  transition: 'opacity 0.3s', padding: '0', fontSize: '14px',
-                }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-              >
-                <TattoodoIcon />
-                <span>Tattoodo</span>
-              </button>
-              <a
-                href="https://instagram.com/danilbrl_tattoo"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
+              <button onClick={() => setTattoodoModalOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, background: 'none', border: 'none', cursor: 'pointer', transition: 'opacity 0.3s', padding: '0', fontSize: '14px' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}><TattoodoIcon /><span>Tattoodo</span></button>
+              <a href="https://instagram.com/danilbrl_tattoo" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 <span style={{ fontSize: '14px' }}>@danilbrl_tattoo</span>
               </a>
-              <a
-                href="https://facebook.com/lbrltattoos"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
+              <a href="https://facebook.com/lbrltattoos" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 <span style={{ fontSize: '14px' }}>Facebook</span>
               </a>
-              <a
-                href="https://share.google/vhS3WwTU20FQj2La2"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
+              <a href="https://share.google/vhS3WwTU20FQj2La2" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
                 <span style={{ fontSize: '14px' }}>Google</span>
               </a>
             </div>
@@ -1552,87 +909,29 @@ export default function LBRLWebsite() {
       </section>
 
       {/* Footer */}
-      <footer style={{
-        padding: '40px 20px',
-        background: colors.bgPrimary,
-        borderTop: `1px solid ${colors.borderSubtle}`,
-        textAlign: 'center',
-      }}>
+      <footer style={{ padding: '40px 20px', background: colors.bgPrimary, borderTop: `1px solid ${colors.borderSubtle}`, textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           <img src="/Tribal Logo.jpg" alt="LBRL Tattoo Studio" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '3px' }}>LBRL</span>
         </div>
-        <p style={{ fontSize: '12px', color: colors.textMuted }}>
-          © 2026 Daniel Liberal. All rights reserved.
-        </p>
-        <p style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>
-          Appointment Only • Vancouver, WA
-        </p>
+        <p style={{ fontSize: '12px', color: colors.textMuted }}>© 2026 Daniel Liberal. All rights reserved.</p>
+        <p style={{ fontSize: '11px', color: colors.textMuted, marginTop: '8px' }}>Appointment Only • Vancouver, WA</p>
       </footer>
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <div
-          style={{
-            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            background: 'rgba(0,0,0,0.95)', zIndex: 2000,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-          onClick={() => setLightboxOpen(false)}
-        >
-          <button
-            onClick={() => setLightboxOpen(false)}
-            style={{
-              position: 'absolute', top: '20px', right: '20px',
-              background: 'none', border: 'none', color: 'white',
-              fontSize: '32px', cursor: 'pointer',
-            }}
-          >
-            ×
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length)
-            }}
-            style={{
-              position: 'absolute', left: '20px',
-              background: 'rgba(255,255,255,0.1)', border: 'none',
-              color: 'white', fontSize: '24px', padding: '16px',
-              borderRadius: '50%', cursor: 'pointer',
-            }}
-          >
-            ←
-          </button>
-          <img
-            src={filteredPortfolio[currentImage]?.image}
-            alt={filteredPortfolio[currentImage]?.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
-            style={{
-              maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length)
-            }}
-            style={{
-              position: 'absolute', right: '20px',
-              background: 'rgba(255,255,255,0.1)', border: 'none',
-              color: 'white', fontSize: '24px', padding: '16px',
-              borderRadius: '50%', cursor: 'pointer',
-            }}
-          >
-            →
-          </button>
-          <div style={{ position: 'absolute', bottom: '20px', color: 'white', fontSize: '14px' }}>
-            {currentImage + 1} / {filteredPortfolio.length}
-          </div>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setLightboxOpen(false)}>
+          <button onClick={() => setLightboxOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', color: 'white', fontSize: '32px', cursor: 'pointer' }}>×</button>
+          <button onClick={(e) => { e.stopPropagation(); setCurrentImage((prev) => (prev - 1 + filteredPortfolio.length) % filteredPortfolio.length) }} style={{ position: 'absolute', left: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '24px', padding: '16px', borderRadius: '50%', cursor: 'pointer' }}>←</button>
+          <img src={filteredPortfolio[currentImage]?.image} alt={filteredPortfolio[currentImage]?.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'} style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '8px' }} onClick={(e) => e.stopPropagation()} />
+          <button onClick={(e) => { e.stopPropagation(); setCurrentImage((prev) => (prev + 1) % filteredPortfolio.length) }} style={{ position: 'absolute', right: '20px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '24px', padding: '16px', borderRadius: '50%', cursor: 'pointer' }}>→</button>
+          <div style={{ position: 'absolute', bottom: '20px', color: 'white', fontSize: '14px' }}>{currentImage + 1} / {filteredPortfolio.length}</div>
         </div>
       )}
 
-      {/* Global Styles */}
+      {/* ================================================================
+          STYLES
+          ================================================================ */}
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -1640,223 +939,315 @@ export default function LBRLWebsite() {
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
         ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
-        
         .ta2do-booking-form { width: 100%; min-height: 400px; }
-        
+
         /* ================================================================
-           PREMIUM LOADING EXPERIENCE — Sacred Geometry Reveal
+           ★ THE NEEDLE TRACES — Premium Loading Experience ★
            ================================================================ */
         
-        /* === EXIT ANIMATION === */
+        /* === SCREEN EXIT === */
         .loader-exit {
-          animation: loaderFadeOut 0.6s ease-in forwards;
+          animation: screenExit 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        
-        @keyframes loaderFadeOut {
-          0% { opacity: 1; transform: scale(1); }
-          100% { opacity: 0; transform: scale(1.05); }
+        @keyframes screenExit {
+          0% { opacity: 1; filter: blur(0px); }
+          60% { opacity: 0.8; filter: blur(0px); }
+          100% { opacity: 0; filter: blur(6px); }
         }
-        
-        /* === SACRED GEOMETRY: Self-Drawing Circles === */
-        .draw-circle {
-          stroke-dasharray: 600;
-          stroke-dashoffset: 600;
-          animation: drawStroke 1.2s ease-out forwards;
+
+        /* === FLOATING INK PARTICLES === */
+        .ink-particle {
+          animation: inkFloat var(--duration, 4s) ease-in-out infinite;
         }
-        .draw-d1 { animation-delay: 0s; stroke-dasharray: 132; stroke-dashoffset: 132; }
-        .draw-d2 { animation-delay: 0.08s; stroke-dasharray: 214; stroke-dashoffset: 214; }
-        .draw-d3 { animation-delay: 0.16s; stroke-dasharray: 346; stroke-dashoffset: 346; }
-        .draw-d4 { animation-delay: 0.24s; stroke-dasharray: 559; stroke-dashoffset: 559; }
-        .draw-d5 { animation-delay: 0.32s; stroke-dasharray: 905; stroke-dashoffset: 905; }
-        
-        @keyframes drawStroke {
+        @keyframes inkFloat {
+          0% { 
+            opacity: 0; 
+            transform: translateY(0) translateX(0) scale(0.5); 
+          }
+          20% { 
+            opacity: var(--target-opacity, 0.2); 
+            transform: translateY(-10px) translateX(calc(var(--drift, 0px) * 0.3)) scale(1); 
+          }
+          80% { 
+            opacity: var(--target-opacity, 0.2); 
+            transform: translateY(-30px) translateX(var(--drift, 0px)) scale(0.8); 
+          }
+          100% { 
+            opacity: 0; 
+            transform: translateY(-50px) translateX(calc(var(--drift, 0px) * 1.2)) scale(0.3); 
+          }
+        }
+
+        /* === BREATHING VIGNETTE === */
+        .vignette {
+          animation: breatheVignette 3s ease-in-out infinite;
+        }
+        @keyframes breatheVignette {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 0.5; }
+        }
+
+        /* === BREATHING CENTER GLOW === */
+        .breath-glow {
+          animation: breathGlow 2.5s ease-in-out infinite;
+        }
+        @keyframes breathGlow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+
+        /* === SACRED GEOMETRY: Traced Lines === */
+        .trace-line {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          animation: traceDraw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .trace-c1 { stroke-dasharray: 132; stroke-dashoffset: 132; animation-duration: 0.6s; animation-delay: 0.05s; }
+        .trace-c2 { stroke-dasharray: 214; stroke-dashoffset: 214; animation-duration: 0.7s; animation-delay: 0.1s; }
+        .trace-c3 { stroke-dasharray: 346; stroke-dashoffset: 346; animation-duration: 0.8s; animation-delay: 0.15s; }
+        .trace-c4 { stroke-dasharray: 559; stroke-dashoffset: 559; animation-duration: 0.9s; animation-delay: 0.2s; }
+        .trace-c5 { stroke-dasharray: 905; stroke-dashoffset: 905; animation-duration: 1.1s; animation-delay: 0.25s; }
+
+        @keyframes traceDraw {
           0% { stroke-dashoffset: inherit; opacity: 0; }
-          10% { opacity: 0.6; }
-          100% { stroke-dashoffset: 0; opacity: 0.2; }
+          5% { opacity: 0.7; }
+          80% { opacity: 0.4; }
+          100% { stroke-dashoffset: 0; opacity: 0.18; }
         }
-        
-        /* === GOLDEN SPIRAL: Draws Itself === */
-        .draw-spiral {
+
+        /* === NEEDLE TRACER DOTS — bright points that fade === */
+        .needle-dot {
+          opacity: 0;
+          animation: needleFade 1.5s ease-out forwards;
+        }
+        .needle-n1 { animation-delay: 0.1s; }
+        .needle-n2 { animation-delay: 0.2s; }
+        .needle-n3 { animation-delay: 0.35s; }
+
+        @keyframes needleFade {
+          0% { opacity: 0; }
+          10% { opacity: 1; }
+          70% { opacity: 0.8; }
+          100% { opacity: 0; }
+        }
+
+        /* === GOLDEN SPIRAL === */
+        .trace-spiral {
           stroke-dasharray: 800;
           stroke-dashoffset: 800;
-          animation: drawSpiral 1.6s ease-in-out forwards;
-          animation-delay: 0.2s;
+          animation: traceDraw 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
         }
-        
-        @keyframes drawSpiral {
-          0% { stroke-dashoffset: 800; opacity: 0; }
-          10% { opacity: 0.5; }
-          100% { stroke-dashoffset: 0; opacity: 0.25; }
-        }
-        
-        /* === FLOWER OF LIFE PETALS: Staggered Draw === */
-        .draw-petal {
+
+        /* === FLOWER OF LIFE: Bloom Effect === */
+        .bloom-petal {
           stroke-dasharray: 220;
           stroke-dashoffset: 220;
-          animation: drawPetal 0.8s ease-out forwards;
+          animation: bloomDraw 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        .draw-p1 { animation-delay: 0.4s; }
-        .draw-p2 { animation-delay: 0.5s; }
-        .draw-p3 { animation-delay: 0.6s; }
-        .draw-p4 { animation-delay: 0.7s; }
-        .draw-p5 { animation-delay: 0.8s; }
-        .draw-p6 { animation-delay: 0.9s; }
-        
-        @keyframes drawPetal {
-          0% { stroke-dashoffset: 220; opacity: 0; }
-          10% { opacity: 0.3; }
-          100% { stroke-dashoffset: 0; opacity: 0.15; }
-        }
-        
-        /* === ORGANIC LINES === */
-        .draw-organic {
-          stroke-dasharray: 400;
-          stroke-dashoffset: 400;
-          animation: drawOrganic 1.4s ease-out forwards;
-        }
-        .draw-o1 { animation-delay: 0.3s; }
-        .draw-o2 { animation-delay: 0.5s; }
-        
-        @keyframes drawOrganic {
-          0% { stroke-dashoffset: 400; opacity: 0; }
-          10% { opacity: 0.3; }
+        .bloom-p1 { animation-delay: 0.35s; }
+        .bloom-p2 { animation-delay: 0.42s; }
+        .bloom-p3 { animation-delay: 0.49s; }
+        .bloom-p4 { animation-delay: 0.56s; }
+        .bloom-p5 { animation-delay: 0.63s; }
+        .bloom-p6 { animation-delay: 0.7s; }
+
+        @keyframes bloomDraw {
+          0% { stroke-dashoffset: 220; opacity: 0; transform-origin: center; }
+          10% { opacity: 0.5; }
           100% { stroke-dashoffset: 0; opacity: 0.12; }
         }
-        
+
+        /* === ORGANIC VINES === */
+        .trace-vine {
+          stroke-dasharray: 400;
+          stroke-dashoffset: 400;
+          animation: traceDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .trace-v1 { animation-delay: 0.3s; }
+        .trace-v2 { animation-delay: 0.45s; }
+        .trace-v3 { animation-delay: 0.6s; }
+
         /* === FINE ARCS === */
-        .draw-arc {
+        .trace-arc {
           stroke-dasharray: 120;
           stroke-dashoffset: 120;
-          animation: drawArc 0.6s ease-out forwards;
+          animation: traceDraw 0.5s ease-out forwards;
         }
-        .draw-a1 { animation-delay: 0.6s; }
-        .draw-a2 { animation-delay: 0.8s; }
-        
-        @keyframes drawArc {
-          0% { stroke-dashoffset: 120; opacity: 0; }
-          100% { stroke-dashoffset: 0; opacity: 0.1; }
-        }
-        
-        /* === ROTATING OUTER RING === */
-        .rotate-ring {
-          animation: rotateRing 8s linear infinite;
+        .trace-a1 { animation-delay: 0.55s; }
+        .trace-a2 { animation-delay: 0.75s; }
+
+        /* === SPINNING RINGS === */
+        .spin-ring {
+          opacity: 0;
           transform-origin: 250px 250px;
+          animation: ringAppear 0.8s ease-out 0.4s forwards, ringSpin 12s linear 0.4s infinite;
+        }
+        .spin-ring-inner {
           opacity: 0;
-          animation: rotateRingIn 1s ease-out 0.5s forwards, rotateRingSpin 8s linear 0.5s infinite;
+          transform-origin: 250px 250px;
+          animation: ringAppear 0.8s ease-out 0.6s forwards, ringSpinReverse 18s linear 0.6s infinite;
         }
-        
-        @keyframes rotateRingIn {
-          0% { opacity: 0; }
-          100% { opacity: 0.15; }
+
+        @keyframes ringAppear { 0% { opacity: 0; } 100% { opacity: 0.12; } }
+        @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes ringSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* === LOGO RING TRACE === */
+        .ring-trace {
+          stroke-dasharray: 440;
+          stroke-dashoffset: 440;
+          transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          opacity: 0;
+          transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         }
-        
-        @keyframes rotateRingSpin {
-          0% { transform: rotate(0deg); transform-origin: 250px 250px; }
-          100% { transform: rotate(360deg); transform-origin: 250px 250px; }
+        .ring-trace.ring-visible {
+          stroke-dashoffset: 0;
+          opacity: 0.6;
         }
-        
-        /* === CENTER GLOW PULSE === */
-        .center-glow {
-          animation: glowPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes glowPulse {
-          0%, 100% { opacity: 0.3; r: 120; }
-          50% { opacity: 0.6; r: 140; }
-        }
-        
-        /* === LOGO REVEAL — Morphing Ring === */
-        .ring-draw {
-          stroke-dasharray: 408;
-          stroke-dashoffset: 408;
-          animation: ringDraw 0.8s ease-out forwards;
-        }
-        
-        @keyframes ringDraw {
-          0% { stroke-dashoffset: 408; }
-          100% { stroke-dashoffset: 0; }
-        }
-        
+
+        /* Ring dots rotation */
         .ring-dots {
-          animation: ringDotsRotate 6s linear infinite;
-          transform-origin: 70px 70px;
-        }
-        
-        @keyframes ringDotsRotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
-        /* === LOGO IMAGE REVEAL === */
-        .logo-reveal {
           opacity: 0;
-          transform: scale(0.6);
-          filter: blur(8px);
-          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-          box-shadow: 0 0 0px rgba(125, 212, 196, 0);
+          transform-origin: 75px 75px;
+          transition: opacity 0.5s ease 0.3s;
         }
-        
-        .logo-reveal.logo-visible {
+        .ring-dots.ring-dots-visible {
+          opacity: 0.3;
+          animation: ringDotsRotate 8s linear infinite;
+        }
+        @keyframes ringDotsRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* === LOGO INK REVEAL === */
+        .logo-ink-reveal {
+          opacity: 0;
+          transform: scale(0.4);
+          filter: blur(12px) brightness(1.5);
+          transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 0 0 0 rgba(125, 212, 196, 0);
+        }
+        .logo-ink-reveal.logo-materialized {
           opacity: 1;
           transform: scale(1);
-          filter: blur(0px);
-          box-shadow: 0 0 60px rgba(125, 212, 196, 0.2), 0 0 120px rgba(125, 212, 196, 0.1);
+          filter: blur(0px) brightness(1);
+          box-shadow: 
+            0 0 40px rgba(125, 212, 196, 0.15),
+            0 0 80px rgba(125, 212, 196, 0.08),
+            0 0 120px rgba(125, 212, 196, 0.04);
         }
-        
-        /* === TEXT REVEAL — Letter by Letter === */
-        .text-reveal .letter-reveal {
+
+        /* === ORBITING MICRO-DOTS === */
+        .orbit-system {
+          position: absolute;
+          width: 150px;
+          height: 150px;
+          top: 0;
+          left: 0;
           opacity: 0;
-          transform: translateY(20px);
-          display: inline-block;
+          transition: opacity 0.5s ease 0.3s;
         }
-        
-        .text-reveal.text-visible .letter-reveal {
-          animation: letterReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        .orbit-system.orbit-active { opacity: 1; }
+
+        .orbit-dot {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: ${colors.accentCyan};
+          top: 50%;
+          left: 50%;
         }
-        
-        .text-visible .letter-0 { animation-delay: 0s; }
-        .text-visible .letter-1 { animation-delay: 0.08s; }
-        .text-visible .letter-2 { animation-delay: 0.16s; }
-        .text-visible .letter-3 { animation-delay: 0.24s; }
-        
-        @keyframes letterReveal {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 0.9; transform: translateY(0); }
+        .orbit-dot-1 {
+          box-shadow: 0 0 6px ${colors.accentCyan};
+          animation: orbit1 4s linear infinite;
         }
-        
-        /* === SUBTITLE REVEAL === */
-        .subtitle-reveal span {
+        .orbit-dot-2 {
+          width: 2px; height: 2px;
+          opacity: 0.6;
+          box-shadow: 0 0 4px ${colors.accentCyan};
+          animation: orbit2 6s linear infinite;
+        }
+        .orbit-dot-3 {
+          width: 1.5px; height: 1.5px;
+          opacity: 0.4;
+          animation: orbit3 5s linear infinite;
+        }
+
+        @keyframes orbit1 {
+          from { transform: rotate(0deg) translateX(72px) rotate(0deg); }
+          to { transform: rotate(360deg) translateX(72px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+          from { transform: rotate(120deg) translateX(68px) rotate(-120deg); }
+          to { transform: rotate(480deg) translateX(68px) rotate(-480deg); }
+        }
+        @keyframes orbit3 {
+          from { transform: rotate(240deg) translateX(76px) rotate(-240deg); }
+          to { transform: rotate(600deg) translateX(76px) rotate(-600deg); }
+        }
+
+        /* === BRAND TEXT REVEAL === */
+        .brand-text .brand-letter {
           opacity: 0;
-          transform: translateY(10px);
-          display: inline-block;
-          transition: all 0.5s ease;
+          transform: translateY(24px) scale(0.8);
         }
-        
-        .subtitle-reveal.subtitle-visible span {
-          opacity: 0.7;
-          transform: translateY(0);
-          transition-delay: 0.3s;
+        .brand-text.brand-visible .brand-letter {
+          animation: letterPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        
-        /* === PROGRESS LINE === */
-        .progress-fill {
+        .brand-visible .bl-0 { animation-delay: 0s; }
+        .brand-visible .bl-1 { animation-delay: 0.07s; }
+        .brand-visible .bl-2 { animation-delay: 0.14s; }
+        .brand-visible .bl-3 { animation-delay: 0.21s; }
+
+        @keyframes letterPop {
+          0% { opacity: 0; transform: translateY(24px) scale(0.8); }
+          60% { opacity: 1; transform: translateY(-3px) scale(1.02); }
+          100% { opacity: 0.95; transform: translateY(0) scale(1); }
+        }
+
+        /* Divider line expands */
+        .brand-text.brand-visible .brand-divider {
+          animation: dividerExpand 0.6s ease-out 0.25s forwards;
+        }
+        @keyframes dividerExpand {
+          from { width: 0px; }
+          to { width: 60px; }
+        }
+
+        /* Subtitle fades */
+        .brand-text.brand-visible .brand-subtitle {
+          animation: subtitleFade 0.5s ease-out 0.4s forwards;
+        }
+        @keyframes subtitleFade {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 0.6; transform: translateY(0); }
+        }
+
+        /* === PROGRESS NEEDLE === */
+        .progress-needle {
           width: 0%;
-          animation: progressFill 2.2s ease-in-out forwards;
+          animation: needleProgress 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        
-        @keyframes progressFill {
+        @keyframes needleProgress {
           0% { width: 0%; }
-          30% { width: 30%; }
-          60% { width: 65%; }
-          80% { width: 85%; }
+          20% { width: 25%; }
+          45% { width: 50%; }
+          70% { width: 75%; }
+          90% { width: 92%; }
           100% { width: 100%; }
         }
-        
+
+        .progress-label {
+          animation: labelFade 0.4s ease-out 0.3s forwards;
+        }
+        @keyframes labelFade {
+          from { opacity: 0; }
+          to { opacity: 0.4; }
+        }
+
         /* ================================================================
-           ORIGINAL ANIMATIONS (UNCHANGED)
+           ORIGINAL SITE ANIMATIONS (UNCHANGED)
            ================================================================ */
         
-        /* Wind Blow Animation */
         @keyframes windBlow {
           0% { transform: translateX(-100px); clip-path: inset(0 100% 0 0); }
           50% { clip-path: inset(0 0 0 0); }
@@ -1864,38 +1255,22 @@ export default function LBRLWebsite() {
           85% { transform: translateX(-5px); }
           100% { transform: translateX(0); clip-path: inset(0 0 0 0); }
         }
-        
-        .wind-blow-image {
-          animation: windBlow 1.5s ease-out forwards;
-          animation-delay: 1s;
-          clip-path: inset(0 100% 0 0);
-        }
-        
-        /* Aurora Effect */
+        .wind-blow-image { animation: windBlow 1.5s ease-out forwards; animation-delay: 1s; clip-path: inset(0 100% 0 0); }
+
         @keyframes auroraFlash {
           0%, 80%, 100% { opacity: 0; transform: translateX(-100%) skewX(-15deg); }
           88% { opacity: 0.25; transform: translateX(0%) skewX(-15deg); }
           94% { opacity: 0.12; transform: translateX(100%) skewX(-15deg); }
         }
-        
-        .aurora-flash {
-          position: absolute;
-          width: 200%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent 0%, rgba(125,212,196,0.05) 15%, rgba(125,212,196,0.15) 35%, rgba(90,138,138,0.2) 50%, rgba(125,212,196,0.15) 65%, rgba(125,212,196,0.05) 85%, transparent 100%);
-          pointer-events: none;
-        }
-        
+        .aurora-flash { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(125,212,196,0.05) 15%, rgba(125,212,196,0.15) 35%, rgba(90,138,138,0.2) 50%, rgba(125,212,196,0.15) 65%, rgba(125,212,196,0.05) 85%, transparent 100%); pointer-events: none; }
         .aurora-1 { top: 0; left: -100%; animation: auroraFlash 10s ease-in-out infinite; }
         .aurora-2 { top: 25%; left: -100%; animation: auroraFlash 13s ease-in-out infinite; animation-delay: 3s; }
         .aurora-3 { top: 55%; left: -100%; animation: auroraFlash 16s ease-in-out infinite; animation-delay: 7s; }
-        
-        /* Section Animations */
+
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        
         .animate-hidden { opacity: 0; }
         .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
         .animate-fadeInLeft { animation: fadeInLeft 0.8s ease forwards; }
@@ -1906,16 +1281,14 @@ export default function LBRLWebsite() {
         .animate-delay-3 { animation-delay: 0.3s; }
         .animate-delay-4 { animation-delay: 0.4s; }
         .animate-delay-5 { animation-delay: 0.5s; }
-        
+
         /* Responsive */
         .desktop-nav { display: flex; }
         .mobile-menu-btn { display: none !important; }
-        
         @media (max-width: 1024px) {
           .desktop-nav { gap: 16px !important; }
           .desktop-nav a { font-size: 10px !important; }
         }
-        
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
@@ -1937,13 +1310,12 @@ export default function LBRLWebsite() {
           #faqs [style*="position: sticky"] { display: none !important; }
           section { position: relative !important; z-index: 1 !important; overflow: visible !important; }
           #contact { margin-top: 0 !important; padding-top: 60px !important; }
-          
-          /* Spinner mobile adjustments */
-          .logo-ring-container { width: 110px !important; height: 110px !important; }
-          .logo-reveal { width: 70px !important; height: 70px !important; }
-          .morph-ring { width: 110px !important; height: 110px !important; }
+          /* Spinner mobile */
+          .logo-area { width: 120px !important; height: 120px !important; }
+          .logo-ink-reveal { width: 76px !important; height: 76px !important; }
+          .logo-ring-svg { width: 120px !important; height: 120px !important; }
+          .orbit-system { width: 120px !important; height: 120px !important; }
         }
-        
         @media (max-width: 480px) {
           h1 { font-size: 26px !important; }
           h2 { font-size: 20px !important; }
