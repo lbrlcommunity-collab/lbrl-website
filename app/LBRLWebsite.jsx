@@ -133,121 +133,122 @@ export default function LBRLWebsite() {
     { value: 'floral', label: 'Floral' },
   ]
 
+  // ========== SEO-OPTIMIZED PORTFOLIO WITH ALT TEXT ==========
   const portfolioItems = [
     // NEO JAPANESE
-    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png' },
-    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png' },
-    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg' },
-    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg' },
-    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png' },
-    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png' },
-    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg' },
-    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png' },
-    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png' },
-    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp' },
-    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp' },
-    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp' },
-    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg' },
-    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg' },
-    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp' },
-    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp' },
-    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp' },
-    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp' },
-    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp' },
-    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png' },
-    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png' },
-    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png' },
-    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png' },
-    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png' },
-    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png' },
-    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_9315.png' },
-    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_9320.png' },
-    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_9321.png' },
-    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_9322.png' },
-    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_9371.png' },
-    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg' },
-    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png' },
-    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp' },
-    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp' },
-    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp' },
-    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp' },
-    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_9417.png' },
-    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_9419.png' },
-    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_9445.png' },
-    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_9844.jpeg' },
-    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp' },
-    { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg' },
-    { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png' },
-    // BLACKWORK (18)
-    { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png' },
-    { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png' },
-    { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png' },
-    { id: 59, style: 'blackwork', image: '/portfolio/blackwork/IMG_4428.webp' },
-    { id: 60, style: 'blackwork', image: '/portfolio/blackwork/IMG_4429.webp' },
-    { id: 61, style: 'blackwork', image: '/portfolio/blackwork/IMG_4430.webp' },
-    { id: 62, style: 'blackwork', image: '/portfolio/blackwork/IMG_4433.webp' },
-    { id: 63, style: 'blackwork', image: '/portfolio/blackwork/IMG_4435.webp' },
-    { id: 64, style: 'blackwork', image: '/portfolio/blackwork/IMG_4438.webp' },
-    { id: 65, style: 'blackwork', image: '/portfolio/blackwork/IMG_4440.webp' },
-    { id: 66, style: 'blackwork', image: '/portfolio/blackwork/IMG_4442.webp' },
-    { id: 67, style: 'blackwork', image: '/portfolio/blackwork/IMG_4443.webp' },
-    { id: 68, style: 'blackwork', image: '/portfolio/blackwork/IMG_9386.webp' },
-    { id: 69, style: 'blackwork', image: '/portfolio/blackwork/IMG_9388.jpeg' },
-    { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg' },
-    { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp' },
-    { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png' },
+    { id: 4, style: 'japanese', image: '/portfolio/japanese/IMG_0465.png', alt: 'Neo Japanese koi fish tattoo with water elements by Daniel Liberal Vancouver WA' },
+    { id: 6, style: 'japanese', image: '/portfolio/japanese/IMG_0534.png', alt: 'Japanese inspired dragon tattoo with bold colors custom design Vancouver WA' },
+    { id: 7, style: 'japanese', image: '/portfolio/japanese/IMG_0536.jpeg', alt: 'Neo Japanese sleeve tattoo with traditional motifs by LBRL Tattoo Studio' },
+    { id: 8, style: 'japanese', image: '/portfolio/japanese/IMG_0597.jpeg', alt: 'Japanese style tattoo with flowing composition custom work Vancouver Washington' },
+    { id: 9, style: 'japanese', image: '/portfolio/japanese/IMG_0781.png', alt: 'Neo Japanese forearm tattoo with dynamic movement by Daniel Liberal' },
+    { id: 10, style: 'japanese', image: '/portfolio/japanese/IMG_0785.png', alt: 'Japanese inspired tattoo piece with traditional elements Vancouver WA artist' },
+    { id: 12, style: 'japanese', image: '/portfolio/japanese/IMG_0794.jpeg', alt: 'Custom neo Japanese tattoo with bold shading by LBRL Studio Vancouver' },
+    { id: 13, style: 'japanese', image: '/portfolio/japanese/IMG_1028.png', alt: 'Japanese style half sleeve tattoo custom designed Vancouver WA tattoo shop' },
+    { id: 14, style: 'japanese', image: '/portfolio/japanese/IMG_4404.png', alt: 'Neo Japanese arm tattoo flowing with natural anatomy Body Harmony design' },
+    { id: 16, style: 'japanese', image: '/portfolio/japanese/IMG_4407.webp', alt: 'Japanese inspired custom tattoo with wave elements by Daniel Liberal' },
+    { id: 17, style: 'japanese', image: '/portfolio/japanese/IMG_4410.webp', alt: 'Neo Japanese leg tattoo with traditional Japanese art influences Vancouver WA' },
+    { id: 18, style: 'japanese', image: '/portfolio/japanese/IMG_4411.webp', alt: 'Custom Japanese style tattoo with organic flow by award winning artist Daniel Liberal' },
+    { id: 19, style: 'japanese', image: '/portfolio/japanese/IMG_4412.jpeg', alt: 'Neo Japanese tattoo design with bold lines and color by LBRL Tattoo Studio' },
+    { id: 20, style: 'japanese', image: '/portfolio/japanese/IMG_4416.jpeg', alt: 'Japanese inspired sleeve progress custom tattoo art Vancouver Washington' },
+    { id: 21, style: 'japanese', image: '/portfolio/japanese/IMG_4460.webp', alt: 'Neo Japanese upper arm tattoo with dynamic composition LBRL Studio' },
+    { id: 23, style: 'japanese', image: '/portfolio/japanese/IMG_4463.webp', alt: 'Japanese style custom tattoo with flowing design by Daniel Liberal Vancouver' },
+    { id: 25, style: 'japanese', image: '/portfolio/japanese/IMG_4467.webp', alt: 'Neo Japanese tattoo piece with traditional motifs and modern execution' },
+    { id: 26, style: 'japanese', image: '/portfolio/japanese/IMG_4468.webp', alt: 'Custom Japanese inspired tattoo with bold shading Vancouver WA tattoo artist' },
+    { id: 28, style: 'japanese', image: '/portfolio/japanese/IMG_4736.webp', alt: 'Neo Japanese full color tattoo designed to flow with body anatomy' },
+    { id: 29, style: 'japanese', image: '/portfolio/japanese/IMG_9302.png', alt: 'Japanese style forearm tattoo with detailed line work by Daniel Liberal' },
+    { id: 30, style: 'japanese', image: '/portfolio/japanese/IMG_9303.png', alt: 'Neo Japanese tattoo with traditional waves and bold contrast LBRL Studio' },
+    { id: 31, style: 'japanese', image: '/portfolio/japanese/IMG_9304.png', alt: 'Custom Japanese sleeve tattoo in progress by award winning Vancouver WA artist' },
+    { id: 33, style: 'japanese', image: '/portfolio/japanese/IMG_9311.png', alt: 'Neo Japanese arm tattoo with organic flow and detailed shading' },
+    { id: 34, style: 'japanese', image: '/portfolio/japanese/IMG_9312.png', alt: 'Japanese inspired custom tattoo piece with dynamic composition Vancouver WA' },
+    { id: 35, style: 'japanese', image: '/portfolio/japanese/IMG_9314.png', alt: 'Neo Japanese tattoo with bold colors flowing with natural body lines' },
+    { id: 36, style: 'japanese', image: '/portfolio/japanese/IMG_9315.png', alt: 'Custom neo Japanese tattoo design by Daniel Liberal LBRL Tattoo Studio' },
+    { id: 37, style: 'japanese', image: '/portfolio/japanese/IMG_9320.png', alt: 'Japanese style tattoo with traditional elements and modern flair Vancouver' },
+    { id: 38, style: 'japanese', image: '/portfolio/japanese/IMG_9321.png', alt: 'Neo Japanese leg piece with flowing composition by LBRL Studio Vancouver WA' },
+    { id: 39, style: 'japanese', image: '/portfolio/japanese/IMG_9322.png', alt: 'Japanese inspired custom tattoo with detailed shading and bold lines' },
+    { id: 40, style: 'japanese', image: '/portfolio/japanese/IMG_9371.png', alt: 'Neo Japanese tattoo art with anatomical flow Body Harmony approach' },
+    { id: 41, style: 'japanese', image: '/portfolio/japanese/IMG_9395.jpeg', alt: 'Japanese style tattoo sleeve by Daniel Liberal award winning tattoo artist' },
+    { id: 42, style: 'japanese', image: '/portfolio/japanese/IMG_9397.png', alt: 'Neo Japanese custom tattoo with vibrant colors Vancouver WA tattoo shop' },
+    { id: 43, style: 'japanese', image: '/portfolio/japanese/IMG_9398.webp', alt: 'Japanese inspired arm tattoo with traditional motifs by LBRL Studio' },
+    { id: 45, style: 'japanese', image: '/portfolio/japanese/IMG_9411.webp', alt: 'Neo Japanese tattoo piece designed with Body Harmony philosophy Vancouver' },
+    { id: 46, style: 'japanese', image: '/portfolio/japanese/IMG_9413.webp', alt: 'Custom Japanese style tattoo with bold composition by Daniel Liberal' },
+    { id: 47, style: 'japanese', image: '/portfolio/japanese/IMG_9415.webp', alt: 'Neo Japanese forearm tattoo with dynamic flow and detailed execution' },
+    { id: 48, style: 'japanese', image: '/portfolio/japanese/IMG_9417.png', alt: 'Japanese inspired custom piece with organic movement Vancouver WA' },
+    { id: 49, style: 'japanese', image: '/portfolio/japanese/IMG_9419.png', alt: 'Neo Japanese tattoo with bold shading and traditional elements LBRL' },
+    { id: 50, style: 'japanese', image: '/portfolio/japanese/IMG_9445.png', alt: 'Japanese style custom tattoo art flowing with anatomy by Daniel Liberal' },
+    { id: 51, style: 'japanese', image: '/portfolio/japanese/IMG_9844.jpeg', alt: 'Neo Japanese full sleeve tattoo with cohesive design Vancouver WA artist' },
+    { id: 52, style: 'japanese', image: '/portfolio/japanese/IMG_9852.webp', alt: 'Japanese inspired custom tattoo with flowing water elements LBRL Studio' },
+    { id: 53, style: 'japanese', image: '/portfolio/japanese/IMG_9855.jpeg', alt: 'Neo Japanese tattoo piece with detailed line work and bold shading' },
+    { id: 54, style: 'japanese', image: '/portfolio/japanese/IMG_9871.png', alt: 'Custom Japanese style tattoo designed for natural body flow Vancouver WA' },
+    // BLACKWORK
+    { id: 56, style: 'blackwork', image: '/portfolio/blackwork/IMG_0446.png', alt: 'Heavy blackwork tattoo with bold geometric patterns by Daniel Liberal Vancouver WA' },
+    { id: 57, style: 'blackwork', image: '/portfolio/blackwork/IMG_0447.png', alt: 'Custom blackwork arm tattoo with solid black fills LBRL Tattoo Studio' },
+    { id: 58, style: 'blackwork', image: '/portfolio/blackwork/IMG_0460.png', alt: 'Blackwork tattoo design with intricate detail by award winning artist Vancouver' },
+    { id: 59, style: 'blackwork', image: '/portfolio/blackwork/IMG_4428.webp', alt: 'Heavy blackwork forearm piece with organic patterns Vancouver WA tattoo shop' },
+    { id: 60, style: 'blackwork', image: '/portfolio/blackwork/IMG_4429.webp', alt: 'Custom blackwork tattoo with bold contrast by Daniel Liberal LBRL Studio' },
+    { id: 61, style: 'blackwork', image: '/portfolio/blackwork/IMG_4430.webp', alt: 'Blackwork sleeve tattoo with detailed composition flowing with body anatomy' },
+    { id: 62, style: 'blackwork', image: '/portfolio/blackwork/IMG_4433.webp', alt: 'Heavy blackwork tattoo piece with organic flow Vancouver Washington artist' },
+    { id: 63, style: 'blackwork', image: '/portfolio/blackwork/IMG_4435.webp', alt: 'Custom blackwork arm tattoo with bold design elements by LBRL Studio' },
+    { id: 64, style: 'blackwork', image: '/portfolio/blackwork/IMG_4438.webp', alt: 'Blackwork tattoo with intricate patterns and solid fills Vancouver WA' },
+    { id: 65, style: 'blackwork', image: '/portfolio/blackwork/IMG_4440.webp', alt: 'Heavy blackwork custom tattoo by Daniel Liberal award winning tattoo artist' },
+    { id: 66, style: 'blackwork', image: '/portfolio/blackwork/IMG_4442.webp', alt: 'Blackwork leg tattoo with bold design flowing with natural anatomy' },
+    { id: 67, style: 'blackwork', image: '/portfolio/blackwork/IMG_4443.webp', alt: 'Custom blackwork piece with geometric elements LBRL Tattoo Studio Vancouver' },
+    { id: 68, style: 'blackwork', image: '/portfolio/blackwork/IMG_9386.webp', alt: 'Heavy blackwork tattoo with organic patterns and bold contrast Vancouver WA' },
+    { id: 69, style: 'blackwork', image: '/portfolio/blackwork/IMG_9388.jpeg', alt: 'Blackwork arm tattoo with detailed shading by Daniel Liberal' },
+    { id: 70, style: 'blackwork', image: '/portfolio/blackwork/IMG_9399.jpeg', alt: 'Custom blackwork tattoo design with bold solid fills Vancouver WA tattoo shop' },
+    { id: 71, style: 'blackwork', image: '/portfolio/blackwork/IMG_9400.webp', alt: 'Heavy blackwork forearm piece by award winning artist LBRL Studio' },
+    { id: 72, style: 'blackwork', image: '/portfolio/blackwork/IMG_9404.png', alt: 'Blackwork custom tattoo with Body Harmony anatomical flow Vancouver' },
     // FLORAL
-    { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg' },
-    { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp' },
-    { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg' },
-    { id: 77, style: 'floral', image: '/portfolio/floral/IMG_0137.jpeg' },
-    { id: 78, style: 'floral', image: '/portfolio/floral/IMG_0140.jpeg' },
-    { id: 79, style: 'floral', image: '/portfolio/floral/IMG_0141.jpeg' },
-    { id: 80, style: 'floral', image: '/portfolio/floral/IMG_0143.jpeg' },
-    { id: 81, style: 'floral', image: '/portfolio/floral/IMG_1222.jpeg' },
-    { id: 82, style: 'floral', image: '/portfolio/floral/IMG_1223.jpeg' },
-    { id: 83, style: 'floral', image: '/portfolio/floral/IMG_1225.jpeg' },
-    { id: 84, style: 'floral', image: '/portfolio/floral/IMG_9361.webp' },
-    { id: 85, style: 'floral', image: '/portfolio/floral/IMG_9363.jpeg' },
-    { id: 86, style: 'floral', image: '/portfolio/floral/IMG_9414.webp' },
-    { id: 87, style: 'floral', image: '/portfolio/floral/IMG_9442.webp' },
-    { id: 88, style: 'floral', image: '/portfolio/floral/IMG_9446.png' },
-    { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp' },
-    { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg' },
-    { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg' },
+    { id: 74, style: 'floral', image: '/portfolio/floral/IMG_0122.jpeg', alt: 'Botanical fine line floral tattoo with delicate petals by Daniel Liberal Vancouver WA' },
+    { id: 75, style: 'floral', image: '/portfolio/floral/IMG_0131.webp', alt: 'Custom floral tattoo with organic botanical elements LBRL Tattoo Studio' },
+    { id: 76, style: 'floral', image: '/portfolio/floral/IMG_0133.jpeg', alt: 'Fine line flower tattoo design flowing with natural body lines Vancouver' },
+    { id: 77, style: 'floral', image: '/portfolio/floral/IMG_0137.jpeg', alt: 'Botanical tattoo with detailed floral composition by award winning artist' },
+    { id: 78, style: 'floral', image: '/portfolio/floral/IMG_0140.jpeg', alt: 'Custom floral arm tattoo with fine line detail Vancouver WA tattoo shop' },
+    { id: 79, style: 'floral', image: '/portfolio/floral/IMG_0141.jpeg', alt: 'Botanical fine line tattoo with organic flower design by Daniel Liberal' },
+    { id: 80, style: 'floral', image: '/portfolio/floral/IMG_0143.jpeg', alt: 'Floral tattoo piece with delicate botanical elements LBRL Studio Vancouver' },
+    { id: 81, style: 'floral', image: '/portfolio/floral/IMG_1222.jpeg', alt: 'Custom botanical tattoo with flowing floral composition Vancouver WA' },
+    { id: 82, style: 'floral', image: '/portfolio/floral/IMG_1223.jpeg', alt: 'Fine line floral tattoo designed with Body Harmony anatomy approach' },
+    { id: 83, style: 'floral', image: '/portfolio/floral/IMG_1225.jpeg', alt: 'Botanical flower tattoo with intricate line work by Daniel Liberal' },
+    { id: 84, style: 'floral', image: '/portfolio/floral/IMG_9361.webp', alt: 'Custom floral tattoo with organic flow by LBRL Tattoo Studio Vancouver WA' },
+    { id: 85, style: 'floral', image: '/portfolio/floral/IMG_9363.jpeg', alt: 'Botanical fine line arm tattoo with natural movement and detail' },
+    { id: 86, style: 'floral', image: '/portfolio/floral/IMG_9414.webp', alt: 'Floral tattoo with delicate petals and stems Vancouver Washington artist' },
+    { id: 87, style: 'floral', image: '/portfolio/floral/IMG_9442.webp', alt: 'Custom botanical tattoo piece flowing with body anatomy by Daniel Liberal' },
+    { id: 88, style: 'floral', image: '/portfolio/floral/IMG_9446.png', alt: 'Fine line floral tattoo with detailed botanical elements LBRL Studio' },
+    { id: 89, style: 'floral', image: '/portfolio/floral/IMG_9447.webp', alt: 'Botanical flower tattoo with organic composition Vancouver WA tattoo shop' },
+    { id: 90, style: 'floral', image: '/portfolio/floral/IMG_9449.jpeg', alt: 'Custom floral fine line tattoo by award winning artist Daniel Liberal' },
+    { id: 91, style: 'floral', image: '/portfolio/floral/IMG_9450.jpeg', alt: 'Botanical tattoo with flowing floral design LBRL Tattoo Studio Vancouver' },
     // ORNAMENTAL
-    { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png' },
-    { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png' },
-    { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png' },
-    { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_0726.png' },
-    { id: 103, style: 'ornamental', image: '/portfolio/ornamental/IMG_0727.png' },
-    { id: 104, style: 'ornamental', image: '/portfolio/ornamental/IMG_0730.png' },
-    { id: 105, style: 'ornamental', image: '/portfolio/ornamental/IMG_0731.png' },
-    { id: 106, style: 'ornamental', image: '/portfolio/ornamental/IMG_0733.png' },
-    { id: 107, style: 'ornamental', image: '/portfolio/ornamental/IMG_0735.webp' },
-    { id: 108, style: 'ornamental', image: '/portfolio/ornamental/IMG_1230.jpeg' },
-    { id: 109, style: 'ornamental', image: '/portfolio/ornamental/IMG_1232.png' },
-    { id: 110, style: 'ornamental', image: '/portfolio/ornamental/IMG_1775.jpeg' },
-    { id: 111, style: 'ornamental', image: '/portfolio/ornamental/IMG_2580.png' },
-    { id: 112, style: 'ornamental', image: '/portfolio/ornamental/IMG_2584.webp' },
-    { id: 113, style: 'ornamental', image: '/portfolio/ornamental/IMG_2610.jpeg' },
-    { id: 114, style: 'ornamental', image: '/portfolio/ornamental/IMG_2616.webp' },
-    { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_2618.jpeg' },
-    { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9366.png' },
-    { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9367.jpeg' },
-    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9382.jpeg' },
-    { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png' },
-    { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp' },
-    { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg' },
-    { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png' },
-    { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png' },
-    { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg' },
-    { id: 126, style: 'ornamental', image: '/portfolio/ornamental/IMG_9424.jpeg' },
-    { id: 127, style: 'ornamental', image: '/portfolio/ornamental/IMG_9425.webp' },
-    { id: 128, style: 'ornamental', image: '/portfolio/ornamental/IMG_9754.jpeg' },
-    { id: 129, style: 'ornamental', image: '/portfolio/ornamental/IMG_9755.jpeg' },
-    { id: 130, style: 'ornamental', image: '/portfolio/ornamental/IMG_9756.png' },
-    { id: 131, style: 'ornamental', image: '/portfolio/ornamental/IMG_9758.webp' },
+    { id: 98, style: 'ornamental', image: '/portfolio/ornamental/IMG_0477.png', alt: 'Ornamental tattoo with intricate geometric patterns by Daniel Liberal Vancouver WA' },
+    { id: 100, style: 'ornamental', image: '/portfolio/ornamental/IMG_0723.png', alt: 'Custom ornamental tattoo with mandala elements LBRL Tattoo Studio Vancouver' },
+    { id: 101, style: 'ornamental', image: '/portfolio/ornamental/IMG_0725.png', alt: 'Ornamental arm tattoo with detailed symmetrical patterns Vancouver WA' },
+    { id: 102, style: 'ornamental', image: '/portfolio/ornamental/IMG_0726.png', alt: 'Custom ornamental piece with fine line geometric design by Daniel Liberal' },
+    { id: 103, style: 'ornamental', image: '/portfolio/ornamental/IMG_0727.png', alt: 'Ornamental tattoo flowing with body anatomy Body Harmony approach LBRL' },
+    { id: 104, style: 'ornamental', image: '/portfolio/ornamental/IMG_0730.png', alt: 'Detailed ornamental tattoo with sacred geometry elements Vancouver WA' },
+    { id: 105, style: 'ornamental', image: '/portfolio/ornamental/IMG_0731.png', alt: 'Custom ornamental forearm tattoo by award winning artist Daniel Liberal' },
+    { id: 106, style: 'ornamental', image: '/portfolio/ornamental/IMG_0733.png', alt: 'Ornamental tattoo with intricate dot work and patterns LBRL Studio' },
+    { id: 107, style: 'ornamental', image: '/portfolio/ornamental/IMG_0735.webp', alt: 'Ornamental leg tattoo with flowing geometric composition Vancouver WA' },
+    { id: 108, style: 'ornamental', image: '/portfolio/ornamental/IMG_1230.jpeg', alt: 'Custom ornamental tattoo with mandala and fine line detail by Daniel Liberal' },
+    { id: 109, style: 'ornamental', image: '/portfolio/ornamental/IMG_1232.png', alt: 'Ornamental arm piece with symmetrical patterns Vancouver Washington tattoo' },
+    { id: 110, style: 'ornamental', image: '/portfolio/ornamental/IMG_1775.jpeg', alt: 'Detailed ornamental tattoo design flowing with natural anatomy LBRL Studio' },
+    { id: 111, style: 'ornamental', image: '/portfolio/ornamental/IMG_2580.png', alt: 'Custom ornamental tattoo with sacred geometry by Daniel Liberal Vancouver' },
+    { id: 112, style: 'ornamental', image: '/portfolio/ornamental/IMG_2584.webp', alt: 'Ornamental tattoo with intricate fine line patterns Vancouver WA tattoo shop' },
+    { id: 113, style: 'ornamental', image: '/portfolio/ornamental/IMG_2610.jpeg', alt: 'Custom ornamental piece with detailed geometric elements by LBRL Studio' },
+    { id: 114, style: 'ornamental', image: '/portfolio/ornamental/IMG_2616.webp', alt: 'Ornamental arm tattoo with mandala and dot work Vancouver WA artist' },
+    { id: 115, style: 'ornamental', image: '/portfolio/ornamental/IMG_2618.jpeg', alt: 'Detailed ornamental tattoo with Body Harmony anatomical flow design' },
+    { id: 116, style: 'ornamental', image: '/portfolio/ornamental/IMG_9366.png', alt: 'Custom ornamental tattoo with fine geometric patterns by Daniel Liberal' },
+    { id: 117, style: 'ornamental', image: '/portfolio/ornamental/IMG_9367.jpeg', alt: 'Ornamental forearm tattoo with intricate symmetry LBRL Tattoo Studio' },
+    { id: 118, style: 'ornamental', image: '/portfolio/ornamental/IMG_9382.jpeg', alt: 'Ornamental tattoo with sacred geometry and organic flow Vancouver WA' },
+    { id: 119, style: 'ornamental', image: '/portfolio/ornamental/IMG_9389.png', alt: 'Custom ornamental piece with detailed patterns by award winning artist' },
+    { id: 120, style: 'ornamental', image: '/portfolio/ornamental/IMG_9390.webp', alt: 'Ornamental tattoo design flowing with body anatomy Vancouver Washington' },
+    { id: 121, style: 'ornamental', image: '/portfolio/ornamental/IMG_9393.jpeg', alt: 'Detailed ornamental arm tattoo with mandala elements by Daniel Liberal' },
+    { id: 123, style: 'ornamental', image: '/portfolio/ornamental/IMG_9420.png', alt: 'Custom ornamental tattoo with fine line geometric work LBRL Studio' },
+    { id: 124, style: 'ornamental', image: '/portfolio/ornamental/IMG_9422.png', alt: 'Ornamental tattoo with intricate symmetrical patterns Vancouver WA' },
+    { id: 125, style: 'ornamental', image: '/portfolio/ornamental/IMG_9423.jpeg', alt: 'Ornamental piece with sacred geometry and dot work by Daniel Liberal' },
+    { id: 126, style: 'ornamental', image: '/portfolio/ornamental/IMG_9424.jpeg', alt: 'Custom ornamental tattoo designed for natural body flow LBRL Studio' },
+    { id: 127, style: 'ornamental', image: '/portfolio/ornamental/IMG_9425.webp', alt: 'Detailed ornamental forearm tattoo by award winning Vancouver WA artist' },
+    { id: 128, style: 'ornamental', image: '/portfolio/ornamental/IMG_9754.jpeg', alt: 'Ornamental tattoo with mandala and geometric composition Vancouver' },
+    { id: 129, style: 'ornamental', image: '/portfolio/ornamental/IMG_9755.jpeg', alt: 'Custom ornamental arm tattoo with fine patterns by Daniel Liberal' },
+    { id: 130, style: 'ornamental', image: '/portfolio/ornamental/IMG_9756.png', alt: 'Ornamental tattoo with intricate detail and Body Harmony flow LBRL' },
+    { id: 131, style: 'ornamental', image: '/portfolio/ornamental/IMG_9758.webp', alt: 'Detailed ornamental tattoo piece with sacred geometry Vancouver WA tattoo shop' },
   ]
 
   const filteredPortfolio = activeStyle === 'all' 
@@ -274,7 +275,7 @@ export default function LBRLWebsite() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentReviewIndex((prev) => (prev + 1) % reviews.length)
-    }, 5000) // Change every 5 seconds
+    }, 5000)
     return () => clearInterval(interval)
   }, [reviews.length])
 
@@ -544,7 +545,7 @@ export default function LBRLWebsite() {
         opacity: isLoading ? 0 : 1,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
+          <img src="/Tribal Logo.jpg" alt="LBRL Tattoo Studio Vancouver WA" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '20px', fontWeight: '300', letterSpacing: '4px', color: colors.textPrimary }}>LBRL</span>
         </div>
         
@@ -672,7 +673,6 @@ export default function LBRLWebsite() {
           padding: '40px 24px',
           gap: '24px',
         }}>
-          {/* ========== TATTOODO ICON - MOBILE MENU - NOW OPENS MODAL ========== */}
           <button
             onClick={() => {
               setMobileMenuOpen(false)
@@ -951,7 +951,7 @@ export default function LBRLWebsite() {
             <div className={visibleSections['about'] ? 'animate-fadeInLeft' : 'animate-hidden'}>
               <img 
                 src="/Dany 3.PNG" 
-                alt="Daniel Liberal tattooing" 
+                alt="Daniel Liberal tattooing a client at LBRL Tattoo Studio Vancouver WA" 
                 style={{ 
                   width: '100%', 
                   borderRadius: '16px', 
@@ -1011,7 +1011,7 @@ export default function LBRLWebsite() {
               justifyContent: 'center',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
-                <img src="/Dani1.png" alt="Daniel Liberal" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src="/Dani1.png" alt="Daniel Liberal headshot - Lead Artist and Owner LBRL Tattoo Studio" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <div>
                   <h3 style={{ fontSize: '18px', fontWeight: '500', marginBottom: '4px' }}>Daniel Liberal</h3>
                   <p style={{ fontSize: '13px', color: colors.textMuted }}>Lead Artist & Owner</p>
@@ -1137,9 +1137,10 @@ export default function LBRLWebsite() {
                       position: 'relative',
                     }}
                   >
+                    {/* ========== SEO FIX: alt text from item.alt ========== */}
                     <img
                       src={item.image}
-                      alt={`Portfolio ${item.id}`}
+                      alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
                       style={{
                         width: '100%',
                         height: '100%',
@@ -1637,7 +1638,7 @@ export default function LBRLWebsite() {
             }}>
               <img 
                 src="/Dani2.png" 
-                alt="Daniel Liberal tattooing" 
+                alt="Daniel Liberal tattoo artist at work - LBRL Tattoo Studio Vancouver WA" 
                 style={{ 
                   width: '100%', 
                   borderRadius: '16px',
@@ -1827,7 +1828,7 @@ export default function LBRLWebsite() {
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-          <img src="/Tribal Logo.jpg" alt="LBRL" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
+          <img src="/Tribal Logo.jpg" alt="LBRL Tattoo Studio" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
           <span style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '3px' }}>LBRL</span>
         </div>
         <p style={{ fontSize: '12px', color: colors.textMuted }}>
@@ -1891,9 +1892,10 @@ export default function LBRLWebsite() {
             ←
           </button>
 
+          {/* ========== SEO FIX: lightbox alt text ========== */}
           <img
             src={filteredPortfolio[currentImage]?.image}
-            alt="Portfolio"
+            alt={filteredPortfolio[currentImage]?.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
             style={{
               maxWidth: '90vw',
               maxHeight: '90vh',
