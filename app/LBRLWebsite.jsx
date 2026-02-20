@@ -25,27 +25,50 @@ export default function LBRLWebsite() {
   useEffect(() => {
     if (!isLoading) return
     const pts = []
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 20; i++) {
       pts.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 3 + 1,
-        delay: Math.random() * 2,
-        duration: Math.random() * 4 + 3,
-        drift: (Math.random() - 0.5) * 40,
-        opacity: Math.random() * 0.4 + 0.1,
+        size: Math.random() * 2 + 0.8,
+        delay: Math.random() * 3,
+        duration: Math.random() * 5 + 4,
+        drift: (Math.random() - 0.5) * 50,
+        opacity: Math.random() * 0.2 + 0.05,
       })
     }
     setParticles(pts)
   }, [isLoading])
 
+  // ========== SACRED GEOMETRY HELPERS ==========
+  const hexPath = (cx, cy, r) => {
+    const pts = Array.from({length: 6}, (_, i) => {
+      const a = (Math.PI / 3) * i - Math.PI / 2
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)]
+    })
+    return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ') + ' Z'
+  }
+
+  // Metatron's Cube: 13 Fruit of Life centers + ALL connections
+  const metatronCenters = [
+    [250, 250],
+    [250, 215], [280, 232], [280, 268], [250, 285], [220, 268], [220, 232],
+    [250, 180], [295, 197], [295, 303], [250, 320], [205, 303], [205, 197],
+  ]
+  const metatronLines = []
+  for (let i = 0; i < metatronCenters.length; i++) {
+    for (let j = i + 1; j < metatronCenters.length; j++) {
+      const d = Math.sqrt((metatronCenters[i][0]-metatronCenters[j][0])**2 + (metatronCenters[i][1]-metatronCenters[j][1])**2)
+      metatronLines.push({ x1: metatronCenters[i][0], y1: metatronCenters[i][1], x2: metatronCenters[j][0], y2: metatronCenters[j][1], d })
+    }
+  }
+
   useEffect(() => {
-    // Phase sequence — cinematic timing
-    const phase1 = setTimeout(() => setLoadingPhase(1), 600)    // Geometry drawn → Logo materializes
-    const phase2 = setTimeout(() => setLoadingPhase(2), 1200)   // Logo solid → Text reveals
-    const phase3 = setTimeout(() => setLoadingPhase(3), 2200)   // Hold moment → Exit begins
-    const done   = setTimeout(() => setIsLoading(false), 2900)  // Cleanup
+    // Phase sequence — cinematic timing (longer for maximum geometry)
+    const phase1 = setTimeout(() => setLoadingPhase(1), 700)    // Geometry drawn → Logo materializes
+    const phase2 = setTimeout(() => setLoadingPhase(2), 1400)   // Logo solid → Text reveals
+    const phase3 = setTimeout(() => setLoadingPhase(3), 3000)   // Hold moment → Exit begins
+    const done   = setTimeout(() => setIsLoading(false), 3700)  // Cleanup
     return () => { clearTimeout(phase1); clearTimeout(phase2); clearTimeout(phase3); clearTimeout(done) }
   }, [])
 
@@ -383,7 +406,7 @@ export default function LBRLWebsite() {
       </div>
 
       {/* ================================================================
-          ★ PREMIUM LOADING EXPERIENCE — "The Needle Traces" ★
+          ★ PREMIUM LOADING — Maximum Sacred Geometry ★
           ================================================================ */}
       {isLoading && (
         <div className={`loader-screen ${loadingPhase >= 3 ? 'loader-exit' : ''}`} style={{
@@ -405,26 +428,25 @@ export default function LBRLWebsite() {
               borderRadius: '50%',
               background: colors.accentCyan,
               opacity: 0,
-              animationDelay: `${p.delay}s`,
-              animationDuration: `${p.duration}s`,
+              animation: `inkFloat ${p.duration}s ease-in-out ${p.delay}s infinite`,
               '--drift': `${p.drift}px`,
-              '--target-opacity': p.opacity,
+              '--op': p.opacity,
               pointerEvents: 'none',
             }} />
           ))}
 
-          {/* ===== BREATHING VIGNETTE ===== */}
-          <div className="vignette" style={{
+          {/* ===== SOFT VIGNETTE ===== */}
+          <div style={{
             position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-            background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)',
             pointerEvents: 'none', zIndex: 1,
           }} />
 
-          {/* ===== SACRED GEOMETRY WITH NEEDLE TRACER ===== */}
+          {/* ===== SACRED GEOMETRY — MAXIMUM PRESENCE ===== */}
           <svg className="sacred-geo" style={{
             position: 'absolute', width: '100%', height: '100%',
             opacity: loadingPhase >= 3 ? 0 : 1,
-            transition: 'opacity 0.8s ease',
+            transition: 'opacity 1.2s ease',
             zIndex: 2,
           }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
             <defs>
@@ -433,87 +455,150 @@ export default function LBRLWebsite() {
                 <stop offset="50%" stopColor={colors.accentTeal} />
                 <stop offset="100%" stopColor={colors.accentCyan} />
               </linearGradient>
-              <radialGradient id="needleGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="1" />
-                <stop offset="40%" stopColor={colors.accentCyan} stopOpacity="0.4" />
-                <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0" />
-              </radialGradient>
+              <linearGradient id="sacredGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor={colors.accentTeal} />
+                <stop offset="100%" stopColor={colors.accentCyan} />
+              </linearGradient>
               <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.12" />
+                <stop offset="0%" stopColor={colors.accentCyan} stopOpacity="0.2" />
+                <stop offset="50%" stopColor={colors.accentCyan} stopOpacity="0.06" />
                 <stop offset="100%" stopColor={colors.accentCyan} stopOpacity="0" />
               </radialGradient>
-              <filter id="softGlow">
-                <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="strongGlow">
-                <feGaussianBlur stdDeviation="4" result="blur"/>
-                <feComposite in="blur" in2="SourceGraphic" operator="over"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
+              <filter id="softGlow"><feGaussianBlur stdDeviation="1.2"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="strongGlow"><feGaussianBlur stdDeviation="3.5"/><feMerge><feMergeNode/><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="medGlow"><feGaussianBlur stdDeviation="2"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
-            
-            {/* Breathing center glow */}
-            <circle cx="250" cy="250" r="130" fill="url(#centerGlow)" className="breath-glow" />
-            
-            {/* Fibonacci circles — traced by needle */}
-            <circle cx="250" cy="250" r="21" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-line trace-c1" filter="url(#softGlow)" />
-            <circle cx="250" cy="250" r="34" stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-line trace-c2" filter="url(#softGlow)" />
-            <circle cx="250" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-line trace-c3" filter="url(#softGlow)" />
-            <circle cx="250" cy="250" r="89" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-line trace-c4" filter="url(#softGlow)" />
-            <circle cx="250" cy="250" r="144" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" className="trace-line trace-c5" filter="url(#softGlow)" />
-            
-            {/* Needle tracer dots — bright points that travel along the circles */}
-            <circle r="3" fill="url(#needleGlow)" className="needle-dot needle-n1" filter="url(#strongGlow)">
-              <animateMotion dur="1.2s" begin="0s" fill="freeze" repeatCount="1">
-                <mpath href="#tracePath1" />
-              </animateMotion>
-            </circle>
-            <circle r="4" fill="url(#needleGlow)" className="needle-dot needle-n2" filter="url(#strongGlow)">
-              <animateMotion dur="1.4s" begin="0.15s" fill="freeze" repeatCount="1">
-                <mpath href="#tracePath2" />
-              </animateMotion>
-            </circle>
-            <circle r="4.5" fill="url(#needleGlow)" className="needle-dot needle-n3" filter="url(#strongGlow)">
-              <animateMotion dur="1.6s" begin="0.3s" fill="freeze" repeatCount="1">
-                <mpath href="#tracePath3" />
-              </animateMotion>
-            </circle>
-            
-            {/* Hidden paths for needle motion */}
-            <path id="tracePath1" d="M271,250 A21,21 0 1,1 270.99,250" fill="none" stroke="none" />
-            <path id="tracePath2" d="M305,250 A55,55 0 1,1 304.99,250" fill="none" stroke="none" />
-            <path id="tracePath3" d="M394,250 A144,144 0 1,1 393.99,250" fill="none" stroke="none" />
-            
-            {/* Golden spiral — draws with bright head */}
-            <path d="M250,250 Q250,180 320,180 Q390,180 390,250 Q390,350 290,350 Q170,350 170,230 Q170,90 310,90" 
-              stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none" className="trace-spiral" filter="url(#softGlow)" />
-            
-            {/* Flower of Life — petals bloom inward */}
-            <circle cx="250" cy="215" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p1" />
-            <circle cx="280" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p2" />
-            <circle cx="280" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p3" />
-            <circle cx="250" cy="285" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p4" />
-            <circle cx="220" cy="268" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p5" />
-            <circle cx="220" cy="232" r="35" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none" className="bloom-petal bloom-p6" />
-            
-            {/* Organic flowing vines */}
-            <path d="M150,100 Q200,150 180,200 Q160,250 200,280 Q240,310 200,350" 
-              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-vine trace-v1" />
-            <path d="M350,100 Q300,150 320,200 Q340,250 300,280 Q260,310 300,350" 
-              stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none" className="trace-vine trace-v2" />
-            <path d="M100,250 Q150,220 200,250 Q250,280 300,250 Q350,220 400,250" 
-              stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none" className="trace-vine trace-v3" />
 
-            {/* Fine arcs */}
-            <path d="M180,150 Q220,120 260,150" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="trace-arc trace-a1" />
-            <path d="M240,350 Q280,380 320,350" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" className="trace-arc trace-a2" />
-            
-            {/* Spinning outer ring — dashed */}
-            <circle cx="250" cy="250" r="210" stroke="url(#sacredGrad)" strokeWidth="0.3" fill="none" 
-              strokeDasharray="4 10" className="spin-ring" />
-            <circle cx="250" cy="250" r="205" stroke="url(#sacredGrad)" strokeWidth="0.2" fill="none" 
-              strokeDasharray="1 20" className="spin-ring-inner" />
+            {/* Deep breathing glow */}
+            <circle cx="250" cy="250" r="200" fill="url(#centerGlow)" className="breath-glow" />
+
+            {/* ===== FIBONACCI CIRCLES — Bold, 7 rings ===== */}
+            {[21, 34, 55, 89, 144, 195, 233].map((r, i) => (
+              <circle key={r} cx="250" cy="250" r={r}
+                stroke="url(#sacredGrad)" strokeWidth={0.8 + i * 0.15} fill="none"
+                filter="url(#softGlow)"
+                className={`geo-draw-bold`}
+                style={{
+                  strokeDasharray: Math.PI * 2 * r,
+                  strokeDashoffset: Math.PI * 2 * r,
+                  animationDuration: `${0.8 + i * 0.1}s`,
+                  animationDelay: `${i * 0.05}s`,
+                }}
+              />
+            ))}
+
+            {/* ===== GOLDEN SPIRALS — dual, prominent ===== */}
+            <path d="M250,250 Q250,175 325,175 Q400,175 400,250 Q400,360 285,360 Q160,360 160,225 Q160,80 315,80"
+              stroke="url(#sacredGrad)" strokeWidth="1.5" fill="none" filter="url(#medGlow)"
+              className="geo-draw-bold" style={{ strokeDasharray: 900, strokeDashoffset: 900, animationDuration: '2s', animationDelay: '0.1s' }} />
+            <path d="M250,250 Q250,325 175,325 Q100,325 100,250 Q100,140 215,140 Q340,140 340,275 Q340,420 185,420"
+              stroke="url(#sacredGrad2)" strokeWidth="1" fill="none" filter="url(#softGlow)"
+              className="geo-draw-medium" style={{ strokeDasharray: 950, strokeDashoffset: 950, animationDuration: '2.2s', animationDelay: '0.2s' }} />
+
+            {/* ===== FLOWER OF LIFE — Full 3 rings ===== */}
+            {/* Center circle */}
+            <circle cx="250" cy="250" r="35" stroke="url(#sacredGrad)" strokeWidth="1" fill="none" filter="url(#softGlow)"
+              className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: '0.2s' }} />
+            {/* Ring 1 — inner 6 */}
+            {[[250,215],[280,232],[280,268],[250,285],[220,268],[220,232]].map(([cx,cy], i) => (
+              <circle key={`fl1-${i}`} cx={cx} cy={cy} r={35}
+                stroke="url(#sacredGrad)" strokeWidth="0.9" fill="none" filter="url(#softGlow)"
+                className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: `${0.28 + i * 0.05}s` }} />
+            ))}
+            {/* Ring 2 — outer 6 */}
+            {[[250,180],[295,197],[295,303],[250,320],[205,303],[205,197]].map(([cx,cy], i) => (
+              <circle key={`fl2-${i}`} cx={cx} cy={cy} r={35}
+                stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none"
+                className="geo-draw-medium" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: `${0.45 + i * 0.05}s` }} />
+            ))}
+            {/* Ring 3 — outermost 18 */}
+            {[
+              [250,145],[271,155],[290,170],[303,190],[310,215],[310,285],
+              [303,310],[290,330],[271,345],[250,355],[229,345],[210,330],
+              [197,310],[190,285],[190,215],[197,190],[210,170],[229,155],
+            ].map(([cx,cy], i) => (
+              <circle key={`fl3-${i}`} cx={cx} cy={cy} r={35}
+                stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
+                className="geo-draw-subtle" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.5s', animationDelay: `${0.6 + i * 0.03}s` }} />
+            ))}
+
+            {/* ===== METATRON'S CUBE — ALL connections ===== */}
+            {metatronLines.map((line, i) => (
+              <line key={`met-${i}`} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+                stroke="url(#sacredGrad)" strokeWidth={line.d < 50 ? "0.5" : line.d < 90 ? "0.35" : "0.25"}
+                className="geo-draw-medium" style={{
+                  strokeDasharray: line.d, strokeDashoffset: line.d,
+                  animationDuration: `${0.4 + line.d * 0.003}s`,
+                  animationDelay: `${0.5 + i * 0.015}s`,
+                }} />
+            ))}
+
+            {/* ===== INTERSECTION DOTS — glowing nodes ===== */}
+            {metatronCenters.map(([cx, cy], i) => (
+              <circle key={`nd-${i}`} cx={cx} cy={cy} r="2.5" fill={colors.accentCyan} filter="url(#softGlow)"
+                className="geo-dot" style={{ animationDelay: `${0.65 + i * 0.04}s` }} />
+            ))}
+
+            {/* ===== HEXAGONS — 3 nested + rotated Star of David ===== */}
+            <path d={hexPath(250, 250, 70)} stroke="url(#sacredGrad)" strokeWidth="0.9" fill="none" filter="url(#softGlow)"
+              className="geo-draw-bold" style={{ strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '0.9s', animationDelay: '0.35s' }} />
+            <path d={hexPath(250, 250, 115)} stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
+              className="geo-draw-medium" style={{ strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.1s', animationDelay: '0.4s' }} />
+            <path d={hexPath(250, 250, 170)} stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none"
+              className="geo-draw-medium" style={{ strokeDasharray: 1020, strokeDashoffset: 1020, animationDuration: '1.4s', animationDelay: '0.45s' }} />
+            {/* Rotated = Star of David */}
+            <path d={hexPath(250, 250, 70)} stroke="url(#sacredGrad2)" strokeWidth="0.6" fill="none"
+              className="geo-draw-medium" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '0.9s', animationDelay: '0.5s' }} />
+            <path d={hexPath(250, 250, 115)} stroke="url(#sacredGrad2)" strokeWidth="0.45" fill="none"
+              className="geo-draw-subtle" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.1s', animationDelay: '0.55s' }} />
+
+            {/* ===== VESICA PISCIS ===== */}
+            <circle cx="225" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
+              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '0.8s', animationDelay: '0.4s' }} />
+            <circle cx="275" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
+              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '0.8s', animationDelay: '0.45s' }} />
+
+            {/* ===== ORGANIC FLOWING CURVES ===== */}
+            <path d="M130,80 Q185,135 165,200 Q145,265 190,300 Q235,335 190,385" stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none"
+              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '1.5s', animationDelay: '0.25s' }} />
+            <path d="M370,80 Q315,135 335,200 Q355,265 310,300 Q265,335 310,385" stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none"
+              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '1.5s', animationDelay: '0.35s' }} />
+            <path d="M70,250 Q160,205 250,250 Q340,295 430,250" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none"
+              className="geo-draw-medium" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.5s' }} />
+            <path d="M70,200 Q160,240 250,200 Q340,160 430,200" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
+              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.6s' }} />
+            <path d="M70,300 Q160,260 250,300 Q340,340 430,300" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
+              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.65s' }} />
+
+            {/* ===== SPINNING RINGS — triple ===== */}
+            <circle cx="250" cy="250" r="225" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
+              strokeDasharray="6 8" className="spin-ring" />
+            <circle cx="250" cy="250" r="235" stroke="url(#sacredGrad)" strokeWidth="0.25" fill="none"
+              strokeDasharray="2 14" className="spin-ring-inner" />
+            <circle cx="250" cy="250" r="243" stroke="url(#sacredGrad)" strokeWidth="0.15" fill="none"
+              strokeDasharray="1 20" className="spin-ring-slow" />
+
+            {/* ===== NEEDLE TRACERS ===== */}
+            <circle r="3.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.05s', animationDuration: '1.4s' }}>
+              <animateMotion dur="1.4s" begin="0.05s" fill="freeze"><mpath href="#needlePath1" /></animateMotion>
+            </circle>
+            <circle r="4.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.15s', animationDuration: '2s' }}>
+              <animateMotion dur="2s" begin="0.15s" fill="freeze"><mpath href="#needlePath2" /></animateMotion>
+            </circle>
+            <circle r="3" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.3s', animationDuration: '1.2s' }}>
+              <animateMotion dur="1.2s" begin="0.3s" fill="freeze"><mpath href="#needlePath3" /></animateMotion>
+            </circle>
+            <path id="needlePath1" d="M339,250 A89,89 0 1,1 338.99,250" fill="none" stroke="none" />
+            <path id="needlePath2" d="M445,250 A195,195 0 1,1 444.99,250" fill="none" stroke="none" />
+            <path id="needlePath3" d="M305,250 A55,55 0 1,1 304.99,250" fill="none" stroke="none" />
+
+            {/* ===== LIVING GEOMETRY — pulses after drawing ===== */}
+            <circle cx="250" cy="250" r="55" stroke={colors.accentCyan} strokeWidth="0.5" fill="none" className="geo-alive geo-alive-1" />
+            <circle cx="250" cy="250" r="89" stroke={colors.accentCyan} strokeWidth="0.5" fill="none" className="geo-alive geo-alive-2" />
+            <circle cx="250" cy="250" r="144" stroke={colors.accentCyan} strokeWidth="0.4" fill="none" className="geo-alive geo-alive-3" />
+            <path d={hexPath(250, 250, 70)} stroke={colors.accentCyan} strokeWidth="0.4" fill="none" className="geo-alive geo-alive-4" />
+            <path d={hexPath(250, 250, 115)} stroke={colors.accentCyan} strokeWidth="0.3" fill="none" className="geo-alive geo-alive-5" />
+            <circle cx="250" cy="250" r="195" stroke={colors.accentCyan} strokeWidth="0.3" fill="none" className="geo-alive geo-alive-6" />
           </svg>
 
           {/* ===== CENTRAL CONTENT ===== */}
@@ -521,42 +606,23 @@ export default function LBRLWebsite() {
 
             {/* Logo Container with Morphing Ring */}
             <div className="logo-area" style={{
-              position: 'relative', width: '150px', height: '150px',
+              position: 'relative', width: '140px', height: '140px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               {/* Outer ring — draws itself */}
               <svg className="logo-ring-svg" style={{
-                position: 'absolute', width: '150px', height: '150px',
-              }} viewBox="0 0 150 150">
-                <circle cx="75" cy="75" r="70" stroke={colors.accentCyan} strokeWidth="0.8" fill="none" 
-                  className={`ring-trace ${loadingPhase >= 1 ? 'ring-visible' : ''}`} filter="url(#softGlow)" />
-                <circle cx="75" cy="75" r="67" stroke={colors.accentCyan} strokeWidth="0.3" fill="none" 
-                  strokeDasharray="2 8" className={`ring-dots ${loadingPhase >= 1 ? 'ring-dots-visible' : ''}`} />
-                {/* Tick marks like a compass */}
-                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-                  const rad = (angle * Math.PI) / 180
-                  const x1 = 75 + Math.cos(rad) * 63
-                  const y1 = 75 + Math.sin(rad) * 63
-                  const x2 = 75 + Math.cos(rad) * 60
-                  const y2 = 75 + Math.sin(rad) * 60
-                  return (
-                    <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} 
-                      stroke={colors.accentCyan} strokeWidth="0.5" 
-                      className={`tick-mark tick-${i}`}
-                      style={{ opacity: loadingPhase >= 1 ? 0.4 : 0 , transition: `opacity 0.3s ease ${0.1 * i}s` }} />
-                  )
-                })}
+                position: 'absolute', width: '140px', height: '140px',
+              }} viewBox="0 0 140 140">
+                <circle cx="70" cy="70" r="66" stroke={colors.accentCyan} strokeWidth="0.8" fill="none" filter="url(#softGlow)"
+                  style={{
+                    strokeDasharray: 415, strokeDashoffset: loadingPhase >= 1 ? 0 : 415,
+                    opacity: loadingPhase >= 1 ? 0.7 : 0,
+                    transition: 'stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
+                  }} />
+                <circle cx="70" cy="70" r="63" stroke={colors.accentCyan} strokeWidth="0.25" fill="none"
+                  strokeDasharray="2 9" className="logo-ring-dots"
+                  style={{ opacity: loadingPhase >= 1 ? 0.3 : 0, transition: 'opacity 0.5s ease 0.3s' }} />
               </svg>
-
-              {/* Logo — ink reveal */}
-              <div className={`logo-ink-reveal ${loadingPhase >= 1 ? 'logo-materialized' : ''}`} style={{
-                width: '96px', height: '96px', borderRadius: '50%',
-                overflow: 'hidden', position: 'relative', zIndex: 2,
-              }}>
-                <img src="/Tribal Logo.jpg" alt="LBRL" style={{ 
-                  width: '100%', height: '100%', objectFit: 'cover',
-                }} />
-              </div>
 
               {/* Orbiting micro-dots */}
               <div className={`orbit-system ${loadingPhase >= 1 ? 'orbit-active' : ''}`}>
@@ -564,39 +630,49 @@ export default function LBRLWebsite() {
                 <div className="orbit-dot orbit-dot-2" />
                 <div className="orbit-dot orbit-dot-3" />
               </div>
+
+              {/* Logo — ink reveal */}
+              <div className={`logo-ink-reveal ${loadingPhase >= 1 ? 'logo-materialized' : ''}`} style={{
+                width: '88px', height: '88px', borderRadius: '50%',
+                overflow: 'hidden', position: 'relative', zIndex: 2,
+              }}>
+                <img src="/Tribal Logo.jpg" alt="LBRL" style={{ 
+                  width: '100%', height: '100%', objectFit: 'cover',
+                }} />
+              </div>
             </div>
 
             {/* Brand Text */}
-            <div className={`brand-text ${loadingPhase >= 2 ? 'brand-visible' : ''}`} style={{ marginTop: '32px' }}>
-              <div className="brand-letters" style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+            <div className={`brand-text ${loadingPhase >= 2 ? 'brand-visible' : ''}`} style={{ marginTop: '28px' }}>
+              <div className="brand-letters" style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
                 {'LBRL'.split('').map((letter, i) => (
                   <span key={i} className={`brand-letter bl-${i}`} style={{
-                    fontSize: '30px', fontWeight: '200', letterSpacing: '10px',
+                    fontSize: '28px', fontWeight: '200', letterSpacing: '10px',
                     color: colors.textPrimary, display: 'inline-block',
                   }}>{letter}</span>
                 ))}
               </div>
               <div className="brand-divider" style={{
-                width: '0px', height: '1px', margin: '14px auto 0',
+                width: '0px', height: '1px', margin: '12px auto 0',
                 background: `linear-gradient(90deg, transparent, ${colors.accentCyan}, transparent)`,
               }} />
               <p className="brand-subtitle" style={{
-                fontSize: '9px', fontWeight: '500', letterSpacing: '5px',
+                fontSize: '9px', fontWeight: '500', letterSpacing: '4px',
                 textTransform: 'uppercase', color: colors.accentCyan,
-                marginTop: '12px', textAlign: 'center', opacity: 0,
+                marginTop: '10px', textAlign: 'center', opacity: 0,
               }}>Tattoo Studio • Vancouver, WA</p>
             </div>
           </div>
 
-          {/* ===== PROGRESS INDICATOR — Needle Line ===== */}
+          {/* ===== PROGRESS INDICATOR ===== */}
           <div style={{
-            position: 'absolute', bottom: '50px', left: '50%',
+            position: 'absolute', bottom: '45px', left: '50%',
             transform: 'translateX(-50%)', zIndex: 10,
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
           }}>
             <div style={{
-              width: '100px', height: '1px',
-              background: `${colors.borderDefault}`,
+              width: '80px', height: '1px',
+              background: 'rgba(255,255,255,0.06)',
               borderRadius: '1px', overflow: 'hidden',
               position: 'relative',
             }}>
@@ -605,19 +681,14 @@ export default function LBRLWebsite() {
                 background: `linear-gradient(90deg, ${colors.accentTeal}, ${colors.accentCyan})`,
                 position: 'relative',
               }}>
-                {/* Bright head of the progress line */}
                 <div style={{
                   position: 'absolute', right: '-2px', top: '-2px',
                   width: '5px', height: '5px', borderRadius: '50%',
                   background: colors.accentCyan,
-                  boxShadow: `0 0 8px ${colors.accentCyan}, 0 0 16px ${colors.accentCyan}44`,
+                  boxShadow: `0 0 6px ${colors.accentCyan}, 0 0 12px ${colors.accentCyan}66`,
                 }} />
               </div>
             </div>
-            <span className="progress-label" style={{
-              fontSize: '8px', letterSpacing: '3px', textTransform: 'uppercase',
-              color: colors.textMuted, opacity: 0,
-            }}>Loading</span>
           </div>
         </div>
       )}
@@ -942,7 +1013,7 @@ export default function LBRLWebsite() {
         .ta2do-booking-form { width: 100%; min-height: 400px; }
 
         /* ================================================================
-           ★ THE NEEDLE TRACES — Premium Loading Experience ★
+           ★ Maximum Sacred Geometry — Loading Styles ★
            ================================================================ */
         
         /* === SCREEN EXIT === */
@@ -960,31 +1031,10 @@ export default function LBRLWebsite() {
           animation: inkFloat var(--duration, 4s) ease-in-out infinite;
         }
         @keyframes inkFloat {
-          0% { 
-            opacity: 0; 
-            transform: translateY(0) translateX(0) scale(0.5); 
-          }
-          20% { 
-            opacity: var(--target-opacity, 0.2); 
-            transform: translateY(-10px) translateX(calc(var(--drift, 0px) * 0.3)) scale(1); 
-          }
-          80% { 
-            opacity: var(--target-opacity, 0.2); 
-            transform: translateY(-30px) translateX(var(--drift, 0px)) scale(0.8); 
-          }
-          100% { 
-            opacity: 0; 
-            transform: translateY(-50px) translateX(calc(var(--drift, 0px) * 1.2)) scale(0.3); 
-          }
-        }
-
-        /* === BREATHING VIGNETTE === */
-        .vignette {
-          animation: breatheVignette 3s ease-in-out infinite;
-        }
-        @keyframes breatheVignette {
-          0%, 100% { opacity: 0.8; }
-          50% { opacity: 0.5; }
+          0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.5); }
+          15% { opacity: var(--op, 0.1); transform: translateY(-8px) translateX(calc(var(--drift, 0px) * 0.2)) scale(1); }
+          85% { opacity: var(--op, 0.1); transform: translateY(-35px) translateX(var(--drift, 0px)) scale(0.7); }
+          100% { opacity: 0; transform: translateY(-50px) translateX(calc(var(--drift, 0px) * 1.3)) scale(0.2); }
         }
 
         /* === BREATHING CENTER GLOW === */
@@ -992,136 +1042,106 @@ export default function LBRLWebsite() {
           animation: breathGlow 2.5s ease-in-out infinite;
         }
         @keyframes breathGlow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.8; }
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 0.9; }
         }
 
-        /* === SACRED GEOMETRY: Traced Lines === */
-        .trace-line {
-          stroke-dasharray: 1000;
-          stroke-dashoffset: 1000;
-          animation: traceDraw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        /* === THREE TIERS OF GEOMETRY DRAW — all higher opacity === */
+        .geo-draw-bold {
+          animation: drawBold 1s cubic-bezier(0.4,0,0.2,1) forwards;
         }
-        .trace-c1 { stroke-dasharray: 132; stroke-dashoffset: 132; animation-duration: 0.6s; animation-delay: 0.05s; }
-        .trace-c2 { stroke-dasharray: 214; stroke-dashoffset: 214; animation-duration: 0.7s; animation-delay: 0.1s; }
-        .trace-c3 { stroke-dasharray: 346; stroke-dashoffset: 346; animation-duration: 0.8s; animation-delay: 0.15s; }
-        .trace-c4 { stroke-dasharray: 559; stroke-dashoffset: 559; animation-duration: 0.9s; animation-delay: 0.2s; }
-        .trace-c5 { stroke-dasharray: 905; stroke-dashoffset: 905; animation-duration: 1.1s; animation-delay: 0.25s; }
-
-        @keyframes traceDraw {
+        @keyframes drawBold {
           0% { stroke-dashoffset: inherit; opacity: 0; }
-          5% { opacity: 0.7; }
-          80% { opacity: 0.4; }
+          8% { opacity: 0.8; }
+          40% { opacity: 0.6; }
+          100% { stroke-dashoffset: 0; opacity: 0.45; }
+        }
+        .geo-draw-medium {
+          animation: drawMedium 1s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes drawMedium {
+          0% { stroke-dashoffset: inherit; opacity: 0; }
+          8% { opacity: 0.6; }
+          40% { opacity: 0.45; }
+          100% { stroke-dashoffset: 0; opacity: 0.3; }
+        }
+        .geo-draw-subtle {
+          animation: drawSubtle 1s ease-out forwards;
+        }
+        @keyframes drawSubtle {
+          0% { stroke-dashoffset: inherit; opacity: 0; }
+          8% { opacity: 0.4; }
           100% { stroke-dashoffset: 0; opacity: 0.18; }
         }
 
-        /* === NEEDLE TRACER DOTS — bright points that fade === */
+        /* === INTERSECTION DOTS — pop === */
+        .geo-dot {
+          opacity: 0;
+          animation: dotPop 0.3s ease-out forwards;
+        }
+        @keyframes dotPop {
+          0% { opacity: 0; }
+          50% { opacity: 0.7; }
+          100% { opacity: 0.5; }
+        }
+
+        /* === NEEDLE TRACERS === */
         .needle-dot {
           opacity: 0;
-          animation: needleFade 1.5s ease-out forwards;
+          animation: needleFade 1.5s ease-in-out forwards;
         }
-        .needle-n1 { animation-delay: 0.1s; }
-        .needle-n2 { animation-delay: 0.2s; }
-        .needle-n3 { animation-delay: 0.35s; }
-
         @keyframes needleFade {
           0% { opacity: 0; }
-          10% { opacity: 1; }
-          70% { opacity: 0.8; }
+          8% { opacity: 1; }
+          50% { opacity: 0.8; }
           100% { opacity: 0; }
         }
-
-        /* === GOLDEN SPIRAL === */
-        .trace-spiral {
-          stroke-dasharray: 800;
-          stroke-dashoffset: 800;
-          animation: traceDraw 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-        }
-
-        /* === FLOWER OF LIFE: Bloom Effect === */
-        .bloom-petal {
-          stroke-dasharray: 220;
-          stroke-dashoffset: 220;
-          animation: bloomDraw 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .bloom-p1 { animation-delay: 0.35s; }
-        .bloom-p2 { animation-delay: 0.42s; }
-        .bloom-p3 { animation-delay: 0.49s; }
-        .bloom-p4 { animation-delay: 0.56s; }
-        .bloom-p5 { animation-delay: 0.63s; }
-        .bloom-p6 { animation-delay: 0.7s; }
-
-        @keyframes bloomDraw {
-          0% { stroke-dashoffset: 220; opacity: 0; transform-origin: center; }
-          10% { opacity: 0.5; }
-          100% { stroke-dashoffset: 0; opacity: 0.12; }
-        }
-
-        /* === ORGANIC VINES === */
-        .trace-vine {
-          stroke-dasharray: 400;
-          stroke-dashoffset: 400;
-          animation: traceDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        .trace-v1 { animation-delay: 0.3s; }
-        .trace-v2 { animation-delay: 0.45s; }
-        .trace-v3 { animation-delay: 0.6s; }
-
-        /* === FINE ARCS === */
-        .trace-arc {
-          stroke-dasharray: 120;
-          stroke-dashoffset: 120;
-          animation: traceDraw 0.5s ease-out forwards;
-        }
-        .trace-a1 { animation-delay: 0.55s; }
-        .trace-a2 { animation-delay: 0.75s; }
 
         /* === SPINNING RINGS === */
         .spin-ring {
           opacity: 0;
           transform-origin: 250px 250px;
-          animation: ringAppear 0.8s ease-out 0.4s forwards, ringSpin 12s linear 0.4s infinite;
+          animation: ringFadeIn 0.6s ease 0.5s forwards, ringSpin 18s linear 0.5s infinite;
         }
         .spin-ring-inner {
           opacity: 0;
           transform-origin: 250px 250px;
-          animation: ringAppear 0.8s ease-out 0.6s forwards, ringSpinReverse 18s linear 0.6s infinite;
+          animation: ringFadeIn 0.6s ease 0.7s forwards, ringSpinReverse 24s linear 0.7s infinite;
         }
-
-        @keyframes ringAppear { 0% { opacity: 0; } 100% { opacity: 0.12; } }
+        .spin-ring-slow {
+          opacity: 0;
+          transform-origin: 250px 250px;
+          animation: ringFadeIn 0.6s ease 0.9s forwards, ringSpin 35s linear 0.9s infinite;
+        }
+        @keyframes ringFadeIn { from { opacity: 0; } to { opacity: 0.18; } }
         @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes ringSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-        /* === LOGO RING TRACE === */
-        .ring-trace {
-          stroke-dasharray: 440;
-          stroke-dashoffset: 440;
-          transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-          opacity: 0;
-          transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-        }
-        .ring-trace.ring-visible {
-          stroke-dashoffset: 0;
-          opacity: 0.6;
+        /* === LIVING GEOMETRY — breathes forever after drawing === */
+        .geo-alive-1 { opacity: 0; animation: aliveIn 0.5s ease 1.3s forwards, alivePulse 2.8s ease-in-out 1.8s infinite; }
+        .geo-alive-2 { opacity: 0; animation: aliveIn 0.5s ease 1.4s forwards, alivePulse 3.2s ease-in-out 1.9s infinite; }
+        .geo-alive-3 { opacity: 0; animation: aliveIn 0.5s ease 1.5s forwards, alivePulse 3.6s ease-in-out 2s infinite; }
+        .geo-alive-4 { opacity: 0; animation: aliveIn 0.5s ease 1.6s forwards, alivePulse 3s ease-in-out 2.1s infinite; }
+        .geo-alive-5 { opacity: 0; animation: aliveIn 0.5s ease 1.7s forwards, alivePulse 3.4s ease-in-out 2.2s infinite; }
+        .geo-alive-6 { opacity: 0; animation: aliveIn 0.5s ease 1.8s forwards, alivePulse 4s ease-in-out 2.3s infinite; }
+        @keyframes aliveIn { from { opacity: 0; } to { opacity: 0.1; } }
+        @keyframes alivePulse {
+          0%, 100% { opacity: 0.08; stroke-width: 0.3; }
+          50% { opacity: 0.22; stroke-width: 0.6; }
         }
 
-        /* Ring dots rotation */
-        .ring-dots {
-          opacity: 0;
-          transform-origin: 75px 75px;
-          transition: opacity 0.5s ease 0.3s;
+        /* === LOGO RING === */
+        .logo-ring-dots {
+          animation: logoRingRotate 8s linear infinite;
+          transform-origin: 70px 70px;
         }
-        .ring-dots.ring-dots-visible {
-          opacity: 0.3;
-          animation: ringDotsRotate 8s linear infinite;
-        }
-        @keyframes ringDotsRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes logoRingRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* === LOGO INK REVEAL === */
         .logo-ink-reveal {
           opacity: 0;
-          transform: scale(0.4);
-          filter: blur(12px) brightness(1.5);
+          transform: scale(0.5);
+          filter: blur(10px) brightness(1.5);
           transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
           box-shadow: 0 0 0 0 rgba(125, 212, 196, 0);
         }
@@ -1131,15 +1151,14 @@ export default function LBRLWebsite() {
           filter: blur(0px) brightness(1);
           box-shadow: 
             0 0 40px rgba(125, 212, 196, 0.15),
-            0 0 80px rgba(125, 212, 196, 0.08),
-            0 0 120px rgba(125, 212, 196, 0.04);
+            0 0 80px rgba(125, 212, 196, 0.08);
         }
 
         /* === ORBITING MICRO-DOTS === */
         .orbit-system {
           position: absolute;
-          width: 150px;
-          height: 150px;
+          width: 140px;
+          height: 140px;
           top: 0;
           left: 0;
           opacity: 0;
@@ -1158,37 +1177,37 @@ export default function LBRLWebsite() {
         }
         .orbit-dot-1 {
           box-shadow: 0 0 6px ${colors.accentCyan};
-          animation: orbit1 4s linear infinite;
+          animation: orbit1 4.5s linear infinite;
         }
         .orbit-dot-2 {
           width: 2px; height: 2px;
-          opacity: 0.6;
+          opacity: 0.5;
           box-shadow: 0 0 4px ${colors.accentCyan};
-          animation: orbit2 6s linear infinite;
+          animation: orbit2 6.5s linear infinite;
         }
         .orbit-dot-3 {
           width: 1.5px; height: 1.5px;
-          opacity: 0.4;
-          animation: orbit3 5s linear infinite;
+          opacity: 0.35;
+          animation: orbit3 5.5s linear infinite;
         }
 
         @keyframes orbit1 {
-          from { transform: rotate(0deg) translateX(72px) rotate(0deg); }
-          to { transform: rotate(360deg) translateX(72px) rotate(-360deg); }
+          from { transform: rotate(0deg) translateX(68px) rotate(0deg); }
+          to { transform: rotate(360deg) translateX(68px) rotate(-360deg); }
         }
         @keyframes orbit2 {
-          from { transform: rotate(120deg) translateX(68px) rotate(-120deg); }
-          to { transform: rotate(480deg) translateX(68px) rotate(-480deg); }
+          from { transform: rotate(120deg) translateX(65px) rotate(-120deg); }
+          to { transform: rotate(480deg) translateX(65px) rotate(-480deg); }
         }
         @keyframes orbit3 {
-          from { transform: rotate(240deg) translateX(76px) rotate(-240deg); }
-          to { transform: rotate(600deg) translateX(76px) rotate(-600deg); }
+          from { transform: rotate(240deg) translateX(72px) rotate(-240deg); }
+          to { transform: rotate(600deg) translateX(72px) rotate(-600deg); }
         }
 
         /* === BRAND TEXT REVEAL === */
         .brand-text .brand-letter {
           opacity: 0;
-          transform: translateY(24px) scale(0.8);
+          transform: translateY(20px) scale(0.85);
         }
         .brand-text.brand-visible .brand-letter {
           animation: letterPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -1199,49 +1218,39 @@ export default function LBRLWebsite() {
         .brand-visible .bl-3 { animation-delay: 0.21s; }
 
         @keyframes letterPop {
-          0% { opacity: 0; transform: translateY(24px) scale(0.8); }
+          0% { opacity: 0; transform: translateY(20px) scale(0.85); }
           60% { opacity: 1; transform: translateY(-3px) scale(1.02); }
           100% { opacity: 0.95; transform: translateY(0) scale(1); }
         }
 
-        /* Divider line expands */
         .brand-text.brand-visible .brand-divider {
           animation: dividerExpand 0.6s ease-out 0.25s forwards;
         }
         @keyframes dividerExpand {
           from { width: 0px; }
-          to { width: 60px; }
+          to { width: 50px; }
         }
 
-        /* Subtitle fades */
         .brand-text.brand-visible .brand-subtitle {
-          animation: subtitleFade 0.5s ease-out 0.4s forwards;
+          animation: subtitleFade 0.4s ease-out 0.35s forwards;
         }
         @keyframes subtitleFade {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 0.6; transform: translateY(0); }
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 0.5; transform: translateY(0); }
         }
 
         /* === PROGRESS NEEDLE === */
         .progress-needle {
           width: 0%;
-          animation: needleProgress 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          animation: needleProgress 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes needleProgress {
           0% { width: 0%; }
-          20% { width: 25%; }
-          45% { width: 50%; }
-          70% { width: 75%; }
-          90% { width: 92%; }
+          20% { width: 20%; }
+          45% { width: 45%; }
+          70% { width: 70%; }
+          90% { width: 88%; }
           100% { width: 100%; }
-        }
-
-        .progress-label {
-          animation: labelFade 0.4s ease-out 0.3s forwards;
-        }
-        @keyframes labelFade {
-          from { opacity: 0; }
-          to { opacity: 0.4; }
         }
 
         /* ================================================================
@@ -1311,10 +1320,10 @@ export default function LBRLWebsite() {
           section { position: relative !important; z-index: 1 !important; overflow: visible !important; }
           #contact { margin-top: 0 !important; padding-top: 60px !important; }
           /* Spinner mobile */
-          .logo-area { width: 120px !important; height: 120px !important; }
-          .logo-ink-reveal { width: 76px !important; height: 76px !important; }
-          .logo-ring-svg { width: 120px !important; height: 120px !important; }
-          .orbit-system { width: 120px !important; height: 120px !important; }
+          .logo-area { width: 110px !important; height: 110px !important; }
+          .logo-ink-reveal { width: 70px !important; height: 70px !important; }
+          .logo-ring-svg { width: 110px !important; height: 110px !important; }
+          .orbit-system { width: 110px !important; height: 110px !important; }
         }
         @media (max-width: 480px) {
           h1 { font-size: 26px !important; }
