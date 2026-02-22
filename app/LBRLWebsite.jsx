@@ -64,11 +64,11 @@ export default function LBRLWebsite() {
   }
 
   useEffect(() => {
-    // Phase sequence — cinematic timing (longer for maximum geometry)
-    const phase1 = setTimeout(() => setLoadingPhase(1), 700)    // Geometry drawn → Logo materializes
-    const phase2 = setTimeout(() => setLoadingPhase(2), 1400)   // Logo solid → Text reveals
-    const phase3 = setTimeout(() => setLoadingPhase(3), 3000)   // Hold moment → Exit begins
-    const done   = setTimeout(() => setIsLoading(false), 3700)  // Cleanup
+    // Phase sequence — extended for appreciation
+    const phase1 = setTimeout(() => setLoadingPhase(1), 2000)   // 2s of pure geometry drawing
+    const phase2 = setTimeout(() => setLoadingPhase(2), 2800)   // Logo settles → Text reveals
+    const phase3 = setTimeout(() => setLoadingPhase(3), 4400)   // Hold and breathe → Exit
+    const done   = setTimeout(() => setIsLoading(false), 5200)  // Cleanup
     return () => { clearTimeout(phase1); clearTimeout(phase2); clearTimeout(phase3); clearTimeout(done) }
   }, [])
 
@@ -435,10 +435,12 @@ export default function LBRLWebsite() {
             }} />
           ))}
 
-          {/* ===== SOFT VIGNETTE ===== */}
+          {/* ===== SOFT VIGNETTE — frosted depth ===== */}
           <div style={{
             position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
             background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)',
+            backdropFilter: 'blur(0.5px)',
+            WebkitBackdropFilter: 'blur(0.5px)',
             pointerEvents: 'none', zIndex: 1,
           }} />
 
@@ -448,6 +450,8 @@ export default function LBRLWebsite() {
             opacity: loadingPhase >= 3 ? 0 : 1,
             transition: 'opacity 1.2s ease',
             zIndex: 2,
+            mixBlendMode: 'screen',
+            willChange: 'opacity',
           }} viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
             <defs>
               <linearGradient id="sacredGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -472,7 +476,7 @@ export default function LBRLWebsite() {
             {/* Deep breathing glow */}
             <circle cx="250" cy="250" r="200" fill="url(#centerGlow)" className="breath-glow" />
 
-            {/* ===== FIBONACCI CIRCLES — Bold, 7 rings ===== */}
+            {/* ===== FIBONACCI CIRCLES — Bold, 7 rings — slower draw ===== */}
             {[21, 34, 55, 89, 144, 195, 233].map((r, i) => (
               <circle key={r} cx="250" cy="250" r={r}
                 stroke="url(#sacredGrad)" strokeWidth={0.8 + i * 0.15} fill="none"
@@ -481,8 +485,8 @@ export default function LBRLWebsite() {
                 style={{
                   strokeDasharray: Math.PI * 2 * r,
                   strokeDashoffset: Math.PI * 2 * r,
-                  animationDuration: `${0.8 + i * 0.1}s`,
-                  animationDelay: `${i * 0.05}s`,
+                  animationDuration: `${1.2 + i * 0.15}s`,
+                  animationDelay: `${i * 0.1}s`,
                 }}
               />
             ))}
@@ -490,26 +494,26 @@ export default function LBRLWebsite() {
             {/* ===== GOLDEN SPIRALS — dual, prominent ===== */}
             <path d="M250,250 Q250,175 325,175 Q400,175 400,250 Q400,360 285,360 Q160,360 160,225 Q160,80 315,80"
               stroke="url(#sacredGrad)" strokeWidth="1.5" fill="none" filter="url(#medGlow)"
-              className="geo-draw-bold" style={{ strokeDasharray: 900, strokeDashoffset: 900, animationDuration: '2s', animationDelay: '0.1s' }} />
+              className="geo-draw-bold" style={{ strokeDasharray: 900, strokeDashoffset: 900, animationDuration: '2.8s', animationDelay: '0.15s' }} />
             <path d="M250,250 Q250,325 175,325 Q100,325 100,250 Q100,140 215,140 Q340,140 340,275 Q340,420 185,420"
               stroke="url(#sacredGrad2)" strokeWidth="1" fill="none" filter="url(#softGlow)"
-              className="geo-draw-medium" style={{ strokeDasharray: 950, strokeDashoffset: 950, animationDuration: '2.2s', animationDelay: '0.2s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 950, strokeDashoffset: 950, animationDuration: '3s', animationDelay: '0.3s' }} />
 
             {/* ===== FLOWER OF LIFE — Full 3 rings ===== */}
             {/* Center circle */}
             <circle cx="250" cy="250" r="35" stroke="url(#sacredGrad)" strokeWidth="1" fill="none" filter="url(#softGlow)"
-              className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: '0.2s' }} />
+              className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.9s', animationDelay: '0.3s' }} />
             {/* Ring 1 — inner 6 */}
             {[[250,215],[280,232],[280,268],[250,285],[220,268],[220,232]].map(([cx,cy], i) => (
               <circle key={`fl1-${i}`} cx={cx} cy={cy} r={35}
                 stroke="url(#sacredGrad)" strokeWidth="0.9" fill="none" filter="url(#softGlow)"
-                className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: `${0.28 + i * 0.05}s` }} />
+                className="geo-draw-bold" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.9s', animationDelay: `${0.4 + i * 0.08}s` }} />
             ))}
             {/* Ring 2 — outer 6 */}
             {[[250,180],[295,197],[295,303],[250,320],[205,303],[205,197]].map(([cx,cy], i) => (
               <circle key={`fl2-${i}`} cx={cx} cy={cy} r={35}
                 stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none"
-                className="geo-draw-medium" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.6s', animationDelay: `${0.45 + i * 0.05}s` }} />
+                className="geo-draw-medium" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.8s', animationDelay: `${0.7 + i * 0.08}s` }} />
             ))}
             {/* Ring 3 — outermost 18 */}
             {[
@@ -519,7 +523,7 @@ export default function LBRLWebsite() {
             ].map(([cx,cy], i) => (
               <circle key={`fl3-${i}`} cx={cx} cy={cy} r={35}
                 stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
-                className="geo-draw-subtle" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.5s', animationDelay: `${0.6 + i * 0.03}s` }} />
+                className="geo-draw-subtle" style={{ strokeDasharray: 220, strokeDashoffset: 220, animationDuration: '0.7s', animationDelay: `${0.95 + i * 0.04}s` }} />
             ))}
 
             {/* ===== METATRON'S CUBE — ALL connections ===== */}
@@ -528,47 +532,47 @@ export default function LBRLWebsite() {
                 stroke="url(#sacredGrad)" strokeWidth={line.d < 50 ? "0.5" : line.d < 90 ? "0.35" : "0.25"}
                 className="geo-draw-medium" style={{
                   strokeDasharray: line.d, strokeDashoffset: line.d,
-                  animationDuration: `${0.4 + line.d * 0.003}s`,
-                  animationDelay: `${0.5 + i * 0.015}s`,
+                  animationDuration: `${0.6 + line.d * 0.005}s`,
+                  animationDelay: `${0.8 + i * 0.02}s`,
                 }} />
             ))}
 
             {/* ===== INTERSECTION DOTS — glowing nodes ===== */}
             {metatronCenters.map(([cx, cy], i) => (
               <circle key={`nd-${i}`} cx={cx} cy={cy} r="2.5" fill={colors.accentCyan} filter="url(#softGlow)"
-                className="geo-dot" style={{ animationDelay: `${0.65 + i * 0.04}s` }} />
+                className="geo-dot" style={{ animationDelay: `${1.0 + i * 0.06}s` }} />
             ))}
 
             {/* ===== HEXAGONS — 3 nested + rotated Star of David ===== */}
             <path d={hexPath(250, 250, 70)} stroke="url(#sacredGrad)" strokeWidth="0.9" fill="none" filter="url(#softGlow)"
-              className="geo-draw-bold" style={{ strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '0.9s', animationDelay: '0.35s' }} />
+              className="geo-draw-bold" style={{ strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '1.3s', animationDelay: '0.5s' }} />
             <path d={hexPath(250, 250, 115)} stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
-              className="geo-draw-medium" style={{ strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.1s', animationDelay: '0.4s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.5s', animationDelay: '0.6s' }} />
             <path d={hexPath(250, 250, 170)} stroke="url(#sacredGrad)" strokeWidth="0.5" fill="none"
-              className="geo-draw-medium" style={{ strokeDasharray: 1020, strokeDashoffset: 1020, animationDuration: '1.4s', animationDelay: '0.45s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 1020, strokeDashoffset: 1020, animationDuration: '1.8s', animationDelay: '0.7s' }} />
             {/* Rotated = Star of David */}
             <path d={hexPath(250, 250, 70)} stroke="url(#sacredGrad2)" strokeWidth="0.6" fill="none"
-              className="geo-draw-medium" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '0.9s', animationDelay: '0.5s' }} />
+              className="geo-draw-medium" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 420, strokeDashoffset: 420, animationDuration: '1.3s', animationDelay: '0.75s' }} />
             <path d={hexPath(250, 250, 115)} stroke="url(#sacredGrad2)" strokeWidth="0.45" fill="none"
-              className="geo-draw-subtle" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.1s', animationDelay: '0.55s' }} />
+              className="geo-draw-subtle" style={{ transformOrigin: '250px 250px', transform: 'rotate(30deg)', strokeDasharray: 700, strokeDashoffset: 700, animationDuration: '1.5s', animationDelay: '0.85s' }} />
 
             {/* ===== VESICA PISCIS ===== */}
             <circle cx="225" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
-              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '0.8s', animationDelay: '0.4s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '1.1s', animationDelay: '0.55s' }} />
             <circle cx="275" cy="250" r="55" stroke="url(#sacredGrad)" strokeWidth="0.7" fill="none" filter="url(#softGlow)"
-              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '0.8s', animationDelay: '0.45s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 346, strokeDashoffset: 346, animationDuration: '1.1s', animationDelay: '0.65s' }} />
 
             {/* ===== ORGANIC FLOWING CURVES ===== */}
             <path d="M130,80 Q185,135 165,200 Q145,265 190,300 Q235,335 190,385" stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none"
-              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '1.5s', animationDelay: '0.25s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '2s', animationDelay: '0.35s' }} />
             <path d="M370,80 Q315,135 335,200 Q355,265 310,300 Q265,335 310,385" stroke="url(#sacredGrad)" strokeWidth="0.8" fill="none"
-              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '1.5s', animationDelay: '0.35s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 450, strokeDashoffset: 450, animationDuration: '2s', animationDelay: '0.5s' }} />
             <path d="M70,250 Q160,205 250,250 Q340,295 430,250" stroke="url(#sacredGrad)" strokeWidth="0.6" fill="none"
-              className="geo-draw-medium" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.5s' }} />
+              className="geo-draw-medium" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.8s', animationDelay: '0.7s' }} />
             <path d="M70,200 Q160,240 250,200 Q340,160 430,200" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
-              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.6s' }} />
+              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.8s', animationDelay: '0.9s' }} />
             <path d="M70,300 Q160,260 250,300 Q340,340 430,300" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
-              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.3s', animationDelay: '0.65s' }} />
+              className="geo-draw-subtle" style={{ strokeDasharray: 400, strokeDashoffset: 400, animationDuration: '1.8s', animationDelay: '1s' }} />
 
             {/* ===== SPINNING RINGS — triple ===== */}
             <circle cx="250" cy="250" r="225" stroke="url(#sacredGrad)" strokeWidth="0.4" fill="none"
@@ -578,21 +582,21 @@ export default function LBRLWebsite() {
             <circle cx="250" cy="250" r="243" stroke="url(#sacredGrad)" strokeWidth="0.15" fill="none"
               strokeDasharray="1 20" className="spin-ring-slow" />
 
-            {/* ===== NEEDLE TRACERS ===== */}
-            <circle r="3.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.05s', animationDuration: '1.4s' }}>
-              <animateMotion dur="1.4s" begin="0.05s" fill="freeze"><mpath href="#needlePath1" /></animateMotion>
+            {/* ===== NEEDLE TRACERS — slower, more dramatic ===== */}
+            <circle r="3.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.1s', animationDuration: '2s' }}>
+              <animateMotion dur="2s" begin="0.1s" fill="freeze"><mpath href="#needlePath1" /></animateMotion>
             </circle>
-            <circle r="4.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.15s', animationDuration: '2s' }}>
-              <animateMotion dur="2s" begin="0.15s" fill="freeze"><mpath href="#needlePath2" /></animateMotion>
+            <circle r="4.5" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.2s', animationDuration: '2.8s' }}>
+              <animateMotion dur="2.8s" begin="0.2s" fill="freeze"><mpath href="#needlePath2" /></animateMotion>
             </circle>
-            <circle r="3" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.3s', animationDuration: '1.2s' }}>
-              <animateMotion dur="1.2s" begin="0.3s" fill="freeze"><mpath href="#needlePath3" /></animateMotion>
+            <circle r="3" fill={colors.accentCyan} filter="url(#strongGlow)" className="needle-dot" style={{ animationDelay: '0.5s', animationDuration: '1.6s' }}>
+              <animateMotion dur="1.6s" begin="0.5s" fill="freeze"><mpath href="#needlePath3" /></animateMotion>
             </circle>
             <path id="needlePath1" d="M339,250 A89,89 0 1,1 338.99,250" fill="none" stroke="none" />
             <path id="needlePath2" d="M445,250 A195,195 0 1,1 444.99,250" fill="none" stroke="none" />
             <path id="needlePath3" d="M305,250 A55,55 0 1,1 304.99,250" fill="none" stroke="none" />
 
-            {/* ===== LIVING GEOMETRY — pulses after drawing ===== */}
+            {/* ===== LIVING GEOMETRY — starts later, pulses through the hold ===== */}
             <circle cx="250" cy="250" r="55" stroke={colors.accentCyan} strokeWidth="0.5" fill="none" className="geo-alive geo-alive-1" />
             <circle cx="250" cy="250" r="89" stroke={colors.accentCyan} strokeWidth="0.5" fill="none" className="geo-alive geo-alive-2" />
             <circle cx="250" cy="250" r="144" stroke={colors.accentCyan} strokeWidth="0.4" fill="none" className="geo-alive geo-alive-3" />
@@ -822,10 +826,10 @@ export default function LBRLWebsite() {
           <div style={{ position: 'relative' }}>
             <button onClick={() => setSliderIndex(Math.max(0, sliderIndex - 1))} disabled={sliderIndex === 0} style={{ position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)', width: '48px', height: '48px', borderRadius: '50%', background: colors.bgCard, border: `1px solid ${colors.borderDefault}`, color: sliderIndex === 0 ? colors.textMuted : colors.textPrimary, cursor: sliderIndex === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10, transition: 'all 0.3s ease' }}>←</button>
             <div style={{ overflow: 'hidden', borderRadius: '12px' }}>
-              <div style={{ display: 'flex', gap: '16px', transform: `translateX(-${sliderIndex * (280 + 16)}px)`, transition: 'transform 0.4s ease' }}>
+              <div style={{ display: 'flex', gap: '16px', transform: `translate3d(-${sliderIndex * (280 + 16)}px, 0, 0)`, transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)', willChange: 'transform' }}>
                 {filteredPortfolio.map((item, index) => (
                   <div key={item.id} onClick={() => openLightbox(index)} style={{ minWidth: '280px', height: '350px', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative' }}>
-                    <img src={item.image} alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
+                    <img src={item.image} alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} />
                   </div>
                 ))}
               </div>
@@ -960,7 +964,7 @@ export default function LBRLWebsite() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
             <p style={{ fontSize: '14px', color: colors.textSecondary }}>📍 9013 NE Hwy 99, Vancouver, WA 98665</p>
             <p style={{ fontSize: '14px', color: colors.textSecondary }}>✉️ Liberaltattoos@gmail.com</p>
-            <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
+            <div style={{ display: 'flex', gap: '20px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
               <button onClick={() => setTattoodoModalOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, background: 'none', border: 'none', cursor: 'pointer', transition: 'opacity 0.3s', padding: '0', fontSize: '14px' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}><TattoodoIcon /><span>Tattoodo</span></button>
               <a href="https://instagram.com/danilbrl_tattoo" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: colors.accentCyan, textDecoration: 'none', transition: 'opacity 0.3s' }} onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -1004,18 +1008,65 @@ export default function LBRLWebsite() {
           STYLES
           ================================================================ */}
       <style>{`
+        /* === MODERN FOUNDATION === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; overflow-x: hidden; }
-        body { overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 8px; }
+        html { 
+          scroll-behavior: smooth; 
+          overflow-x: hidden;
+          -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+        }
+        body { 
+          overflow-x: hidden;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
+          overscroll-behavior-y: none;
+        }
+        
+        /* Modern scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: ${colors.bgDark}; }
-        ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: ${colors.bgElevated}; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: ${colors.accentTeal}; }
+        @supports (scrollbar-width: thin) {
+          html { scrollbar-width: thin; scrollbar-color: ${colors.bgElevated} ${colors.bgDark}; }
+        }
+
+        /* Clean mobile interactions */
+        a, button { 
+          -webkit-tap-highlight-color: transparent; 
+          touch-action: manipulation;
+        }
+        button { cursor: pointer; }
+        img { 
+          max-width: 100%; 
+          height: auto; 
+          display: block;
+        }
+
         .ta2do-booking-form { width: 100%; min-height: 400px; }
+
+        /* === CONTENT VISIBILITY — paint-on-demand for below-fold sections === */
+        section[data-animate] {
+          content-visibility: auto;
+          contain-intrinsic-size: auto 600px;
+        }
 
         /* ================================================================
            ★ Maximum Sacred Geometry — Loading Styles ★
            ================================================================ */
         
+        /* === LOADER CONTAINER — GPU compositing layer === */
+        .loader-screen {
+          contain: strict;
+          isolation: isolate;
+          user-select: none;
+          -webkit-user-select: none;
+          overscroll-behavior: none;
+          will-change: opacity, filter;
+        }
+
         /* === SCREEN EXIT === */
         .loader-exit {
           animation: screenExit 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -1026,9 +1077,12 @@ export default function LBRLWebsite() {
           100% { opacity: 0; filter: blur(6px); }
         }
 
-        /* === FLOATING INK PARTICLES === */
+        /* === FLOATING INK PARTICLES — GPU accelerated === */
         .ink-particle {
           animation: inkFloat var(--duration, 4s) ease-in-out infinite;
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
         @keyframes inkFloat {
           0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.5); }
@@ -1098,32 +1152,39 @@ export default function LBRLWebsite() {
         }
 
         /* === SPINNING RINGS === */
+        /* === SPINNING RINGS — GPU composited === */
         .spin-ring {
           opacity: 0;
           transform-origin: 250px 250px;
-          animation: ringFadeIn 0.6s ease 0.5s forwards, ringSpin 18s linear 0.5s infinite;
+          animation: ringFadeIn 0.8s ease 0.6s forwards, ringSpin 18s linear 0.6s infinite;
+          will-change: transform;
+          backface-visibility: hidden;
         }
         .spin-ring-inner {
           opacity: 0;
           transform-origin: 250px 250px;
-          animation: ringFadeIn 0.6s ease 0.7s forwards, ringSpinReverse 24s linear 0.7s infinite;
+          animation: ringFadeIn 0.8s ease 0.9s forwards, ringSpinReverse 24s linear 0.9s infinite;
+          will-change: transform;
+          backface-visibility: hidden;
         }
         .spin-ring-slow {
           opacity: 0;
           transform-origin: 250px 250px;
-          animation: ringFadeIn 0.6s ease 0.9s forwards, ringSpin 35s linear 0.9s infinite;
+          animation: ringFadeIn 0.8s ease 1.2s forwards, ringSpin 35s linear 1.2s infinite;
+          will-change: transform;
+          backface-visibility: hidden;
         }
         @keyframes ringFadeIn { from { opacity: 0; } to { opacity: 0.18; } }
         @keyframes ringSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes ringSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
         /* === LIVING GEOMETRY — breathes forever after drawing === */
-        .geo-alive-1 { opacity: 0; animation: aliveIn 0.5s ease 1.3s forwards, alivePulse 2.8s ease-in-out 1.8s infinite; }
-        .geo-alive-2 { opacity: 0; animation: aliveIn 0.5s ease 1.4s forwards, alivePulse 3.2s ease-in-out 1.9s infinite; }
-        .geo-alive-3 { opacity: 0; animation: aliveIn 0.5s ease 1.5s forwards, alivePulse 3.6s ease-in-out 2s infinite; }
-        .geo-alive-4 { opacity: 0; animation: aliveIn 0.5s ease 1.6s forwards, alivePulse 3s ease-in-out 2.1s infinite; }
-        .geo-alive-5 { opacity: 0; animation: aliveIn 0.5s ease 1.7s forwards, alivePulse 3.4s ease-in-out 2.2s infinite; }
-        .geo-alive-6 { opacity: 0; animation: aliveIn 0.5s ease 1.8s forwards, alivePulse 4s ease-in-out 2.3s infinite; }
+        .geo-alive-1 { opacity: 0; animation: aliveIn 0.5s ease 1.8s forwards, alivePulse 2.8s ease-in-out 2.3s infinite; }
+        .geo-alive-2 { opacity: 0; animation: aliveIn 0.5s ease 1.9s forwards, alivePulse 3.2s ease-in-out 2.4s infinite; }
+        .geo-alive-3 { opacity: 0; animation: aliveIn 0.5s ease 2s forwards, alivePulse 3.6s ease-in-out 2.5s infinite; }
+        .geo-alive-4 { opacity: 0; animation: aliveIn 0.5s ease 2.1s forwards, alivePulse 3s ease-in-out 2.6s infinite; }
+        .geo-alive-5 { opacity: 0; animation: aliveIn 0.5s ease 2.2s forwards, alivePulse 3.4s ease-in-out 2.7s infinite; }
+        .geo-alive-6 { opacity: 0; animation: aliveIn 0.5s ease 2.3s forwards, alivePulse 4s ease-in-out 2.8s infinite; }
         @keyframes aliveIn { from { opacity: 0; } to { opacity: 0.1; } }
         @keyframes alivePulse {
           0%, 100% { opacity: 0.08; stroke-width: 0.3; }
@@ -1131,19 +1192,26 @@ export default function LBRLWebsite() {
         }
 
         /* === LOGO RING === */
+        /* === LOGO RING — GPU composited === */
         .logo-ring-dots {
           animation: logoRingRotate 8s linear infinite;
           transform-origin: 70px 70px;
+          will-change: transform;
+          backface-visibility: hidden;
         }
         @keyframes logoRingRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* === LOGO INK REVEAL === */
+        /* === LOGO INK REVEAL — GPU composited === */
         .logo-ink-reveal {
           opacity: 0;
           transform: scale(0.5);
           filter: blur(10px) brightness(1.5);
           transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
           box-shadow: 0 0 0 0 rgba(125, 212, 196, 0);
+          will-change: transform, opacity, filter;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
         .logo-ink-reveal.logo-materialized {
           opacity: 1;
@@ -1174,6 +1242,8 @@ export default function LBRLWebsite() {
           background: ${colors.accentCyan};
           top: 50%;
           left: 50%;
+          will-change: transform;
+          backface-visibility: hidden;
         }
         .orbit-dot-1 {
           box-shadow: 0 0 6px ${colors.accentCyan};
@@ -1205,9 +1275,12 @@ export default function LBRLWebsite() {
         }
 
         /* === BRAND TEXT REVEAL === */
+        /* === BRAND TEXT REVEAL — GPU composited === */
         .brand-text .brand-letter {
           opacity: 0;
           transform: translateY(20px) scale(0.85);
+          will-change: transform, opacity;
+          backface-visibility: hidden;
         }
         .brand-text.brand-visible .brand-letter {
           animation: letterPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -1242,14 +1315,15 @@ export default function LBRLWebsite() {
         /* === PROGRESS NEEDLE === */
         .progress-needle {
           width: 0%;
-          animation: needleProgress 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          animation: needleProgress 4.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes needleProgress {
           0% { width: 0%; }
-          20% { width: 20%; }
-          45% { width: 45%; }
-          70% { width: 70%; }
-          90% { width: 88%; }
+          15% { width: 18%; }
+          35% { width: 40%; }
+          55% { width: 60%; }
+          75% { width: 78%; }
+          90% { width: 92%; }
           100% { width: 100%; }
         }
 
@@ -1291,49 +1365,172 @@ export default function LBRLWebsite() {
         .animate-delay-4 { animation-delay: 0.4s; }
         .animate-delay-5 { animation-delay: 0.5s; }
 
-        /* Responsive */
-        .desktop-nav { display: flex; }
-        .mobile-menu-btn { display: none !important; }
-        @media (max-width: 1024px) {
-          .desktop-nav { gap: 16px !important; }
-          .desktop-nav a { font-size: 10px !important; }
-        }
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: block !important; }
-          html, body { overflow-x: hidden !important; width: 100% !important; }
-          nav { padding: 12px 16px !important; }
-          section { padding: 40px 16px !important; }
+        /* ================================================================
+           MOBILE-FIRST RESPONSIVE — base = mobile, enhance up
+           ================================================================ */
+        
+        /* === BASE: MOBILE (default, no media query) === */
+        html, body { overflow-x: hidden !important; width: 100% !important; }
+        .desktop-nav { display: none !important; }
+        .mobile-menu-btn { display: block !important; }
+        
+        /* Mobile nav + sections */
+        nav { padding: 12px 16px !important; }
+        section { padding: 40px 16px !important; position: relative !important; z-index: 1 !important; overflow: visible !important; }
+        h1 { font-size: 26px !important; }
+        h2 { font-size: 20px !important; }
+        
+        /* Mobile grids → stacked */
+        [style*="grid-template-columns: 1fr 1fr"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+        [style*="grid-template-columns: repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+        [style*="grid-template-columns: repeat(3"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
+        [style*="grid-template-columns: 1fr 300px"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+        [style*="grid-template-columns: repeat(auto-fit"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
+        
+        /* Mobile portfolio slider */
+        [style*="minWidth: 280px"] { min-width: 200px !important; height: 280px !important; }
+        
+        /* Mobile filter buttons */
+        [style*="gap: 12px"][style*="flex-wrap"] { gap: 8px !important; justify-content: center !important; }
+        [style*="gap: 12px"][style*="flex-wrap"] button { padding: 6px 10px !important; font-size: 9px !important; letter-spacing: 0.5px !important; }
+        
+        /* Mobile cards */
+        [style*="padding: 32px"] { padding: 16px !important; }
+        
+        /* Mobile hero */
+        [style*="minHeight: 100vh"] { min-height: auto !important; padding-top: 100px !important; padding-bottom: 60px !important; }
+        
+        /* Mobile sticky → relative */
+        [style*="position: sticky"] { position: relative !important; }
+        #faqs [style*="position: sticky"] { display: none !important; }
+        #contact { margin-top: 0 !important; padding-top: 60px !important; }
+        
+        /* Mobile spinner */
+        .logo-area { width: 110px !important; height: 110px !important; }
+        .logo-ink-reveal { width: 70px !important; height: 70px !important; }
+        .logo-ring-svg { width: 110px !important; height: 110px !important; }
+        .orbit-system { width: 110px !important; height: 110px !important; }
+        .brand-letter { font-size: 24px !important; letter-spacing: 8px !important; }
+        .brand-subtitle { font-size: 8px !important; letter-spacing: 3px !important; }
+        
+        /* === TABLET: 481px+ === */
+        @media (min-width: 481px) {
           h1 { font-size: 32px !important; }
           h2 { font-size: 24px !important; }
-          [style*="grid-template-columns: 1fr 1fr"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
-          [style*="grid-template-columns: repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
-          [style*="grid-template-columns: repeat(3"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
-          [style*="grid-template-columns: 1fr 300px"] { display: flex !important; flex-direction: column !important; gap: 30px !important; }
-          [style*="grid-template-columns: repeat(auto-fit"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
-          [style*="gap: 12px"][style*="flex-wrap"] { gap: 8px !important; }
-          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 8px 12px !important; font-size: 10px !important; }
-          [style*="minWidth: 280px"] { min-width: 240px !important; }
-          [style*="minHeight: 100vh"] { min-height: auto !important; padding-top: 100px !important; padding-bottom: 60px !important; }
-          [style*="position: sticky"] { position: relative !important; }
-          #faqs [style*="position: sticky"] { display: none !important; }
-          section { position: relative !important; z-index: 1 !important; overflow: visible !important; }
-          #contact { margin-top: 0 !important; padding-top: 60px !important; }
-          /* Spinner mobile */
-          .logo-area { width: 110px !important; height: 110px !important; }
-          .logo-ink-reveal { width: 70px !important; height: 70px !important; }
-          .logo-ring-svg { width: 110px !important; height: 110px !important; }
-          .orbit-system { width: 110px !important; height: 110px !important; }
+          [style*="minWidth: 280px"] { min-width: 240px !important; height: 320px !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 8px 14px !important; font-size: 10px !important; letter-spacing: 0.8px !important; }
+          [style*="padding: 32px"] { padding: 24px !important; }
+          .logo-area { width: 130px !important; height: 130px !important; }
+          .logo-ink-reveal { width: 80px !important; height: 80px !important; }
+          .logo-ring-svg { width: 130px !important; height: 130px !important; }
+          .orbit-system { width: 130px !important; height: 130px !important; }
+          .brand-letter { font-size: 26px !important; letter-spacing: 9px !important; }
         }
-        @media (max-width: 480px) {
-          h1 { font-size: 26px !important; }
-          h2 { font-size: 20px !important; }
-          [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
-          [style*="padding: 32px"] { padding: 16px !important; }
-          [style*="grid-template-columns: repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-          [style*="gap: 12px"][style*="flex-wrap"] { justify-content: center !important; }
-          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 6px 10px !important; font-size: 9px !important; letter-spacing: 0.5px !important; }
-          [style*="minWidth: 280px"] { min-width: 200px !important; height: 280px !important; }
+
+        /* === DESKTOP: 769px+ === */
+        @media (min-width: 769px) {
+          .desktop-nav { display: flex !important; }
+          .mobile-menu-btn { display: none !important; }
+          nav { padding: 20px 24px !important; }
+          section { padding: clamp(60px, 10vw, 100px) 20px !important; }
+          h1 { font-size: clamp(40px, 8vw, 72px) !important; }
+          h2 { font-size: clamp(28px, 4vw, 36px) !important; }
+          
+          /* Desktop grids restore */
+          [style*="grid-template-columns: 1fr 1fr"] { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 60px !important; }
+          [style*="grid-template-columns: repeat(4"] { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 24px !important; }
+          [style*="grid-template-columns: 1fr 300px"] { display: grid !important; grid-template-columns: 1fr 300px !important; gap: 60px !important; }
+          [style*="grid-template-columns: repeat(auto-fit"] { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; gap: 24px !important; }
+          
+          /* Desktop portfolio */
+          [style*="minWidth: 280px"] { min-width: 280px !important; height: 350px !important; }
+          
+          /* Desktop filter buttons */
+          [style*="gap: 12px"][style*="flex-wrap"] { gap: 12px !important; }
+          [style*="gap: 12px"][style*="flex-wrap"] button { padding: 10px 20px !important; font-size: 12px !important; letter-spacing: 1px !important; }
+          
+          /* Desktop cards */
+          [style*="padding: 32px"] { padding: 32px !important; }
+          
+          /* Desktop hero */
+          [style*="minHeight: 100vh"] { min-height: 100vh !important; padding-top: 120px !important; padding-bottom: 80px !important; }
+          
+          /* Desktop sticky */
+          [style*="position: sticky"] { position: sticky !important; }
+          #faqs [style*="position: sticky"] { display: block !important; }
+          
+          /* Desktop spinner */
+          .logo-area { width: 140px !important; height: 140px !important; }
+          .logo-ink-reveal { width: 88px !important; height: 88px !important; }
+          .logo-ring-svg { width: 140px !important; height: 140px !important; }
+          .orbit-system { width: 140px !important; height: 140px !important; }
+          .brand-letter { font-size: 28px !important; letter-spacing: 10px !important; }
+          .brand-subtitle { font-size: 9px !important; letter-spacing: 4px !important; }
+        }
+
+        /* === LARGE DESKTOP: 1025px+ === */
+        @media (min-width: 1025px) {
+          .desktop-nav { gap: 32px !important; }
+          .desktop-nav a { font-size: 11px !important; }
+        }
+
+        /* ================================================================
+           MODERN ENHANCEMENTS
+           ================================================================ */
+
+        /* === ACCESSIBILITY: Reduced Motion === */
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+          .loader-screen { display: none !important; }
+          .sacred-geo { display: none !important; }
+          .ink-particle { display: none !important; }
+          html { scroll-behavior: auto; }
+        }
+
+        /* === MODERN FOCUS — keyboard only, no ring on click === */
+        :focus-visible {
+          outline: 2px solid ${colors.accentCyan};
+          outline-offset: 2px;
+          border-radius: 4px;
+        }
+        :focus:not(:focus-visible) {
+          outline: none;
+        }
+
+        /* === PORTFOLIO SCROLL SNAP (mobile) === */
+        @supports (scroll-snap-type: x mandatory) {
+          .portfolio-slider {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+          }
+          .portfolio-slider > * {
+            scroll-snap-align: start;
+          }
+        }
+
+        /* === MODERN TRANSITIONS with @supports === */
+        @supports (transition-behavior: allow-discrete) {
+          .loader-screen {
+            transition-behavior: allow-discrete;
+          }
+        }
+
+        /* === HIGH DPI — sharper SVG rendering === */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          .sacred-geo {
+            shape-rendering: geometricPrecision;
+          }
+        }
+
+        /* === PRINT — hide loader and non-essential === */
+        @media print {
+          .loader-screen, .sacred-geo, nav, footer { display: none !important; }
+          section { break-inside: avoid; }
+          * { color: #000 !important; background: #fff !important; }
         }
       `}</style>
     </div>
