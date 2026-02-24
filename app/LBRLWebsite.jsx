@@ -1021,7 +1021,6 @@ export default function LBRLWebsite() {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
-          overscroll-behavior-y: none;
         }
         
         /* Modern scrollbar */
@@ -1047,23 +1046,16 @@ export default function LBRLWebsite() {
 
         .ta2do-booking-form { width: 100%; min-height: 400px; }
 
-        /* === CONTENT VISIBILITY — paint-on-demand for below-fold sections === */
-        section[data-animate] {
-          content-visibility: auto;
-          contain-intrinsic-size: auto 600px;
-        }
-
         /* ================================================================
            ★ Maximum Sacred Geometry — Loading Styles ★
            ================================================================ */
         
         /* === LOADER CONTAINER — GPU compositing layer === */
         .loader-screen {
-          contain: strict;
+          contain: layout style;
           isolation: isolate;
           user-select: none;
           -webkit-user-select: none;
-          overscroll-behavior: none;
           will-change: opacity, filter;
         }
 
@@ -1370,7 +1362,7 @@ export default function LBRLWebsite() {
            ================================================================ */
         
         /* === BASE: MOBILE (default, no media query) === */
-        html, body { overflow-x: hidden !important; width: 100% !important; }
+        body { overflow-x: hidden !important; width: 100% !important; }
         .desktop-nav { display: none !important; }
         .mobile-menu-btn { display: block !important; }
         
