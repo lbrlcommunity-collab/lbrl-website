@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-
+import WelcomeIntro from './WelcomeIntro'
 const BOOKING_URL = 'https://ta2.do/Dani_lbrl'
 const RELEASE_URL = 'https://book.lbrltattoos.com/release-form'
 
@@ -357,6 +357,7 @@ export default function LBRLWebsite() {
       width: '100%',
       maxWidth: '100vw',
     }}>
+      <WelcomeIntro isLoading={isLoading} onBook={() => setTattoodoModalOpen(true)} />
 
       {/* ========== TATTOODO EMBED MODAL ========== */}
       <div
