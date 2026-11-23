@@ -1,6 +1,17 @@
 import Script from 'next/script'
 import LBRLWebsite from './LBRLWebsite'
 
+export const metadata = {
+  title: 'Custom Tattoo Studio in Vancouver, WA | LBRL Tattoo Studio',
+  description: 'Custom Japanese-inspired, blackwork, ornamental and floral tattoos, plus full sleeves in Vancouver, Washington. Explore original work by Daniel Liberal at LBRL.',
+  alternates: { canonical: 'https://www.lbrltattoos.com/' },
+  openGraph: {
+    title: 'Custom Tattoo Studio in Vancouver, WA | LBRL',
+    description: 'Explore custom large-scale tattoos, sleeves, Japanese-inspired, blackwork, ornamental and floral designs in Vancouver, WA.',
+    url: 'https://www.lbrltattoos.com/',
+  },
+}
+
 // ========== LOCAL BUSINESS SCHEMA ==========
 const localBusinessSchema = {
   '@context': 'https://schema.org',
@@ -80,13 +91,6 @@ const localBusinessSchema = {
     jobTitle: 'Lead Artist & Owner',
     knowsAbout: ['Japanese Tattoo', 'Blackwork', 'Ornamental Tattoo', 'Botanical Fine Line', 'Body Harmony Tattoo Design'],
     award: ['3rd Place Asian Category - Portland Tattoo Expo 2024', 'Award Winner - New York Tattoo Convention 2016'],
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '22',
-    bestRating: '5',
-    worstRating: '1',
   },
   sameAs: [
     'https://www.instagram.com/danilbrl_tattoo/',
