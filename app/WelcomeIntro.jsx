@@ -73,46 +73,37 @@ const c = {
   accentTeal: '#5a8a8a',
 }
 
-export default function WelcomeIntro({ isLoading = false, onBook }) {
+export default function WelcomeIntro({ isLoading = false, onBook, onOpenChange, reopenSignal = 0 }) {
   const [open, setOpen] = useState(false)
   const [slide, setSlide] = useState(0)
   const touchX = React.useRef(0)
 
-  // Open once per session, ~800ms after the loader finishes.
+  // Show the full booking/process guide on EVERY fresh page visit.
+  // This is deliberately independent of the lightweight LBRL logo animation;
+  // users can dismiss the guide without losing access to the website.
   useEffect(() => {
     if (isLoading) return
-    let seen = false
-    try {
-      seen = sessionStorage.getItem('lbrl_welcomed') === '1'
-    } catch (e) {
-      seen = false
-    }
-    if (seen) return
-    const t = setTimeout(() => setOpen(true), 420)
-    return () => clearTimeout(t)
+    const timeout = window.setTimeout(() => setOpen(true), 220)
+    return () => window.clearTimeout(timeout)
   }, [isLoading])
 
-  const close = useCallback(() => {
-    setOpen(false)
-    try {
-      sessionStorage.setItem('lbrl_welcomed', '1')
-    } catch (e) {
-      /* private mode — fail silently, modal just won't suppress next visit */
-    }
-  }, [])
+  // Allow visitors to open the same guide again from the homepage or menu.
+  useEffect(() => {
+    if (isLoading || reopenSignal === 0) return
+    setSlide(0)
+    setOpen(true)
+  }, [isLoading, reopenSignal])
+
+  const close = useCallback(() => setOpen(false), [])
 
   const go = useCallback((i) => {
     setSlide(Math.max(0, Math.min(SLIDES.length - 1, i)))
   }, [])
 
-  // Only manage scroll while this dialog is open. Restore the previous value
-  // so closing this dialog cannot unlock an unrelated booking overlay.
+  // Parent owns scroll locking for the entire overlay stack.
   useEffect(() => {
-    if (!open) return
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previousOverflow }
-  }, [open])
+    if (typeof onOpenChange === 'function') onOpenChange(open)
+  }, [open, onOpenChange])
 
   // Keyboard: ESC closes, arrows navigate
   useEffect(() => {
@@ -178,7 +169,7 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
         </div>
 
         {/* body */}
-        <div style={{ padding: '24px 32px 0', position: 'relative', zIndex: 2, flex: 1, overflowY: 'auto' }}>
+        <div style={{ padding: '24px 32px 0', position: 'relative', zIndex: 2, flex: 1, minHeight: 0, overflowY: 'auto' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, color: c.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>Welcome</p>
           <h2 style={{ fontFamily: "'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", fontSize: 'clamp(26px, 5vw, 34px)', fontWeight: 300, letterSpacing: '0.4px', lineHeight: 1.14, marginBottom: '8px' }}>Before Booking With Me</h2>
           <p style={{ fontSize: '14px', color: c.textMuted, marginBottom: '28px' }}>A quick look at how I work</p>
@@ -205,8 +196,10 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
             </div>
           </div>
 
-          {/* nav */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', padding: '0 4px' }}>
+        </div>
+
+        {/* nav — outside the scroll area so controls stay visible on small screens */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, padding: '10px 28px 14px', borderTop: `1px solid ${c.borderSubtle}`, position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', gap: '8px' }}>
               {SLIDES.map((_, i) => (
                 <button key={i} onClick={() => go(i)} aria-label={`Slide ${i + 1}`} style={{ width: slide === i ? '24px' : '7px', height: '7px', borderRadius: slide === i ? '4px' : '50%', background: slide === i ? c.accentCyan : c.bgElevated, border: 'none', cursor: 'pointer', transition: 'all 0.3s ease', padding: 0 }} />
@@ -216,7 +209,6 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
               <button onClick={() => go(slide - 1)} disabled={slide === 0} aria-label="Previous" style={{ width: '36px', height: '36px', borderRadius: '50%', background: c.bgElevated, border: `1px solid ${c.borderDefault}`, color: c.textPrimary, cursor: slide === 0 ? 'not-allowed' : 'pointer', opacity: slide === 0 ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>←</button>
               <button onClick={() => go(slide + 1)} disabled={slide === SLIDES.length - 1} aria-label="Next" style={{ width: '36px', height: '36px', borderRadius: '50%', background: c.bgElevated, border: `1px solid ${c.borderDefault}`, color: c.textPrimary, cursor: slide === SLIDES.length - 1 ? 'not-allowed' : 'pointer', opacity: slide === SLIDES.length - 1 ? 0.3 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>→</button>
             </div>
-          </div>
         </div>
 
         {/* footer */}
