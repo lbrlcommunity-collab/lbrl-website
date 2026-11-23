@@ -517,6 +517,7 @@ export default function LBRLWebsite() {
           <span style={{ fontSize: '12px', color: colors.textMuted }}>•</span>
           <span style={{ fontSize: '12px', color: colors.accentCyan }}>Award Winner: NYC 2016 & Portland 2024</span>
         </div>
+        <p style={{ fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', color: colors.accentCyan, marginBottom: '16px', fontWeight: 500 }}>Custom Tattoo Studio in Vancouver, WA</p>
         <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: '300', letterSpacing: '-1px', marginBottom: '24px', lineHeight: '1.1', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(30px)' : 'translateY(0)', transition: 'all 0.6s ease 0.5s' }}>
           Art That<br /><span style={{ color: colors.accentCyan }}>Becomes You</span>
         </h1>
@@ -574,6 +575,28 @@ export default function LBRLWebsite() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 0' }}><span style={{ fontSize: '13px', color: colors.textMuted }}>Recognition</span><span style={{ fontSize: '13px', color: colors.accentCyan }}>NYC 2016 & Portland 2024</span></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Local search service paths — real server-rendered pages, not gallery filters */}
+      <section aria-label="Vancouver WA tattoo specialties" style={{ padding: '64px 20px', background: colors.bgDark }}>
+        <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+          <p style={{ color: colors.accentCyan, fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>Vancouver, Washington</p>
+          <h2 style={{ fontWeight: 300, fontSize: 'clamp(26px, 4vw, 36px)', marginBottom: '16px' }}>Custom Tattoo Styles & Large-Scale Projects</h2>
+          <p style={{ color: colors.textSecondary, maxWidth: '800px', lineHeight: 1.8, marginBottom: '26px' }}>LBRL is a private tattoo studio in Vancouver, WA, creating custom Japanese-inspired, blackwork, ornamental and floral tattoos, including half and full sleeves. Explore the work and approach behind each specialty.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(210px, 100%), 1fr))', gap: '12px' }}>
+            {[
+              { title: 'Neo-Japanese Tattoos', href: '/tattoos/neo-japanese-vancouver-wa' },
+              { title: 'Blackwork Tattoos', href: '/tattoos/blackwork-vancouver-wa' },
+              { title: 'Ornamental Tattoos', href: '/tattoos/ornamental-vancouver-wa' },
+              { title: 'Floral Tattoos', href: '/tattoos/floral-vancouver-wa' },
+              { title: 'Custom Tattoo Sleeves', href: '/tattoos/sleeves-vancouver-wa' },
+            ].map(({ title, href }) => (
+              <a key={href} href={href} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: '18px', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '10px', background: colors.bgCard, color: colors.textPrimary, textDecoration: 'none', fontSize: '14px', lineHeight: 1.5 }}>
+                {title}<span aria-hidden="true" style={{ color: colors.accentCyan }}>↗</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
