@@ -22,6 +22,10 @@ export default function LBRLWebsite() {
   
   // ========== TATTOODO MODAL STATE ==========
   const [tattoodoModalOpen, setTattoodoModalOpen] = useState(false)
+  const [welcomeOpen, setWelcomeOpen] = useState(false)
+  const [welcomeReopenSignal, setWelcomeReopenSignal] = useState(0)
+
+  const showBookingGuide = () => setWelcomeReopenSignal((n) => n + 1)
 
   // A brief brand welcome, not a blocking loading sequence.
   // Returning tab visitors and reduced-motion users go straight to the site.
@@ -41,24 +45,26 @@ export default function LBRLWebsite() {
     return () => { window.clearTimeout(exit); window.clearTimeout(done) }
   }, [])
 
-  // ========== LOAD TATTOODO SDK ONLY WHEN BOOKING IS OPEN ==========
+  // ========== LOAD TATTOODO SDK ASYNCHRONOUSLY (ORIGINAL RELIABLE FLOW) ==========
   useEffect(() => {
-    if (!tattoodoModalOpen) return
+    // Preserve the existing Tattoodo integration until its SDK initialization
+    // lifecycle can be tested in the live deployment. Loading is non-blocking.
     const sdkUrl = 'https://www.tattoodo.com/static/assets/sdk.js'
     if (document.querySelector(`script[src="${sdkUrl}"]`)) return
     const script = document.createElement('script')
     script.src = sdkUrl
     script.async = true
     document.body.appendChild(script)
-  }, [tattoodoModalOpen])
+  }, [])
 
-  // ========== CONTROL BODY SCROLL WHEN MODAL OPENS ==========
+  // One authority manages scrolling for every full-screen overlay.
+  // Prevents the welcome and booking dialogs from restoring stale values.
   useEffect(() => {
-    if (!tattoodoModalOpen) return
+    if (!(welcomeOpen || tattoodoModalOpen || lightboxOpen || mobileMenuOpen)) return
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = previous }
-  }, [tattoodoModalOpen])
+  }, [welcomeOpen, tattoodoModalOpen, lightboxOpen, mobileMenuOpen])
 
   // ========== CLOSE MODAL ON ESCAPE KEY ==========
   useEffect(() => {
@@ -72,6 +78,12 @@ export default function LBRLWebsite() {
   }, [tattoodoModalOpen])
 
   useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      const allVisible = {}
+      document.querySelectorAll('[data-animate]').forEach((el) => { allVisible[el.id] = true })
+      setVisibleSections(allVisible)
+      return
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -90,6 +102,7 @@ export default function LBRLWebsite() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -280,7 +293,11 @@ export default function LBRLWebsite() {
   // No video bytes or autoplay until the video is actually near the viewport.
   useEffect(() => {
     const video = videoRef.current
-    if (!video || typeof IntersectionObserver === 'undefined') return
+    if (!video) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setVideoHasEntered(true)
+      return
+    }
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setVideoHasEntered(true)
@@ -361,7 +378,9 @@ export default function LBRLWebsite() {
       width: '100%',
       maxWidth: '100vw',
     }}>
-      <WelcomeIntro isLoading={isLoading} onBook={() => setTattoodoModalOpen(true)} />
+      <WelcomeIntro isLoading={isLoading} onOpenChange={setWelcomeOpen}
+        reopenSignal={welcomeReopenSignal}
+        onBook={() => setTattoodoModalOpen(true)} />
 
       {/* ========== TATTOODO EMBED MODAL ========== */}
       <div
@@ -372,8 +391,12 @@ export default function LBRLWebsite() {
           alignItems: 'center', justifyContent: 'center', padding: '20px',
         }}
         onClick={() => setTattoodoModalOpen(false)}
+        aria-hidden={!tattoodoModalOpen}
       >
         <div
+          role={tattoodoModalOpen ? 'dialog' : undefined}
+          aria-modal={tattoodoModalOpen ? 'true' : undefined}
+          aria-label={tattoodoModalOpen ? 'Tattoodo booking form' : undefined}
           style={{
             background: colors.bgCard, borderRadius: '16px', width: '100%',
             maxWidth: '600px', maxHeight: '90vh', overflow: 'hidden',
@@ -391,6 +414,7 @@ export default function LBRLWebsite() {
             </div>
             <button
               onClick={() => setTattoodoModalOpen(false)}
+              aria-label="Close booking form"
               style={{ background: 'none', border: 'none', color: colors.textSecondary, fontSize: '28px', cursor: 'pointer', lineHeight: 1, padding: '0', transition: 'color 0.3s' }}
               onMouseOver={(e) => e.target.style.color = colors.textPrimary}
               onMouseOut={(e) => e.target.style.color = colors.textSecondary}
@@ -455,7 +479,7 @@ export default function LBRLWebsite() {
           <a href={RELEASE_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${colors.accentCyan}`, borderRadius: '6px', color: colors.accentCyan, fontSize: '11px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.3s ease' }} onMouseOver={(e) => { e.target.style.background = colors.accentCyan; e.target.style.color = colors.bgDark }} onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = colors.accentCyan }}>Release Form</a>
           <button onClick={() => setTattoodoModalOpen(true)} style={{ padding: '10px 20px', background: colors.textPrimary, borderRadius: '6px', color: colors.bgDark, fontSize: '11px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Book Now</button>
         </div>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="mobile-menu-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileMenuOpen} className="mobile-menu-btn" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={colors.textPrimary} strokeWidth="2">{mobileMenuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}</svg>
         </button>
       </nav>
@@ -464,6 +488,10 @@ export default function LBRLWebsite() {
       {mobileMenuOpen && (
         <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: colors.bgDark, zIndex: 999, display: 'flex', flexDirection: 'column', padding: '40px 24px', gap: '24px' }}>
           <button onClick={() => { setMobileMenuOpen(false); setTattoodoModalOpen(true) }} style={{ background: 'none', border: 'none', color: colors.textPrimary, fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', padding: '0', textAlign: 'left' }}><TattoodoIcon /><span>Book on Tattoodo</span></button>
+          <button type="button" onClick={() => { setMobileMenuOpen(false); showBookingGuide() }}
+            style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', color: colors.accentCyan, fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase', cursor: 'pointer' }}>
+            How I Work · Booking Guide
+          </button>
           {['Portfolio', 'About', 'Process', 'Pricing', 'FAQs', 'Contact'].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} style={{ color: colors.textPrimary, textDecoration: 'none', fontSize: '18px', letterSpacing: '2px', textTransform: 'uppercase' }}>{item}</a>
           ))}
@@ -498,6 +526,10 @@ export default function LBRLWebsite() {
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', opacity: isLoading ? 0 : 1, transform: isLoading ? 'translateY(30px)' : 'translateY(0)', transition: 'all 0.6s ease 0.9s' }}>
           <button onClick={() => setTattoodoModalOpen(true)} style={{ padding: '16px 32px', background: colors.accentCyan, color: colors.bgDark, borderRadius: '8px', fontSize: '13px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Start Your Journey</button>
           <a href="#portfolio" style={{ padding: '16px 32px', background: 'transparent', border: `1px solid ${colors.borderDefault}`, color: colors.textPrimary, borderRadius: '8px', fontSize: '13px', fontWeight: '500', letterSpacing: '1px', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.3s ease' }}>View Portfolio</a>
+          <button type="button" onClick={showBookingGuide}
+            style={{ padding: '16px 24px', background: 'transparent', border: 'none', color: colors.accentCyan, fontSize: '12px', fontWeight: 500, letterSpacing: '0.8px', cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '4px' }}>
+            How I Work · Booking Guide
+          </button>
         </div>
         <div style={{ width: '100%', maxWidth: '1200px', marginTop: '60px', padding: '0 40px' }}>
           <img loading="lazy" decoding="async" src="/IMG_4885.png" alt="Decorative floral element" className="wind-blow-image" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
@@ -566,7 +598,7 @@ export default function LBRLWebsite() {
                   <button key={item.id} type="button" className="portfolio-card"
                     aria-label={`View tattoo ${safeSliderIndex + index + 1} of ${filteredPortfolio.length}`}
                     onClick={() => openLightbox(safeSliderIndex + index)}
-                    style={{ flexShrink: 0, padding: 0, border: 'none', background: 'none', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative' }}>
+                    style={{ flexShrink: 0, width: `calc((100% - ${16 * (visibleCount - 1)}px) / ${visibleCount})`, aspectRatio: '4 / 5', padding: 0, border: 'none', background: 'none', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative' }}>
                     <img src={item.image} alt={item.alt || 'Custom tattoo by Daniel Liberal - LBRL Tattoo Studio Vancouver WA'}
                       loading="lazy" decoding="async" width="280" height="350"
                       style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.25s ease' }}
@@ -884,7 +916,7 @@ export default function LBRLWebsite() {
         [style*="grid-template-columns: repeat(auto-fit"] { display: flex !important; flex-direction: column !important; gap: 16px !important; }
         
         /* Mobile portfolio cards */
-        .portfolio-card { width: 200px; height: 280px; }
+        /* Portfolio card size is set dynamically in JSX to fit each breakpoint. */
         .portfolio-window { animation: portfolioWindowIn 0.18s ease-out; }
         @keyframes portfolioWindowIn { from { opacity: 0.65; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -904,25 +936,15 @@ export default function LBRLWebsite() {
         #contact { margin-top: 0 !important; padding-top: 60px !important; }
         
         /* Mobile spinner */
-
-.logo-ink-reveal { width: 70px !important; height: 70px !important; }
-
-.orbit-system { width: 110px !important; height: 110px !important; }
-
-.brand-subtitle { font-size: 8px !important; letter-spacing: 3px !important; }
         
         /* === TABLET: 481px+ === */
         @media (min-width: 481px) {
           h1 { font-size: 32px !important; }
           h2 { font-size: 24px !important; }
           [role="dialog"] h2 { font-size: clamp(26px, 5vw, 34px) !important; }
-          .portfolio-card { width: 240px; height: 320px; }
+          /* Portfolio card size is set dynamically in JSX to fit each breakpoint. */
           [style*="gap: 12px"][style*="flex-wrap"] button { padding: 8px 14px !important; font-size: 10px !important; letter-spacing: 0.8px !important; }
           [style*="padding: 32px"] { padding: 24px !important; }
-
-.logo-ink-reveal { width: 80px !important; height: 80px !important; }
-
-.orbit-system { width: 130px !important; height: 130px !important; }
 
 }
 
@@ -943,7 +965,7 @@ export default function LBRLWebsite() {
           [style*="grid-template-columns: repeat(auto-fit"] { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; gap: 24px !important; }
           
           /* Desktop portfolio */
-          .portfolio-card { width: 280px; height: 350px; }
+          /* Portfolio card size is set dynamically in JSX to fit each breakpoint. */
           
           /* Desktop filter buttons */
           [style*="gap: 12px"][style*="flex-wrap"] { gap: 12px !important; }
@@ -960,12 +982,6 @@ export default function LBRLWebsite() {
           #faqs [style*="position: sticky"] { display: block !important; }
           
           /* Desktop spinner */
-
-.logo-ink-reveal { width: 88px !important; height: 88px !important; }
-
-.orbit-system { width: 140px !important; height: 140px !important; }
-
-.brand-subtitle { font-size: 9px !important; letter-spacing: 4px !important; }
         }
 
         /* === LARGE DESKTOP: 1025px+ === */
