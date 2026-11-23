@@ -76,7 +76,7 @@ const c = {
 export default function WelcomeIntro({ isLoading = false, onBook }) {
   const [open, setOpen] = useState(false)
   const [slide, setSlide] = useState(0)
-  const [touchX, setTouchX] = useState(0)
+  const touchX = React.useRef(0)
 
   // Open once per session, ~800ms after the loader finishes.
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
       seen = false
     }
     if (seen) return
-    const t = setTimeout(() => setOpen(true), 800)
+    const t = setTimeout(() => setOpen(true), 420)
     return () => clearTimeout(t)
   }, [isLoading])
 
@@ -105,10 +105,13 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
     setSlide(Math.max(0, Math.min(SLIDES.length - 1, i)))
   }, [])
 
-  // Lock body scroll while open
+  // Only manage scroll while this dialog is open. Restore the previous value
+  // so closing this dialog cannot unlock an unrelated booking overlay.
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : 'unset'
-    return () => { document.body.style.overflow = 'unset' }
+    if (!open) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previousOverflow }
   }, [open])
 
   // Keyboard: ESC closes, arrows navigate
@@ -130,13 +133,17 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
 
   const cur = SLIDES[slide]
 
+  // Unmount while dismissed: no full-screen backdrop or carousel in the DOM.
+  if (!open) return null
+
   return (
     <div
+      role="presentation"
       onClick={(e) => { if (e.target === e.currentTarget) close() }}
       style={{
         position: 'fixed', inset: 0, zIndex: 2500,
         background: 'rgba(10,13,11,0.85)',
-        backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '20px',
         opacity: open ? 1 : 0,
@@ -145,21 +152,21 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
       }}
     >
       <div
+        role="dialog" aria-modal="true" aria-label="Before booking with me"
         style={{
           background: c.bgPrimary, borderRadius: '20px',
           border: `1px solid ${c.borderDefault}`,
           width: '100%', maxWidth: '560px', maxHeight: '90vh',
           display: 'flex', flexDirection: 'column', overflow: 'hidden',
           position: 'relative',
-          boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
-          transform: open ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
-          opacity: open ? 1 : 0,
-          transition: 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease',
+          boxShadow: '0 18px 55px rgba(0,0,0,0.38)',
+          transform: 'translateY(0)',
+          opacity: 1,
+          transition: 'opacity 0.2s ease',
         }}
       >
-        {/* atmospheric glow */}
-        <div style={{ position: 'absolute', top: '-150px', left: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(125,212,196,0.07), transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-120px', right: '-100px', width: '350px', height: '350px', background: 'radial-gradient(circle, rgba(232,168,124,0.04), transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+        {/* Subtle atmosphere without the cost of large CSS blur filters. */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(circle at 20% 0%, rgba(125,212,196,.07), transparent 55%)' }} />
 
         {/* header */}
         <div style={{ padding: '28px 32px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 2 }}>
@@ -173,16 +180,16 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
         {/* body */}
         <div style={{ padding: '24px 32px 0', position: 'relative', zIndex: 2, flex: 1, overflowY: 'auto' }}>
           <p style={{ fontSize: '11px', fontWeight: 500, color: c.accentCyan, letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '12px' }}>Welcome</p>
-          <h2 style={{ fontFamily: "'Anton', Impact, sans-serif", fontSize: '38px', fontWeight: 400, letterSpacing: '0.5px', lineHeight: 0.95, marginBottom: '8px', textTransform: 'uppercase' }}>Before Booking With Me</h2>
+          <h2 style={{ fontFamily: "'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", fontSize: 'clamp(26px, 5vw, 34px)', fontWeight: 300, letterSpacing: '0.4px', lineHeight: 1.14, marginBottom: '8px' }}>Before Booking With Me</h2>
           <p style={{ fontSize: '14px', color: c.textMuted, marginBottom: '28px' }}>A quick look at how I work</p>
 
           {/* carousel */}
           <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', background: c.bgCard, border: `1px solid ${c.borderDefault}`, minHeight: '280px', marginBottom: '20px' }}>
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', zIndex: 3, background: cur.stripe, transition: 'background 0.4s ease' }} />
             <div
-              onTouchStart={(e) => setTouchX(e.touches[0].clientX)}
+              onTouchStart={(e) => { touchX.current = e.touches[0].clientX }}
               onTouchEnd={(e) => {
-                const d = touchX - e.changedTouches[0].clientX
+                const d = touchX.current - e.changedTouches[0].clientX
                 if (Math.abs(d) > 50) go(slide + (d > 0 ? 1 : -1))
               }}
               style={{ display: 'flex', transform: `translateX(-${slide * 100}%)`, transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)' }}
@@ -190,7 +197,7 @@ export default function WelcomeIntro({ isLoading = false, onBook }) {
               {SLIDES.map((s, i) => (
                 <div key={i} style={{ minWidth: '100%', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <p style={{ fontSize: '10px', fontWeight: 600, color: c.accentCyan, letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '12px' }}>{s.tag}</p>
-                  <h3 style={{ fontFamily: "'Anton', Impact, sans-serif", fontSize: '40px', fontWeight: 400, color: c.textPrimary, letterSpacing: '1px', lineHeight: 0.95, marginBottom: '16px', textTransform: 'uppercase' }}>{s.title}</h3>
+                  <h3 style={{ fontFamily: "'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", fontSize: 'clamp(25px, 4.5vw, 32px)', fontWeight: 300, color: c.textPrimary, letterSpacing: '0.2px', lineHeight: 1.15, marginBottom: '16px' }}>{s.title}</h3>
                   <div style={{ width: '32px', height: '1px', background: `linear-gradient(90deg, ${c.accentCyan}, transparent)`, marginBottom: '16px' }} />
                   <p style={{ fontSize: '14px', color: c.textSecondary, lineHeight: 1.8 }}>{s.body}</p>
                 </div>
